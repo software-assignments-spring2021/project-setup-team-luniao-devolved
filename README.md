@@ -17,14 +17,16 @@ Our Minimum Viable Product should have:
 * ...?
 
 ## Team members
-Brian Steinberg (Github)
-Emma Sargent (Github)
-Karik Jain (Github)
-Kaylee Park (Github)
+Brian Steinberg (Github)    
+Emma Sargent (Github)    
+Karik Jain (Github)    
+Kaylee Park (Github)   
 Pranav Guntunur ([Github](https://github.com/pguntunur))
 
 ## History
-A short history of how the project came to be.
+A short history of how the project came to be. (Feel free to change anything at all if you do not agree!)
+
+All of us are working on this project because we love to travel, and this means we've each experienced the challenges of keeping track of numerous checklists and suggestions, especially when traveling in a group. And there are so many recommendations available online that sometimes we'd just wish for easy, simple suggestions all located in the place.
 
 ## How can you contribute?
 [See here.](CONTRIBUTING.md)
