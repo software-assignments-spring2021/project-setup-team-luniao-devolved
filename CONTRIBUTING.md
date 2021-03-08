@@ -19,7 +19,14 @@ We will be using a simplified version of the [workflow described here](https://n
 ## Resolving Disagreements  
 Disagreements and conflicts should be resolved independently and as soon as possible, and team members are always welcome to share their opinions and concerns with each other. The aim for every resolution should be a situation where all parties are satisfied and reach a consensus — and this does mean that everyone should be open and willing to converse and objectively strategize to reach such an outcome.
 
-## Instructions for Setting Up the Local Development Environment   
+## Instructions for Setting Up the Local Development Environment
+The following is required for setting up the local development enironment:
+
+Install Visual Studio Code 
+Install Git
+Clone the respository onto the local machine via Visual Studio Code or the commandline via 
+'''git clone https://github.com/agile-dev-assignments/project-setup-team-luniao-devolved'''
+
 
 ## Instructions for Building and Testing the Project  
 We will update this with that information once the project reaches this stage.
