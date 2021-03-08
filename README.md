@@ -1,6 +1,3 @@
-# Project Repository
-Delete the contents of this file and replace with the contents of a proper README.md, as described in the [instructions](./instructions.md)
-
 ## Project description
 Everyone knows that planning a trip involves lots of details and moving parts. Travel Wise is a web application that makes it easy for individuals and groups to make and keep track of their travel plans. Users can create polls or checklists and receive recommendations for activities, hotels, flights, and much more based on budget, trip purpose, and interests. Users can access our app through a guest account that will allow them to use create a personalized itinerary. This itinerary can also ultimately be logged when a user creates their account, giving them the ability to add other users and form group trips to keep track of previous trip history.
 
