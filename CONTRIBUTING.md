@@ -1,7 +1,14 @@
 # Guide to Contributing
-Delete the contents of this file and replace with the contents of a proper guide to contributing to this project, as described in the [instructions](./instructions.md)
 
-## Team Norms and Project values
+## Team Norms and Project Values
+* Attend Scrum meetings on time and notify the group in advance if you cannot make it
+* Be transparent - use Slack to resolve any questions as soon as possible, and be sure to contact tutors or the Professor with any relevant questions
+* Meeting notes should be taken for each meeting and will be updated into the Google Drive folder
+* Complete tasks on time
+
+### Daily Standups
+* Daily Standup meetings three times a week
+* Current Schedule: Mondays (11:30am-11:45am), Wednesdays (11:30am-11:45am) and Fridays (9:45am-10:00am)
 
 ## Git workflow
 We will be using a simplified version of the [workflow described here](https://nvie.com/posts/a-successful-git-branching-model/).
@@ -9,6 +16,7 @@ We will be using a simplified version of the [workflow described here](https://n
 * There is a `develop` branch that exists parallel to the `master` where the `HEAD` always reflects a state with latest changes
 * Each feature will have its own branch and are branched from the `develop` branch
 * Do not merge anything into `main` without full group agreement and testing the `deploy` branch
+* Commit changes locally, and make sure to pull all changes before committing.  
 
 
 ## Rules for Contributing
@@ -22,9 +30,9 @@ Disagreements and conflicts should be resolved independently and as soon as poss
 ## Instructions for Setting Up the Local Development Environment
 The following is required for setting up the local development enironment:
 
-* Install Visual Studio Code 
+* Install Visual Studio Code
 * Install Git
-* Clone the respository onto the local machine via Visual Studio Code or the commandline via 
+* Clone the respository onto the local machine via Visual Studio Code or the commandline via
 >git clone https://github.com/agile-dev-assignments/project-setup-team-luniao-devolved
 
 
