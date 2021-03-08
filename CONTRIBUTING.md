@@ -22,9 +22,9 @@ Disagreements and conflicts should be resolved independently and as soon as poss
 ## Instructions for Setting Up the Local Development Environment
 The following is required for setting up the local development enironment:
 
-Install Visual Studio Code 
-Install Git
-Clone the respository onto the local machine via Visual Studio Code or the commandline via 
+* Install Visual Studio Code 
+* Install Git
+* Clone the respository onto the local machine via Visual Studio Code or the commandline via 
 >git clone https://github.com/agile-dev-assignments/project-setup-team-luniao-devolved
 
 
