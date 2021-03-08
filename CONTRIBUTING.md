@@ -25,7 +25,7 @@ The following is required for setting up the local development enironment:
 Install Visual Studio Code 
 Install Git
 Clone the respository onto the local machine via Visual Studio Code or the commandline via 
-'''git clone https://github.com/agile-dev-assignments/project-setup-team-luniao-devolved'''
+>git clone https://github.com/agile-dev-assignments/project-setup-team-luniao-devolved
 
 
 ## Instructions for Building and Testing the Project  
