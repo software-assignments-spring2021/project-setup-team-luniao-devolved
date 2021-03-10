@@ -10,6 +10,8 @@
 ### Daily Standups
 * Daily Standup meetings are held three times a week
 * Current Schedule: Mondays (11:30am-11:45am), Wednesdays (11:30am-11:45am) and Fridays (9:45am-10:00am)
+Monday and Wednesday Zoom Link: https://nyu.zoom.us/j/95380124743
+Friday Zoom Link: https://nyu.zoom.us/j/91036163638 
 
 ### Definition of "done"
 * A functioning app where a guest/registered user collaboratively makes travel plans with other invited users and receives personalized recommendations for activities, hotels, flights, etc. based on personal preferences.
