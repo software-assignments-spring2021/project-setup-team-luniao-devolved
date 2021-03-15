@@ -9,7 +9,7 @@
 
 ### Daily Standups
 * Daily Standup meetings are held three times a week
-* Current Schedule: Mondays (11:30am-11:45am), Wednesdays (11:30am-11:45am) and Fridays (9:45am-10:00am)
+* Current Schedule: Mondays (12:00pm-12:15pm), Wednesdays (12:00pm-12:15pm) and Fridays (9:45am-10:00am)
 Monday and Wednesday Zoom Link: https://nyu.zoom.us/j/95380124743
 Friday Zoom Link: https://nyu.zoom.us/j/91036163638 
 
