@@ -12,6 +12,7 @@ ReactDOM.render(
 		      <Route exact path="/" component={Login}/>
           <Route exact path="/guestdashboard" component={GuestDashboard}/>
           <Route exact path="/signup" component={SignUp}/>
+          <Route exact path="/createpost" component={CreatePost}/>
 	    </Switch>
   </Router>,
   document.getElementById('root')
