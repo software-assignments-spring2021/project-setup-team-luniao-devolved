@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
-import './App.css';
+import './CreatePost.css';
 import { useState } from 'react';
 
 import { Alert, Form, Button} from 'react-bootstrap';

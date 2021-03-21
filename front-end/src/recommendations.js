@@ -1,7 +1,7 @@
 // import logo from 'logo2.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
-import './App.css';
+import './Recommendations.css';
 import { useState } from 'react';
 import axios from "axios";
 
@@ -51,7 +51,7 @@ function MyVerticallyCenteredModal(props) {
 }
 
 
-function App(props) {
+function Recommendations(props) {
 
   const [topic, setTopic] = useState(0);
   const [budget, setBudget] = useState(0);
@@ -184,4 +184,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default Recommendations;
