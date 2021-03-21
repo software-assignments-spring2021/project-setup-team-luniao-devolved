@@ -1,4 +1,4 @@
-// import logo from 'logo2.png';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './App.css';
@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { Alert, Form, Button} from 'react-bootstrap';
 
-function App(props) {
+function CreatePost(props) {
 
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
@@ -63,4 +63,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default CreatePost;
