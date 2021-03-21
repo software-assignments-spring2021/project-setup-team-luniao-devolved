@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './App.css';
 import { useState } from 'react';
+import axios from "axios";
+
 
 import { Alert, Form, Button, Card, Modal, Container, Row, Col} from 'react-bootstrap';
 
@@ -27,12 +29,12 @@ function MyVerticallyCenteredModal(props) {
             <Row className="rec-row">
               <Card className="rec-card">
                 <Card.Body>
-                  <Card.Title>{e[0]}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{e[1]} </Card.Subtitle>
+                  <Card.Title>{e["date"]}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">{e["from_country"]} to {e["to_country"]} </Card.Subtitle>
                   <Card.Text>
-                    {e[2]}
+                    ${e["cost"]}
                   </Card.Text>
-                  <Card.Link href={e[3]}>More info</Card.Link>
+                  <Card.Link href={e["url"]}>More info</Card.Link>
                 </Card.Body>
               </Card>
           </Row>
@@ -69,8 +71,22 @@ function App(props) {
 
     setModalShow(true)
     // submit values, and return recommendations from back-end
-    // creating test data with example format
-    setRecsReceived([["3/22/2021", "LAX to JFK", "$555", "example.org/1"], ["3/23/2021", "LAX to JFK", "$783", "example.org/2"]]); 
+    // creating test data with Mockaroo API - no function to generate airport names so I generate country codes instead
+
+    async function fetchData() {
+      // axios is a 3rd-party module for fetching data from servers
+      const result = await axios(
+        // retrieving some mock data about animals for sale
+        "https://my.api.mockaroo.com/recs.json?key=8f9d78c0"
+      );
+      // set the state variable
+      // this will cause a re-render of this component
+      //setData(result.data);
+      setRecsReceived(result.data);
+    }
+    fetchData();
+
+
   }
 
   let showFunc = null;
