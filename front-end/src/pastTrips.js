@@ -12,8 +12,6 @@ import {Card, CardColumns} from 'react-bootstrap';
 function App(props) {
 
   const [pastTrips, setPastTrips] = useState([]);
- 
-
   
   useEffect(() => {
     //when this page's component loads, it first saves the past trips into our state variable - could just be object ids (mongodb), depends on how we store this data and do the express
