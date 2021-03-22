@@ -15,6 +15,7 @@ import './App.css';
 
 
 function Preferences() {
+    return (
         // Container with padding
         <Container className="p-3">
             
