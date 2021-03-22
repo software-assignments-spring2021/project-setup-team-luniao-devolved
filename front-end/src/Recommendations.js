@@ -1,4 +1,4 @@
-// import logo from 'logo2.png';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './Recommendations.css';
