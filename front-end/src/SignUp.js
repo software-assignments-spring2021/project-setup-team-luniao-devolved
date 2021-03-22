@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./SignUp.css";
 
 function SignUp() {
