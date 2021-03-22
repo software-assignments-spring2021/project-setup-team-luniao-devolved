@@ -1,7 +1,7 @@
 // import logo from 'logo2.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
-import './App.css';
+import './PastTrips.css';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
@@ -9,7 +9,7 @@ import axios from "axios";
 import {Card, CardColumns} from 'react-bootstrap';
 
 
-function App(props) {
+function PastTrips(props) {
 
   const [pastTrips, setPastTrips] = useState([]);
   
@@ -62,4 +62,4 @@ function App(props) {
   );
 }
 
-export default App;
+export default PastTrips;
