@@ -29,7 +29,9 @@ function Login() {
           <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
         </Form.Group>
 
-        <Button block size="lg" disabled={!checkTyped()}>Login</Button>
+        <Link to='dashboard'>
+          <Button block size="lg" disabled={!checkTyped()}>Login</Button>
+        </Link>
         <h2>Don't have an account? <Link to='/signup'>Sign up today!</Link></h2>
         <h2>...Or continue as <Link to='/guestdashboard'>Guest</Link></h2>
       </Col>

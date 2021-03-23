@@ -7,13 +7,13 @@ import GuestDashboard from './GuestDashboard';
 import SignUp from './SignUp';
 import CreatePost from './CreatePost';
 import Recommendations from './Recommendations';
-import PastTrips from './PastTrips'
 import Friends from './Friends'
 import CurrentTrip from './CurrentTrip';
 import NewTrip from './NewTrip';
 import NavBar from './components/NavBar';
 import ProfilePage from './ProfilePage';
-//import Dashboard from '/Dashboard';
+import PastTrips from './PastTrips';
+import Dashboard from './Dashboard';
 
 ReactDOM.render(
   <Router>
@@ -48,6 +48,8 @@ ReactDOM.render(
           <Route exact path="/createpost" component={CreatePost}/>
           <Route exact path="/recommendations" component={Recommendations}/>
           <Route exact path="/pasttrips" component={PastTrips}/> */}
+          <Route exact path="/pasttrips" component={PastTrips}/>
+          <Route exact path="/dashboard" component={Dashboard}/>
 	    </Switch>
   </Router>,
   document.getElementById('root')
