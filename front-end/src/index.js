@@ -1,54 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-//import './index.css';
-import Login from './Login';
-import GuestDashboard from './GuestDashboard';
-import SignUp from './SignUp';
-import CreatePost from './CreatePost';
-import Recommendations from './Recommendations';
-import PastTrips from './PastTrips'
-import Friends from './Friends'
-import CurrentTrip from './CurrentTrip';
-import NewTrip from './NewTrip';
-import NavBar from './components/NavBar';
-import ProfilePage from './ProfilePage';
-import Dashboard from '/Dashboard';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <Router>
-       <Switch>
-		      <Route exact path="/">
-            <NavBar/>
-            <Dashboard/>
-          </Route>
-
-          <Route exact path="/guestdashboard">
-            <NavBar/>
-            <GuestDashboard/>
-          </Route>
-
-          <Route exact path="/ProfilePage">
-            <NavBar/>
-            <ProfilePage/>
-          </Route>
-
-          <Route exact path="/CurrentTrip">
-            <NavBar/>
-            <CurrentTrip/>
-          </Route>
-
-          <Route exact path="/NewTrip">
-            <NavBar/>
-            <NewTrip/>
-          </Route>
-
-          {/* <Route exact path="/ProfilePage" component={ProfilePage}/> */}
-          {/* <Route exact path="/signup" component={SignUp}/>
-          <Route exact path="/createpost" component={CreatePost}/>
-          <Route exact path="/recommendations" component={Recommendations}/>
-          <Route exact path="/pasttrips" component={PastTrips}/> */}
-	    </Switch>
-  </Router>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
