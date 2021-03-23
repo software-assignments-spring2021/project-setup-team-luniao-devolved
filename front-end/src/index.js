@@ -13,14 +13,14 @@ import CurrentTrip from './CurrentTrip';
 import NewTrip from './NewTrip';
 import NavBar from './components/NavBar';
 import ProfilePage from './ProfilePage';
-import Dashboard from '/Dashboard';
+//import Dashboard from '/Dashboard';
 
 ReactDOM.render(
   <Router>
        <Switch>
 		      <Route exact path="/">
             <NavBar/>
-            <Dashboard/>
+            
           </Route>
 
           <Route exact path="/guestdashboard">
