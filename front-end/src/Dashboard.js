@@ -56,7 +56,7 @@ function Dashboard(){
                     Dashboard
                 </h1>
             </div>
-            <textarea class="form-control" rows="3" placeholder="How is your vacation going?"></textarea>
+            <textarea class="postform" rows="3" placeholder="How is your vacation going?"></textarea>
             <button type="submit" class="btn btn-default">Post</button>
 
             <div>
