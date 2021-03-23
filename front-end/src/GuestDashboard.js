@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Navbar, Nav, NavDropdown, Alert, Modal} from "react-bootstrap";
 import { Link } from 'react-router-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./GuestDashboard.css";
 
 function GuestDashboard() {
