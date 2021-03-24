@@ -25,15 +25,12 @@ function Dashboard(){
       // the blank array below causes this callback to be executed only once on component load
     }, []);
     return(
-        <div classname="dashboard">
-            <div classname="Dashboard-header">
-                <h1>
-                    Dashboard
-                </h1>
+        <div className="dashboard">
+            <div className="dashboard-header">
+                <h3>Dashboard</h3>
             </div>
             <textarea class="postform" rows="3" placeholder="How is your vacation going?"></textarea>
             <button type="submit" class="btn btn-default">Post</button>
-
             <div>
                 {post["post"]}
             </div>

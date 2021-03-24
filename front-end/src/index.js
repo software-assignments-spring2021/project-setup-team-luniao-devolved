@@ -12,6 +12,13 @@ import Dashboard from './Dashboard';
 import NavBar from './components/NavBar';
 import NewTrip from './NewTrip';
 import CurrentTrip from './CurrentTrip';
+import Cpoll from './Cpoll';
+import Itinerary from './Itinerary';
+import ProfilePage from './ProfilePage';
+import Friends from './Friends';
+import EditProfile from './EditProfile';
+import Preferences from './Preferences';
+import GuestNewTrip from './GuestNewTrip';
 
 ReactDOM.render(
   <Router>
@@ -39,10 +46,53 @@ ReactDOM.render(
             <CurrentTrip/>
           </Route>
 
+          <Route exact path="/editprofile">
+            <NavBar/>
+            <EditProfile/>
+          </Route>
+
+          <Route exact path="/createpost">
+            <NavBar/>
+            <CreatePost/>
+          </Route>
+
+          <Route exact path="/friends">
+            <NavBar/>
+            <Friends/>
+          </Route>
+
+          <Route exact path="/guestnewtrip">
+            <GuestNewTrip/>
+          </Route>
+
+          <Route exact path="/preferences">
+            <NavBar/>
+            <Preferences/>
+          </Route>
+
+          <Route exact path="/createpoll">
+            <NavBar/>
+            <Cpoll/>
+          </Route>
+
           <Route exact path="/dashboard">
             <NavBar/>
             <Dashboard/>
-          
+          </Route>
+
+          <Route exact path="/profile">
+            <NavBar/>
+            <ProfilePage/>
+          </Route>
+
+          <Route exact path="/itinerary">
+            <NavBar/>
+            <Itinerary/>
+          </Route>
+
+          <Route exact path="/recommendations">
+            <NavBar/>
+            <Recommendations/>
           </Route>
 	    </Switch>
   </Router>,

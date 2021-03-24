@@ -41,8 +41,8 @@ function SignUp() {
           <Form.Control value={repassword} onChange={(e) => setRepassword(e.target.value)} placeholder="Re-enter password"/>
         </Form.Group>
 
-        <Button block size="lg" disabled={!checkTyped()}>Sign Up</Button>
-        <h2>Already have an account? <Link to=''>Click to Login</Link></h2>
+        <Link to='/dashboard'><Button block size="lg" disabled={!checkTyped()}>Sign Up</Button></Link>
+        <h2>Already have an account? <Link to='/'>Click to Login</Link></h2>
         <h2>Click to continue as <Link to='/guestdashboard'>Guest</Link></h2>
       </Col>
     </Row>
