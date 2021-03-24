@@ -2,13 +2,6 @@
   text-align: center;
 }
 
-.logo {
-  position:inline;
-  top: 1vmin;
-  height: 10vmin;
-  pointer-events: none;
-
-}
 
 .alert {
   text-align: center;

@@ -1,19 +1,22 @@
-import React, {useState} from "react";
-import {Navbar, Nav, NavDropdown, Alert, Modal} from "react-bootstrap";
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-import "./GuestDashboard.css";
+// import logo from './logo.svg';
+import './NewTrip.css';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import {Navbar, Nav, NavDropdown, Alert, Modal} from "react-bootstrap";
 
-function GuestDashboard() {
+const GuestNewTrip = (props) => {
 
     const [open, setOpen] = useState(false);
 
     const closeModal = () => setOpen(false);
     const openModal = () => setOpen(true);
 
-    return (
-    <div className="GuestDashboard">
-        <div className="GuestAlert">
+  return (
+    <div className="NewTrip">
+      <div className="GuestAlert">
             <Alert variant="primary">
             <Alert.Heading>Welcome to Travel Wise!</Alert.Heading>
             <p className="info">As a guest, feel free to create a new trip and explore Travel Wise. Note that if you want to try other options, you must sign up. Enjoy!</p>
@@ -50,11 +53,49 @@ function GuestDashboard() {
                     <Modal.Body>Click here to <Link to ="">sign up</Link></Modal.Body>
         </Modal>
         </div>
-        <div>
-            <h4>Seems awfully quiet without friends...</h4>
+
+      <h3>New Trip</h3>
+      <section className="main-content">
+
+        <div class='flex-container'>
+          <div>
+
+          </div>
+
+          <div>
+            <InputGroup className="mb-3">
+              <FormControl
+                placeholder="Trip Name"
+                aria-label="Trip Name"
+                aria-describedby="basic-addon2"
+              />
+            </InputGroup>
+          </div>
+
+          <div>
+            <Button href="#">Add Friends</Button>
+            <Button href="/createpoll">Create Poll</Button>
+            <Button href="/recommendations">Ask for Rec</Button>
+          </div>
+
+          <div>
+            <p>To-do List:</p>
+            {/* Need help creating blank list and populating with items */}
+          </div>
+
+          <div>
+            <Button href="#">Back</Button>
+          </div>
+
+          <div>
+            <Button href="#">Add</Button>
+          </div>
+
         </div>
+
+      </section>
     </div>
-    );
+  );
 }
 
-export default GuestDashboard;
+export default GuestNewTrip;

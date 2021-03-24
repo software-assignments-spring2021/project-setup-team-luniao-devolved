@@ -9,7 +9,7 @@ const NewTrip = (props) => {
 
   return (
     <div className="NewTrip">
-      <h1>New Trip</h1>
+      <h3>New Trip</h3>
       <section className="main-content">
 
         <div class='flex-container'>
@@ -29,8 +29,8 @@ const NewTrip = (props) => {
 
           <div>
             <Button href="#">Add Friends</Button>
-            <Button href="#">Create Poll</Button>
-            <Button href="#">Ask for Rec</Button>
+            <Button href="/createpoll">Create Poll</Button>
+            <Button href="/recommendations">Ask for Rec</Button>
           </div>
 
           <div>

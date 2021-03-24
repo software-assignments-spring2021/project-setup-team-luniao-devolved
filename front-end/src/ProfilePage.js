@@ -1,8 +1,7 @@
-import './App.css'
+import './ProfilePage.css'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-//import './User.js'
 
 function ProfilePage(){
     /*const [data, setData] = useState([]);
