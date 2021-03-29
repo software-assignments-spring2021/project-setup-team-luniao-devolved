@@ -65,16 +65,9 @@ function Preferences() {
             </Form >
             <>
 
-                <Button variant="outline-danger">Cancel</Button>{' '}
-                <Button variant="outline-success">Confirm</Button>{' '}
+                <Button variant="outline-danger" href='/profile'>Cancel</Button>
+                <Button variant="outline-success" href='/profile'>Confirm</Button>
                 <br />
-
-            </>
-
-
-            <>
-                <br />
-                <Button variant="outline-secondary" href="./Cpoll" size="lg" block>Page 2- Poll </Button> {' '}
             </>
 
         </Container >

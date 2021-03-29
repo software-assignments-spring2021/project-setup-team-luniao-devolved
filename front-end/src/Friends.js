@@ -46,7 +46,7 @@ const Friends = (props) => {
           </div>
 
           <div>
-            <Button href="#">Back</Button>
+            <Button href="/profile">Back</Button>
           </div>
 
           <div>

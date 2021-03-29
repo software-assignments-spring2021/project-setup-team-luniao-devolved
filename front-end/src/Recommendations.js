@@ -163,7 +163,7 @@ function Recommendations(props) {
             
             {showFlightForm} {showOtherForm}
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" href="/currenttrip">
               Submit
             </Button>
           </Form>

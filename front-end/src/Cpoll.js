@@ -53,8 +53,8 @@ function Cpoll() {
             </Form>
             <>
 
-                <Button variant="outline-danger">Back</Button>{' '}
-                <Button variant="outline-success">Confirm</Button>{' '}
+                <Link to='/currenttrip'><Button variant="outline-danger">Back</Button></Link>
+                <Link to='/currenttrip'><Button variant="outline-success">Confirm</Button></Link>
                 <br />
 
             </>
@@ -62,7 +62,6 @@ function Cpoll() {
 
             <>
                 <br />
-                <Button variant="outline-secondary" href="./Itinerary" size="lg" block>Page 2- Itinerary </Button> {' '}
             </>
 
 

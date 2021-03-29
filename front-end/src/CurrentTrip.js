@@ -11,7 +11,7 @@ const CurrentTrip = (props) => {
       <section className="main-content">
         <div class='flex-container'>
           <div>
-            <h4>Trip Title</h4>
+            <h4>Trip Title:</h4>
           </div>
 
           <div className="friends">
@@ -68,9 +68,9 @@ const CurrentTrip = (props) => {
               </ListGroup.Item>
             </ListGroup>
           </div>
-
+          <br />
           <div>
-            <Button href="#">Back</Button>
+            <Button href="/dashboard">Back</Button>
           </div>
 
         </div>

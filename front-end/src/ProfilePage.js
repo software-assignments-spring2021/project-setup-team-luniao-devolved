@@ -49,6 +49,7 @@ function ProfilePage(){
     return(
         <div classname = "ProfilePage">
             <header classname = "Profile-header">
+                <br />
                 <h1> 
                     Profile
                 </h1>

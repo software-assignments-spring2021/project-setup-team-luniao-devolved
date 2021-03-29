@@ -48,7 +48,7 @@ function CreatePost(props) {
                 setPost(e.target.value);}}/>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" href='/dashboard'>
               Submit
             </Button>
           </Form>
