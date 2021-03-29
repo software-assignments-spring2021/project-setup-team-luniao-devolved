@@ -136,7 +136,7 @@ function Recommendations(props) {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" id="recsHeader">
         {<h2 className="App-title">Recommendations</h2>}
       </header>
 

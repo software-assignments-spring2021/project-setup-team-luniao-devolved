@@ -12,7 +12,7 @@
   }
 }
 
-.App-header {
+.App-header#recsHeader {
   background-color: white;
   min-height: 10vh;
   display: flex;
