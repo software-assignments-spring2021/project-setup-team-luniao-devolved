@@ -19,6 +19,7 @@ import GuestNewTrip from './GuestNewTrip';
 import PastTrips from './PastTrips';
 import CreatePost from './CreatePost';
 import Recommendations from './Recommendations';
+import AddFriends from './AddFriends';
 
 ReactDOM.render(
   <Router>
@@ -34,6 +35,11 @@ ReactDOM.render(
           <Route exact path="/dashboard"> 
             <NavBar/>
             <Dashboard/>
+          </Route>
+
+          <Route exact path="/addfriends"> 
+            <NavBar/>
+            <AddFriends/>
           </Route>
 
           <Route exact path="/pasttrips">

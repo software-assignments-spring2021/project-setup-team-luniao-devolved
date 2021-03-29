@@ -29,7 +29,7 @@ const NewTrip = (props) => {
           </div>
 
           <div>
-            <Button href="#">Add Friends</Button>
+            <Button href="/addfriends">Add Friends</Button>
             <Button href="/createpoll">Create Poll</Button>
             <Button href="/recommendations">Ask for Rec</Button>
           </div>

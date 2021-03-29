@@ -42,7 +42,7 @@ const CurrentTrip = (props) => {
 
           <div className="links">
             <Button href="/itinerary">Full Itinerary</Button>
-            <Button href="#">Add Friends</Button>
+            <Button href="/addfriends">Add Friends</Button>
             <Button href="/createpoll">Polls</Button>
             <Button href="/recommendations">Recommendations</Button>
           </div>
