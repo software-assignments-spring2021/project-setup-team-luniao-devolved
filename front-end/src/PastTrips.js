@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './PastTrips.css';
 import { useState, useEffect } from 'react';
 import axios from "axios";
@@ -34,8 +33,8 @@ function PastTrips(props) {
 
   return (
     <div className="App">
-      <header className="App-header">
-        {<h2 className="App-title">Past Trips</h2>}
+      <header className="App-header" id='pastTripsHeader'>
+        {<h3 className="App-title">Past Trips</h3>}
       </header>
 
 
