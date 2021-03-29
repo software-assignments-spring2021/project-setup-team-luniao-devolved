@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Dashboard(){
-    const [post, setData] = useState([]);
+    const [user, setData] = useState([]);
 
     useEffect(() => {
       // a nested function that fetches the data
       async function fetchData() {
         // axios is a 3rd-party module for fetching data from servers
         const result = await axios(
-          // retrieving some mock data about posts
-          "https://my.api.mockaroo.com/posts.json?key=4e1c2150"
+          // retrieving some mock data about users
+          "https://my.api.mockaroo.com/users.json?key=4e1c2150"
         );
         // set the state variable
         // this will cause a re-render of this component
@@ -31,8 +31,17 @@ function Dashboard(){
             </div>
             <textarea class="postform" rows="3" placeholder="How is your vacation going?"></textarea>
             <button type="submit" class="btn btn-default">Post</button>
+            <h2><strong>Here's what your friends have been up to:</strong></h2>
+            <div class="container">
             <div>
-                {post["post"]}
+                <strong>{user["first_name"]} {user["last_name"]}</strong>
+            </div>
+            <div>
+                {user["posts"]}
+            </div>
+            <div>
+                {user["date"]}
+            </div>
             </div>
         </div>
     )
