@@ -27,7 +27,7 @@ function CreatePost(props) {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" id="newpostheader">
         {<h2 className="App-title">New Post</h2>}
       </header>
 
