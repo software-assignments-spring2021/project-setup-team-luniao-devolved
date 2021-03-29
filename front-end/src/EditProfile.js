@@ -62,10 +62,10 @@ function EditProfile(){
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-1.5">
-                <a href="/ProfilePage">Confirm Changes</a>
+                <a href="/profile">Confirm Changes</a>
                 </div>
                 <div class="col-1">
-                <a href="/ProfilePage">Cancel</a>
+                <a href="/profile">Cancel</a>
                 </div>
             </div>
         </div>

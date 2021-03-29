@@ -136,7 +136,7 @@ function Recommendations(props) {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" id="recsHeader">
         {<h2 className="App-title">Recommendations</h2>}
       </header>
 
@@ -163,7 +163,7 @@ function Recommendations(props) {
             
             {showFlightForm} {showOtherForm}
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" href="/currenttrip">
               Submit
             </Button>
           </Form>

@@ -5,9 +5,6 @@ import './index.css';
 import Login from './Login';
 import GuestDashboard from './GuestDashboard';
 import SignUp from './SignUp';
-import CreatePost from './CreatePost';
-import Recommendations from './Recommendations';
-import PastTrips from './PastTrips';
 import Dashboard from './Dashboard';
 import NavBar from './components/NavBar';
 import NewTrip from './NewTrip';
@@ -19,6 +16,9 @@ import Friends from './Friends';
 import EditProfile from './EditProfile';
 import Preferences from './Preferences';
 import GuestNewTrip from './GuestNewTrip';
+import PastTrips from './PastTrips';
+import CreatePost from './CreatePost';
+import Recommendations from './Recommendations';
 
 ReactDOM.render(
   <Router>
@@ -30,6 +30,11 @@ ReactDOM.render(
           </Route>
 
           <Route exact path="/signup" component={SignUp}/>
+
+          <Route exact path="/dashboard"> 
+            <NavBar/>
+            <Dashboard/>
+          </Route>
 
           <Route exact path="/pasttrips">
             <NavBar/>

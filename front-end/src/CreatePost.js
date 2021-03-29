@@ -27,7 +27,7 @@ function CreatePost(props) {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" id="newpostheader">
         {<h2 className="App-title">New Post</h2>}
       </header>
 
@@ -48,7 +48,7 @@ function CreatePost(props) {
                 setPost(e.target.value);}}/>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" href='/dashboard'>
               Submit
             </Button>
           </Form>

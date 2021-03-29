@@ -4,6 +4,7 @@ import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const NewTrip = (props) => {
 
@@ -32,20 +33,35 @@ const NewTrip = (props) => {
             <Button href="/createpoll">Create Poll</Button>
             <Button href="/recommendations">Ask for Rec</Button>
           </div>
-
+          <br />
           <div>
             <p>To-do List:</p>
-            {/* Need help creating blank list and populating with items */}
-          </div>
+            <ListGroup>
+              <ListGroup.Item>
+                Edit to add
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
+              </ListGroup.Item>
 
+              <ListGroup.Item>
+
+                Edit to add
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
+              </ListGroup.Item>
+
+              <ListGroup.Item>
+                Edit to add
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
+              </ListGroup.Item>
+            </ListGroup>
+          </div>
+          <br />
           <div>
-            <Button href="#">Back</Button>
+            <Button href="/currenttrip">Add</Button>
           </div>
-
+          <br />
           <div>
-            <Button href="#">Add</Button>
+            <Button href="/dashboard">Back</Button>
           </div>
-
         </div>
 
       </section>
