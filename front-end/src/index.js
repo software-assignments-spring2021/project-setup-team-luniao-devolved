@@ -16,6 +16,9 @@ import Friends from './Friends';
 import EditProfile from './EditProfile';
 import Preferences from './Preferences';
 import GuestNewTrip from './GuestNewTrip';
+import PastTrips from './PastTrips';
+import CreatePost from './CreatePost';
+import Recommendations from './Recommendations';
 
 ReactDOM.render(
   <Router>
@@ -28,7 +31,10 @@ ReactDOM.render(
 
           <Route exact path="/signup" component={SignUp}/>
 
-          <Route exact path="/dashboard" component={Dashboard}/>
+          <Route exact path="/dashboard"> 
+            <NavBar/>
+            <Dashboard/>
+          </Route>
 
           <Route exact path="/pasttrips">
             <NavBar/>
