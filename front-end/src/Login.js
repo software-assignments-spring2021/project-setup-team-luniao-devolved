@@ -17,7 +17,7 @@ function Login() {
     <Row>
       <Col><img src="logo2.png" alt="logo"></img></Col>
       <Col>
-        <h3>Sign In</h3>
+        <div className="signin"><h3>Sign In</h3></div>
 
         <Form.Group className="form" controlId="email">
           <Form.Label>Email</Form.Label>

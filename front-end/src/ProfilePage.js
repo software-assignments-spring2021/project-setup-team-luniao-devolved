@@ -1,8 +1,7 @@
-import './App.css'
+import './ProfilePage.css'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-//import './User.js'
 
 function ProfilePage(){
     /*const [data, setData] = useState([]);
@@ -61,7 +60,23 @@ function ProfilePage(){
                     <div class="row">
                         {user["dob"]}
                     </div>
-                    <div class="row">
+                <div class="container">
+                    <div>
+                        <strong>Past Posts</strong>
+                    </div>
+                    <div>
+                        {user["posts"]}
+                    </div>
+                </div>
+                </div>
+            </header>
+        </div>
+    );
+}
+
+export default ProfilePage;
+
+/*                    <div class="row">
                         <a href="#">New Post</a>
                     </div>
                     <div class="row">
@@ -73,21 +88,8 @@ function ProfilePage(){
                     <div class="row">
                         <a href = "#">Edit Profile</a>
                     </div>
-                </div>
-                <div class="container">
-                    <div>
-                        <strong>Past Posts</strong>
-                    </div>
-                    <div>
-                        {user["posts"]}
-                    </div>
-                </div>
-            </header>
-        </div>
-    );
-}
-
-export default ProfilePage;
+                </div> 
+*/
 
 //Alt buttons
 /*

@@ -2,3 +2,13 @@
     margin: auto;
     width: 50%;
 }
+
+.dashboard {
+    text-align: center;
+}
+
+h3 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}

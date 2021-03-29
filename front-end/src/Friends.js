@@ -50,8 +50,8 @@ const Friends = (props) => {
           </div>
 
           <div>
-            <Button href="#">New Post</Button>
-            <Button href="#">Edit Profile</Button>
+            <Button href="/createpost">New Post</Button>
+            <Button href="/editprofile">Edit Profile</Button>
           </div>
 
         </div>

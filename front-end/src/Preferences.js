@@ -1,18 +1,8 @@
-import React, { useState } from 'react';
-
-
-
+import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from "react-router-dom";
-
-import './App.css';
-
-
 
 function Preferences() {
     return (

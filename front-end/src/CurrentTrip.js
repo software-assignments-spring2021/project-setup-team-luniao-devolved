@@ -7,11 +7,11 @@ const CurrentTrip = (props) => {
 
   return (
     <div className="CurrentTrip">
-      <h1>Current Trip</h1>
+      <h3>Current Trip</h3>
       <section className="main-content">
         <div class='flex-container'>
           <div>
-            <h1>Trip Title</h1>
+            <h4>Trip Title</h4>
           </div>
 
           <div>
@@ -41,10 +41,10 @@ const CurrentTrip = (props) => {
           </div>
 
           <div>
-            <Button href="#">Full Itinerary</Button>
+            <Button href="/itinerary">Full Itinerary</Button>
             <Button href="#">Add Friends</Button>
-            <Button href="#">Polls</Button>
-            <Button href="#">Recommendations</Button>
+            <Button href="/createpoll">Polls</Button>
+            <Button href="/recommendations">Recommendations</Button>
           </div>
 
           <div>
@@ -64,7 +64,6 @@ const CurrentTrip = (props) => {
               </ListGroup.Item>
 
               <ListGroup.Item>
-
                 Research tourist destinations
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
               </ListGroup.Item>

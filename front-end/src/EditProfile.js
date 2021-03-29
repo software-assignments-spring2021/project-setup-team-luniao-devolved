@@ -26,36 +26,36 @@ function EditProfile(){
     }, []);
 
     return(
-        <div classname="editprofile">
+        <div className="editprofile">
         <h1 class="text-center">
             Edit Profile
         </h1>
         <form>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputEmail1"></label>
             <input class="form-control" type="text" placeholder={user["first_name"]} aria-label="Disabled input example"  disabled></input>
         </div>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputEmail1"></label>
             <input class="form-control" type="text" placeholder={user["dob"]} aria-label="Disabled input example" disabled></input>
         </div>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputEmail1"></label>
             <input class="form-control" type="text" placeholder={user["email"]} aria-label="Disabled input example" disabled></input>
         </div>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputEmail1"></label>
             <input type="email" class="form-control" id="exampleInputEmail1" placeholder="New Email"></input>
         </div>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputPassword1"></label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="New Password"></input>
         </div>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputPassword1"></label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Reenter Password"></input>
         </div>
-        <div class="form-group">
+        <div className="formgroup">
             <label for="exampleInputFile">Upload Profile Picture</label>
             <input type="file" id="exampleInputFile"></input>
         </div>

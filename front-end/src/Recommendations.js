@@ -137,7 +137,6 @@ function Recommendations(props) {
   return (
     <div className="App">
       <header className="App-header">
-        <img src="logo2.png" className="logo" alt="logo" />
         {<h2 className="App-title">Recommendations</h2>}
       </header>
 
