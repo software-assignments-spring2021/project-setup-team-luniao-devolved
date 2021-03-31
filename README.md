@@ -26,7 +26,11 @@ All of us are working on this project because we love to travel, and this means 
 [See here.](CONTRIBUTING.md)
 
 ## Building and testing instructions
-We will update this once the project reaches this stage.
+1. Clone the repository onto the local machine via Visual Studio Code or the command line via
+>git clone https://github.com/agile-dev-assignments/project-setup-team-luniao-devolved
+2. To test the front-end, navigate to the `front-end` folder.  
+3. Run `npm install` to install all dependencies.  
+4. Run `npm start` to start the server.  
 
 ## Relevant links
 [User Experience Design](https://github.com/agile-dev-assignments/user-experience-design-team-luniao-devolved): app map, wireframes, and prototype
