@@ -75,5 +75,18 @@ app.get('/api/pasttrips', (req,res) => {
     .catch(err => next(err)) // pass any errors to express
 });
 
+/* Create Post Page Routes */
+app.post("/api/createpost", (req, res) => {
+    
+    // now we have the data
+    recForm = req.body;
+
+    // now, we would use mongoose to save the post data in a database. But to prove the back-end
+    // is working, I output the post data to the console of the server.
+    console.log(recForm);
+    res.end();
+    
+});
+
 // export the express app we created to make it available to other modules
 module.exports = app

@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './CreatePost.css';
 import { useState } from 'react';
+import axios from "axios";
 
 import { Alert, Form, Button} from 'react-bootstrap';
 
@@ -14,8 +15,28 @@ function CreatePost(props) {
 
   const handleSubmit= (e) => {
     console.log("Post submitted");
-    setShow(true);
     e.preventDefault();
+
+    let formData = new Object();
+    formData.post = post;
+    formData.title = title;
+    let formString = JSON.stringify(formData);    
+
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/createpost",
+      data: formString,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(function (response) {
+        //handle success
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+
+    setShow(true);
     // post is saved in `post`
   }
 
@@ -48,7 +69,7 @@ function CreatePost(props) {
                 setPost(e.target.value);}}/>
             </Form.Group>
 
-            <Button variant="primary" type="submit" href='/dashboard'>
+            <Button variant="primary" type="submit">
               Submit
             </Button>
           </Form>
