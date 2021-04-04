@@ -8,7 +8,14 @@ import axios from "axios";
 
 import { Alert, Form, Button, Card, Modal, Container, Row, Col} from 'react-bootstrap';
 
+
+
 function MyVerticallyCenteredModal(props) {
+
+  if (!props.recs.data) {
+    props.recs.data = [];
+  }
+
   return (
     <Modal
       {...props}
@@ -25,7 +32,7 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Body>
         <Container>
 
-          {props.recs.map(e => (
+          {props.recs.data.map(e => (
             <Row className="rec-row">
               <Card className="rec-card">
                 <Card.Body>
@@ -66,25 +73,48 @@ function Recommendations(props) {
 
   const handleSubmit= (e) => {
     console.log("Form values saved.");
-    setShow(true);
     e.preventDefault();
 
+    let formData = new Object();
+    formData.topic = topic;
+    formData.budget = budget;
+    formData.date = date;
+    let formString = JSON.stringify(formData);    
+  
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/recommendations",
+      data: formString,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(function (response) {
+        //handle success
+        console.log(response);
+        setRecsReceived(response);
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+
+
+    setShow(true);
     setModalShow(true)
     // submit values, and return recommendations from back-end
     // creating test data with Mockaroo API - no function to generate airport names so I generate country codes instead
 
-    async function fetchData() {
-      // axios is a 3rd-party module for fetching data from servers
-      const result = await axios(
-        // retrieving some mock data about animals for sale
-        "https://my.api.mockaroo.com/recs.json?key=8f9d78c0"
-      );
-      // set the state variable
-      // this will cause a re-render of this component
-      //setData(result.data);
-      setRecsReceived(result.data);
-    }
-    fetchData();
+    // async function fetchData() {
+    //   // axios is a 3rd-party module for fetching data from servers
+    //   const result = await axios(
+    //     // retrieving some mock data about animals for sale
+    //     "https://my.api.mockaroo.com/recs.json?key=8f9d78c0"
+    //   );
+    //   // set the state variable
+    //   // this will cause a re-render of this component
+    //   //setData(result.data);
+    //   setRecsReceived(result.data);
+    // }
+    // fetchData();
 
 
   }
@@ -163,7 +193,7 @@ function Recommendations(props) {
             
             {showFlightForm} {showOtherForm}
 
-            <Button variant="primary" type="submit" href="/currenttrip">
+            <Button variant="primary" type="submit" >
               Submit
             </Button>
           </Form>
