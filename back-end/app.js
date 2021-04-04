@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors());
 
-// we will put some server logic here later...
+// not making routes for Guest Dashboard because doesn't require any data from back end
 
 /* Recommendations Page Routes */
 app.post("/api/recommendations", (req, res) => {
