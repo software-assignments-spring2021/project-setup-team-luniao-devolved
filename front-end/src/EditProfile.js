@@ -1,8 +1,60 @@
 import './EditProfile.css'
 import axios from 'axios'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Component } from 'react';
+
+/*class UserForm extends Component{
+
+    constructor(){
+        super()
+        this.state = {
+            newEmail: '',
+            oldPW: '',
+            newPW: '',
+        };
+    }
+
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        const {newEmail, oldPW, newPW} = this.state;
+        
+        axios.post('http://localhost:4000/api/EditProfile', {newEmail, oldPW, newPW})
+            .then((result) => {
+
+            });
+    }
+
+}
+*/
+
 
 function EditProfile(){
+
+    constructor();{
+        super();
+        this.state = {
+            newEmail: '',
+            newPW: '',
+            rePW: '',
+        };
+    }
+
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        const {newEmail, newPW, rePW} = this.state;
+        
+        axios.post('http://localhost:4000/api/EditProfile', {newEmail, newPW, rePW})
+            .then((result) => {
+
+            });
+    }
 
     const [user, setData] = useState([]);
 
@@ -25,6 +77,7 @@ function EditProfile(){
       // the blank array below causes this callback to be executed only once on component load
     }, []);
 
+
     return(
         <div className="editprofile">
         <h1 class="text-center">
@@ -45,15 +98,15 @@ function EditProfile(){
         </div>
         <div className="formgroup">
             <label for="exampleInputEmail1"></label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="New Email"></input>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="New Email" value={newEmail} onChange={this.onChange}></input>
         </div>
         <div className="formgroup">
             <label for="exampleInputPassword1"></label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="New Password"></input>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="New Password" value={newPW} onChange={this.onChange}></input>
         </div>
         <div className="formgroup">
             <label for="exampleInputPassword1"></label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Reenter Password"></input>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Reenter Password" value={rePW} onChange={this.onChange}></input>
         </div>
         <div className="formgroup">
             <label for="exampleInputFile">Upload Profile Picture</label>
@@ -62,10 +115,10 @@ function EditProfile(){
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-1.5">
-                <a href="/profile">Confirm Changes</a>
+                <Link to="/Profile">Confirm Changes</Link>
                 </div>
                 <div class="col-1">
-                <a href="/profile">Cancel</a>
+                <Link to="/Profile">Cancel</Link>
                 </div>
             </div>
         </div>
