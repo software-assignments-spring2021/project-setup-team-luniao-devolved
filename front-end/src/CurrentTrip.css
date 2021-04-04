@@ -1,38 +1,54 @@
-.flex-container {
+
+/* .flex-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+  } */
+
+
+  .current-trip-btns {
+    display: flex;
+    justify-content: space-evenly;
   }
 
-.CurrentTrip {
-  text-align: center;
+  .current-trip-friends {
+    display: flex;
+    
+  }
+  .current-trip-friends p {
+    width: 20vw;
+  }
+
+.friends-list{
+  display: flex;
+  flex-direction: row;
+}
+  .friends-list li {
+    display: flex;
+    justify-content: space-evenly;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: right;
+    
+  }
+
+  .form-check-input {
+    justify-content: right;
+    margin-left: 100px;
+  }
+
+.current-trip-todo {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
 }
 
-h4 {
-  padding-top: 20px;
+.current-trip-todo p {
+  display: flex;
+  width: 20vw;
 }
 
-.CurrentTrip img {
-  max-width:5vw;
-  padding-top: 0;
+.current-trip-todo input{
+  justify-content: right;
 }
 
-.friends {
-  padding-bottom:5vh;
-}
-
-.links {
-  padding-bottom:5vh;
-}
-
-.form-check-input {
-  display:inline-block; 
-  position:absolute;
-  right: .5rem; 
-}
-
-.todo .list-group-item {
-  text-align: left;
-  padding: .75rem 1.75rem;
-}
