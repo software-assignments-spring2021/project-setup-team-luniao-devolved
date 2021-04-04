@@ -1,5 +1,17 @@
-.flex-container {
+/* .flex-container {
     display: flex;
     align-items: center;
     flex-direction: column;
+  } */
+
+
+  .new-trip-buttons{
+    display: flex;
+    justify-content: space-evenly;
   }
+
+  .new-trip-backbtn{
+    display: flex;
+    justify-content: space-between;
+  }
+
