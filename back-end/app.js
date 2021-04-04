@@ -23,7 +23,6 @@ app.get('/api/pasttrips', (req,res) => {
     .then(pastTrips => {
         
         res.json(pastTrips.data);
-        console.log(pastTrips.data)
         console.log('Retrieved past trips');
         }) // pass data along directly to client
     .catch(err => next(err)) // pass any errors to express
