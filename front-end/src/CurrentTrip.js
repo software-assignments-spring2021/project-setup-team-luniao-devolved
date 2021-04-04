@@ -3,6 +3,7 @@ import './CurrentTrip.css';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+
 const CurrentTrip = (props) => {
 
   return (

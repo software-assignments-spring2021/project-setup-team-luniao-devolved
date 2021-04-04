@@ -1,11 +1,4 @@
 
-/* .flex-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  } */
-
-
   .current-trip-btns {
     display: flex;
     justify-content: space-evenly;
