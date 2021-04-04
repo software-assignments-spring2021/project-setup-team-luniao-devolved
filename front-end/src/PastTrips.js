@@ -18,19 +18,34 @@ function PastTrips(props) {
     //using Mockaroo to get MongoDB ids, city names and dates for past trips from mock API
     //setPastTrips([["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"]])
 
-    async function fetchData() {
-      // axios is a 3rd-party module for fetching data from servers
-      const result = await axios(
-        // retrieving some mock data about animals for sale
-        "https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0"
-      );
-      // set the state variable
-      // this will cause a re-render of this component
-      //setData(result.data);
-      setPastTrips(result.data);
-    }
-    fetchData();
+  //   async function fetchData() {
+  //     // axios is a 3rd-party module for fetching data from servers
+
+      
+  //     // const result = await axios(
+  //     //   // retrieving some mock data about animals for sale
+  //     //   "https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0"
+  //     // );
+  //     // // set the state variable
+  //     // // this will cause a re-render of this component
+  //     // //setData(result.data);
+  //     // setPastTrips(result.data);
+  //   }
+  //   fetchData();
+
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/pasttrips",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(apiTrips => {
+      console.log(apiTrips.data)
+      setPastTrips(apiTrips.data);
+    });
+
   }, [])
+
 
   return (
     <div className="App">
