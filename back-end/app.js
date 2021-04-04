@@ -2,10 +2,14 @@
 const express = require("express") // CommonJS import style!
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
 const axios = require("axios")
+const cors = require('cors');
 
 const app = express() // instantiate an Express object
 
 app.use(morgan("dev"))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(cors());
 
 // we will put some server logic here later...
 
