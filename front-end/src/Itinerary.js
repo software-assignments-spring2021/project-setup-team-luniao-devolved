@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 
 function AddItem(props) {
+
     return (
         // Modal that contains the form for adding an itinerary item
         <Modal
@@ -62,14 +63,16 @@ function Itinerary(props) {
 
     useEffect(() => {
 
-        async function fetchData() {
-            const result = await axios(
-                // getting random words to fill sample itinerary items
-                "https://my.api.mockaroo.com/itinerary_items.json?key=f3836780"
-            );
-            setItin(result.data);
-        }
-        fetchData();
+        axios({
+            method: "GET",
+            url: "http://localhost:4000/itinerary",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(itinerary => {
+            console.log(itinerary.data)
+            setItin(itinerary.data);
+        });
     }, [])
 
     return (

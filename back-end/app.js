@@ -1,38 +1,58 @@
 // import and instantiate express
 const express = require("express") // CommonJS import style!
-const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
-const axios = require("axios")
-const cors = require('cors');
-
 const app = express() // instantiate an Express object
+const cors = require("cors");
+//const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const axios = require("axios");
+const PORT = process.env.PORT || 4000;
+const pollRoute = express.Router();
+const prefRoute = express.Router();
+const itinRoute = express.Router();
+const mongoose = require('mongoose');
 
-app.use(morgan("dev"))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+// let Poll = require('./poll.model.js');
+// let Pref = require('./preference.model.js')
+
 app.use(cors());
+//app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// we will put some server logic here later...
 
+app.use(morgan('tiny'));
+//app.use('/Cpoll, pollRoute');
+pollRoute.route('/').post(function (req, res) {
+    //console.log(p);
+    res.status(200).json({ 'p': 'added' });
+    console.log(req.body);
+    //res.send("heY!")
+    // poll.save()
+    //     .then(poll => {
+    //         res.status(200).json({'poll': 'poll created'});
+    //     })
+    // .catch(err => {
+    //     res.status(400).send('failed to create poll')
+    // })
+})
+prefRoute.route('/').post(function (req, res) {
+    res.status(200).json({ 'p': 'added' });
+    console.log(req.body);
+})
 
-/* Past Trips Page Routes */
-// An api endpoint that returns list of past trips
-app.get('/api/pasttrips', (req,res) => {
-
-    /*
-    Once mongoose is setup, we would retrieve the data of past trips stored by unique user id. However, as we don't
-    mongo set up, I just retrieve mock data from mockaroo.
-    */
+itinRoute.route('/').get(function (req, res) {
     axios
-    .get("https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0")
-    .then(pastTrips => {
-        
-        res.json(pastTrips.data);
-        console.log('Retrieved past trips');
-        }) // pass data along directly to client
-    .catch(err => next(err)) // pass any errors to express
+        .get("https://my.api.mockaroo.com/itinerary_items.json?key=f3836780")
+        .then(itin => {
+
+            res.json(itin.data);
+            console.log('Retrieved itinerary items');
+        })
+})
+app.use('/createpoll', pollRoute);
+app.use('/preferences', prefRoute);
+app.use('/itinerary', itinRoute);
+app.listen(PORT, () => {
+    console.log('server start on port 4000');
 });
-
-
-
 // export the express app we created to make it available to other modules
 module.exports = app
