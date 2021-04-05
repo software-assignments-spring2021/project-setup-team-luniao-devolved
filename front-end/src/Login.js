@@ -3,6 +3,7 @@ import {Form, Button, Container, Row, Col} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./Login.css";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,13 +13,44 @@ function Login() {
     return email.length > 0 && password.length > 0;
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const user = {email, password};
+
+    //let userForm = {};
+    //userForm.email = email;
+    //userForm.password = password;
+    //userForm = JSON.stringify(userForm);
+    /*
+    axios ({
+      method: "post",
+      url: "http://localhost:4000/api/login",
+      data: userForm,
+      headers: {"Content-Type": "application/json"}
+    }).then(function(res) {
+      console.log('hi');
+    }).catch(function(res) {
+      console.log(res);
+    });*/
+
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/login",
+      data: user
+    })
+    .then(() => console.log('user created'))
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
   return (
     <Container>
     <Row>
       <Col><img src="logo2.png" alt="logo"></img></Col>
       <Col>
         <div className="signin"><h3>Sign In</h3></div>
-
+        <Form onSubmit={e => handleSubmit(e)}>
         <Form.Group className="form" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email"/>
@@ -30,8 +62,9 @@ function Login() {
         </Form.Group>
 
         <Link to='/dashboard'>
-          <Button block size="lg" disabled={!checkTyped()}>Login</Button>
+          <Button type="submit" block size="lg" disabled={!checkTyped()}>Login</Button>
         </Link>
+        </Form>
         <h2>Don't have an account? <Link to='/signup'>Sign up today!</Link></h2>
         <h2>...Or continue as <Link to='/guestdashboard'>Guest</Link></h2>
       </Col>

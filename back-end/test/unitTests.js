@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 chai.use(require('chai-json-schema'));
 chai.should();
 
-describe("GET PASTTRIPS", () => {
+describe("GET PAST TRIPS", () => {
     // Test to get all students record
     it("should get past trips", (done) => {
          chai.request(app)

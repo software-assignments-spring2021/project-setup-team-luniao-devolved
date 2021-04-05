@@ -3,13 +3,13 @@ const express = require("express") // CommonJS import style!
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
 const axios = require("axios")
 const cors = require('cors');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
 const app = express() // instantiate an Express object
 
 app.use(morgan("dev"));
-app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }))
+//app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(cors());
 
@@ -19,7 +19,14 @@ app.use(cors());
 app.post("/api/login", (req, res) => {
     // currently, we're not using mongoose so cannot check whether the user is in the database
     // printing out the inputted user to prove back-end is working as of now
-    const users = req.body;
+    let users = []
+
+    const user = {
+        email: req.body.email,
+        password: req.body.password
+    };
+    
+    users.push(user);
     console.log(users);
 });
 

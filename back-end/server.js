@@ -11,4 +11,4 @@ const close = () => {
   listener.close()
 }
 
-module.exports = listener;;
+module.exports = listener;
