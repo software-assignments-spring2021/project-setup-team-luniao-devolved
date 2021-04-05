@@ -27,7 +27,7 @@ app.post("/api/login", (req, res) => {
     };
 
     users.push(user);
-    console.log(users);
+    console.log(user);
 });
 
 /* Sign Up Page Router */
