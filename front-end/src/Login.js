@@ -17,21 +17,6 @@ const Login = () => {
     //e.preventDefault();
     const user = {email, password};
     console.log(user);
-    //let userForm = {};
-    //userForm.email = email;
-    //userForm.password = password;
-    //userForm = JSON.stringify(userForm);
-    /*
-    axios ({
-      method: "post",
-      url: "http://localhost:4000/api/login",
-      data: userForm,
-      headers: {"Content-Type": "application/json"}
-    }).then(function(res) {
-      console.log('hi');
-    }).catch(function(res) {
-      console.log(res);
-    });*/
 
     axios({
       method: "post",
