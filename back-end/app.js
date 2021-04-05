@@ -30,6 +30,22 @@ app.post("/api/login", (req, res) => {
     console.log(users);
 });
 
+/* Sign Up Page Router */
+app.post("/api/signup", (req, res) => {
+    // currently, we're not saving new users to the database
+    // prints out the inputted new user to prove back-end is working as of now
+    let users = [];
+
+    const user = {
+        fullname: req.body.fullname,
+        email: req.body.email,
+        password: req.body.password
+    };
+
+    users.push(user);
+    console.log(users);
+})
+
 /* Recommendations Page Routes */
 app.post("/api/recommendations", (req, res) => {
     
