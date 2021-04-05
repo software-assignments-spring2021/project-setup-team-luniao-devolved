@@ -25,7 +25,7 @@ app.post("/api/login", (req, res) => {
         email: req.body.email,
         password: req.body.password
     };
-    
+
     users.push(user);
     console.log(users);
 });
