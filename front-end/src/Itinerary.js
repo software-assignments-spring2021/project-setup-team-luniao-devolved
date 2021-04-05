@@ -12,7 +12,26 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 
 function AddItem(props) {
+    const [type, setType] = useState('');
+    const [name, setName] = useState('');
+    const [location, setLocation] = useState('');
+    const [time, setTime] = useState('');
 
+    const onSubmit = (e) => {
+        console.log("data saved");
+        e.preventDefault();
+        const itinItem = {
+            item_name: { name },
+            item_time: { time },
+            item_type: { type },
+            item_location: { location }
+
+
+        };
+        axios.post('http://localhost:4000/itinerary', itinItem)
+            .then(res => console.log(res.data));
+
+    }
     return (
         // Modal that contains the form for adding an itinerary item
         <Modal
@@ -26,30 +45,30 @@ function AddItem(props) {
             </Modal.Header>
 
             <Modal.Body>
-                <Form>
+                <Form onSubmit={e => { onSubmit(e) }}>
                     <Form.Group controlId="option1.ControlTextarea">
                         <Form.Label>Type (Eg. Hotel, Flight, Tour)</Form.Label>
-                        <Form.Control as="textarea" rows={1} />
+                        <Form.Control as="textarea" value={type} onChange={e => { setType(e.target.value) }} rows={1} />
                     </Form.Group>
                     <Form.Group controlId="option1.ControlTextarea">
                         <Form.Label>Name (Eg. Marriot)</Form.Label>
-                        <Form.Control as="textarea" rows={1} />
+                        <Form.Control as="textarea" value={name} onChange={e => { setName(e.target.value) }} rows={1} />
                     </Form.Group>
                     <Form.Group controlId="message.ControlTextarea">
                         <Form.Label>Location</Form.Label>
-                        <Form.Control as="textarea" rows={1} />
+                        <Form.Control as="textarea" value={location} onChange={e => { setLocation(e.target.value) }} rows={1} />
                     </Form.Group>
 
                     <Form.Group controlId="option1.ControlTextarea">
                         <Form.Label>Time</Form.Label>
-                        <Form.Control as="textarea" rows={1} />
+                        <Form.Control as="textarea" value={time} onChange={e => { setTime(e.target.value) }} rows={1} />
                     </Form.Group>
+                    <Button onClick={props.onHide}>Close</Button>
+                    <Button type="submit" onClick={props.onHide}>Save</Button>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 {/* Buttons hide the modal on click*/}
-                <Button onClick={props.onHide}>Close</Button>
-                <Button onClick={props.onHide}>Save</Button>
 
             </Modal.Footer>
         </Modal>
