@@ -19,15 +19,14 @@ app.use(cors());
 app.post("/api/login", (req, res) => {
     // currently, we're not using mongoose so cannot check whether the user is in the database
     // printing out the inputted user to prove back-end is working as of now
-    let users = []
 
     const user = {
         email: req.body.email,
         password: req.body.password
     };
 
-    users.push(user);
-    console.log(user);
+    //console.log(user);
+    res.json(user);
 });
 
 /* Sign Up Page Router */

@@ -5,8 +5,9 @@ const { expect, assert } = require('chai');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 
-
 const app = require("../server") // load up the web server
+
+const request = require('request');
 
 // Configure chai
 chai.use(chaiHttp);
@@ -26,44 +27,31 @@ describe("GET PAST TRIPS", () => {
      });
 });
 
-/*
-let email = 'aa@aa.com';
-let password = 'test';
-
-describe('GET LOGIN INFO', function () {
-  it('should output the logged in user', async() => {
-    const response = await chai.request(app).post('/api/login')
-    .send({
-      email: 'aa@aa.com',
-      password: 'test'
-    }).end(function(err, res) {
-      if (err) {
-        throw err;
-      }
-      assert.ok(res);
-      assert.ok(res.body);
-      assert.equal(res.status, 200);
+/* unit test for /api/login */
+describe("GET LOGIN INFO", () => {
+  it("should send an object with status 200", (done) => {
+    const obj = {email: 'aa@aa.com', password:'test'};
+    chai.request(app)
+    .post('/api/login')
+    .send(obj)
+    .end((err,res) => {
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      res.body.should.have.property('email');
+      res.body.should.have.property('password');
       done();
     });
-    //expect(response.body).to.be.an('object');
-    //expect(response.body.data).to.have.property('email');
-    //expect(response.body.data).to.have.property('password');
   });
-});
-*/
 
-const delay = require('delay');
-
-describe("GET LOGIN INFO", () => {
-  // Test to get all students record
-    it("should get user info", async () => {
-      chai.request(app)
-          .post('/api/login')
-          .send({email: "aa@aa.com", password:'test'})
-          .end((err, res) => {  
-            res.body.should.be.an('object');
-            done();
-           });
-      await delay(1000)
+  it("should send an email and password", (done) => {
+    const obj = {email: 'aa@aa.com', password:'test'};
+    chai.request(app)
+    .post('/api/login')
+    .send(obj)
+    .end((err,res) => {
+      res.body.should.have.property('email');
+      res.body.should.have.property('password');
+      done();
     });
+  });
 });
