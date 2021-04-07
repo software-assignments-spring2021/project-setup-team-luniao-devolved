@@ -47,4 +47,7 @@ The following is required for setting up the local development environment:
 1. Clone all files following the instructions above.
 2. To test the front-end, navigate to the `front-end` folder.  
 3. Run `npm install` to install all dependencies.  
-4. Run `npm start` to start the server.  
+4. Run `npm start` to start the server.
+5. To test the back-end, open another terminal and navigate to the `back-end` folder while #4 is still running.
+6. Run `npm install` to install all dependencies.
+7. Run `npm start` to run the back-end.
