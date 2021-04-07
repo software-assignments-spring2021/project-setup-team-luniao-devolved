@@ -19,22 +19,20 @@ app.use(cors());
 app.post("/api/login", (req, res) => {
     // currently, we're not using mongoose so cannot check whether the user is in the database
     // printing out the inputted user to prove back-end is working as of now
-    let users = []
 
     const user = {
         email: req.body.email,
         password: req.body.password
     };
 
-    users.push(user);
-    console.log(users);
+    console.log(user);
+    res.json(user);
 });
 
 /* Sign Up Page Router */
 app.post("/api/signup", (req, res) => {
     // currently, we're not saving new users to the database
     // prints out the inputted new user to prove back-end is working as of now
-    let users = [];
 
     const user = {
         fullname: req.body.fullname,
@@ -42,8 +40,8 @@ app.post("/api/signup", (req, res) => {
         password: req.body.password
     };
 
-    users.push(user);
-    console.log(users);
+    console.log(user);
+    res.json(user);
 })
 
 /* Recommendations Page Routes */

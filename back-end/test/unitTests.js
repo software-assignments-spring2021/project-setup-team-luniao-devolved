@@ -1,11 +1,13 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
+const { expect, assert } = require('chai');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 
-
 const app = require("../server") // load up the web server
+
+const request = require('request');
 
 // Configure chai
 chai.use(chaiHttp);
@@ -23,4 +25,59 @@ describe("GET PAST TRIPS", () => {
                 done();
               });
      });
+});
+
+/* unit test for /api/login */
+describe("GET LOGIN INFO", () => {
+  it("should send an object with status 200", (done) => {
+    const obj = {email: 'aa@aa.com', password:'test'};
+    chai.request(app)
+    .post('/api/login')
+    .send(obj)
+    .end((err,res) => {
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      done();
+    });
+  });
+
+  it("should send an email and password", (done) => {
+    const obj = {email: 'aa@aa.com', password:'test'};
+    chai.request(app)
+    .post('/api/login')
+    .send(obj)
+    .end((err,res) => {
+      res.body.should.have.property('email');
+      res.body.should.have.property('password');
+      done();
+    });
+  });
+});
+
+/* unit test for /api/signup */
+describe("GET SIGN UP INFO", () => {
+  it("should send an object with status 200", (done) => {
+    const obj = {fullname: 'Kaylee Park', email: 'aa@aa.com', password:'test'};
+    chai.request(app)
+    .post('/api/signup')
+    .send(obj)
+    .end((err,res) => {
+      res.should.have.status(200);
+      res.body.should.be.an('object');
+      done();
+    });
+  });
+
+  it("should send full name, email and password", (done) => {
+    const obj = {fullname: 'Kaylee Park', email: 'aa@aa.com', password:'test'};
+    chai.request(app)
+    .post('/api/signup')
+    .send(obj)
+    .end((err,res) => {
+      res.body.should.have.property('fullname');
+      res.body.should.have.property('email');
+      res.body.should.have.property('password');
+      done();
+    });
+  });
 });
