@@ -13,7 +13,7 @@ import Cpoll from './Cpoll';
 import Itinerary from './Itinerary';
 import ProfilePage from './ProfilePage';
 import Friends from './Friends';
-import EditProfile from './EditProfile';
+//import EditProfile from './EditProfile';
 import Preferences from './Preferences';
 import GuestNewTrip from './GuestNewTrip';
 import PastTrips from './PastTrips';
@@ -57,10 +57,10 @@ ReactDOM.render(
             <CurrentTrip/>
           </Route>
 
-          <Route exact path="/editprofile">
+          {/* <Route exact path="/editprofile">
             <NavBar/>
             <EditProfile/>
-          </Route>
+          </Route> */}
 
           <Route exact path="/createpost">
             <NavBar/>
