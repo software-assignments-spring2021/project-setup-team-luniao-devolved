@@ -1,9 +1,11 @@
 // import and instantiate express
 const express = require("express") // CommonJS import style!
+
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
 const axios = require("axios")
 const cors = require('cors');
-//const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+//const bodyParser = require("body-parser");
 
 const app = express() // instantiate an Express object
 
@@ -118,6 +120,35 @@ app.post("/api/createpost", (req, res) => {
     res.end();
     
 });
+
+/* Preferences Page Routes */
+const pollRoute = express.Router();
+const prefRoute = express.Router();
+
+// let Poll = require('./poll.model.js');
+// let Pref = require('./preference.model.js')
+//app.use('/Cpoll, pollRoute');
+
+pollRoute.route('/').post(function (req, res) {
+    //console.log(p);
+    res.status(200).json({ 'p': 'added' });
+    console.log(req.body);
+    //res.send("heY!")
+    // poll.save()
+    //     .then(poll => {
+    //         res.status(200).json({'poll': 'poll created'});
+    //     })
+    // .catch(err => {
+    //     res.status(400).send('failed to create poll')
+    // })
+})
+prefRoute.route('/').post(function (req, res) {
+    res.status(200).json({ 'p': 'added' });
+    console.log(req.body);
+})
+app.use('/createpoll', pollRoute);
+app.use('/preferences', prefRoute);
+
 
 // export the express app we created to make it available to other modules
 module.exports = app
