@@ -4,7 +4,8 @@ const app = express() // instantiate an Express object
 const cors = require("cors");
 //const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const PORT = process.env.PORT || 4000;
+
+
 const pollRoute = express.Router();
 const prefRoute = express.Router();
 const mongoose = require('mongoose');
@@ -38,8 +39,6 @@ prefRoute.route('/').post(function (req, res) {
 })
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
-app.listen(PORT, () => {
-    console.log('server start on port 4000');
-});
+
 // export the express app we created to make it available to other modules
 module.exports = app
