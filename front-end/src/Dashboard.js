@@ -7,6 +7,8 @@ function Dashboard(){
     const [user, setData] = useState([]);
 
     useEffect(() => {
+
+    /*
       // a nested function that fetches the data
       async function fetchData() {
         // axios is a 3rd-party module for fetching data from servers
@@ -23,6 +25,18 @@ function Dashboard(){
       // fetch the data!
       fetchData();
       // the blank array below causes this callback to be executed only once on component load
+      */
+
+      axios({
+        method: "GET",
+        url: "http://localhost:4000/api/Dashboard",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(post => {
+            setData(post.data);
+      });
+
     }, []);
     return(
         <div className="dashboard">
