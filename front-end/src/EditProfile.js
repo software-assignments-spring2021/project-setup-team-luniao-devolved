@@ -32,7 +32,12 @@ import { useEffect, useState, Component } from 'react';
 
 
 function EditProfile(){
-
+//useState - email, password 
+//const [currentId, setCurrentId] = useState(0);
+const [newEmail, setEmail] = useState("");
+const [newPW, setPW] = useState("");
+const [newPFP, setSelectedFile] = useState(null);
+/*
     constructor();{
         super();
         this.state = {
@@ -41,19 +46,27 @@ function EditProfile(){
             rePW: '',
         };
     }
+*/
+//one onChange for each- pw and email
+    onChangeEmail = (e) => {
+        this.setEmail({[e.target.name]: e.target.value});
+    }
 
-    onChange = (e) => {
-        this.setState({[e.target.name]: e.target.value});
+    onChangePW = (e) => {
+        this.setPW({[e.target.name]: e.target.value});
     }
 
     onSubmit = (e) => {
-        e.preventDefault()
-        const {newEmail, newPW, rePW} = this.state;
-        
-        axios.post('http://localhost:4000/api/EditProfile', {newEmail, newPW, rePW})
+        e.preventDefault() 
+        const {newEmail, newPW, newPFP} = this.state;
+        //check that the passwords are the same, send only one password
+        if (newPW === rePW){
+        axios.post('http://localhost:4000/api/EditProfile', {newEmail, newPW, newPFP})
             .then((result) => {
 
             });
+        }
+            
     }
 
     const [user, setData] = useState([]);
@@ -98,18 +111,18 @@ function EditProfile(){
         </div>
         <div className="formgroup">
             <label for="exampleInputEmail1"></label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="New Email" value={newEmail} onChange={this.onChange}></input>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="New Email" value={newEmail} onChange={this.onChangeEmail}></input>
         </div>
         <div className="formgroup">
             <label for="exampleInputPassword1"></label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="New Password" value={newPW} onChange={this.onChange}></input>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="New Password" value={newPW} onChange={this.onChangePW}></input>
         </div>
         <div className="formgroup">
             <label for="exampleInputPassword1"></label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Reenter Password" value={rePW} onChange={this.onChange}></input>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Reenter Password" value={rePW}></input>
         </div>
         <div className="formgroup">
-            <label for="exampleInputFile">Upload Profile Picture</label>
+            <label for="exampleInputFile" onChange={(e) => setSelectedFile(e.target.files[0])} >Upload Profile Picture</label>
             <input type="file" id="exampleInputFile"></input>
         </div>
         <div class="container">
