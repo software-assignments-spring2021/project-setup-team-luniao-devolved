@@ -149,6 +149,19 @@ prefRoute.route('/').post(function (req, res) {
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 
+//View Profile routes
+app.get("/api/ProfilePage", (req, res) => {
+    //Without a database this is just linking to mockaroo
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    .then(user => {
+        //Map the response onto the User data
+        res.json(user.data);
+        console.log('Retrieved User data');
+        })
+    .catch(err => next(err)) 
+
+})
 
 // export the express app we created to make it available to other modules
 module.exports = app
