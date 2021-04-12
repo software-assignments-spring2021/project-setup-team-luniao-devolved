@@ -149,6 +149,18 @@ prefRoute.route('/').post(function (req, res) {
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 
+app.get('/api/friends', (req,res) => {
+    // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    .then(friends => {
+        
+        res.json(friends.data);
+        console.log('Retrieved friends list');
+        }) 
+    .catch(err => next(err)) 
+});
+
 
 // export the express app we created to make it available to other modules
 module.exports = app
