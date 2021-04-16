@@ -3,25 +3,28 @@ import {React, useState} from 'react';
 import './Friends.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/ListGroup';
+import axios from 'axios'
+import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 
 
-const Friends = (props) => {
+function Friends() {
 
 
-const setData = useState([]);
-  // not sure about the axios stuff but this was similar to what another person did 
-  axios({
-    method: "GET",
-    url: "http://localhost:4000/api/friends",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(post => {
-        setData(post.data);
-  });
+  const [user, setData] = useState([]);
 
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/friends",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(user => {
+      setData(user.data);
+    });
+
+    }, []);
   return (
     <div className="Friends">
       <h1>Friends</h1>

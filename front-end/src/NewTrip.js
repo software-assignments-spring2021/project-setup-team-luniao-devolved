@@ -4,30 +4,65 @@ import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import useState from 'react';
 import axios from 'axios'
+import { useEffect, useState } from 'react';
+
+function NewTrip() {
+
+  const [user, setData] = useState([]);
+
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://localhost:4000/api/NewTrip",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   }).then(user => {
+  //     setData(user.data);
+  //   });
+
+  //   }, []);
+
+  // //const [newTripTitle, setTripTitle] = useState("");
+  // //one onChange for trip title - not sure how to handle other inputs for friends/preferences etc
+  // const onChangeTripTitle = (e) => {
+  //   this.setTripTitle({ [e.target.name]: e.target.value });
+  // }
+
+  // const onSubmit = (e) => {
+  //   e.preventDefault()
+  //   const { newTripTitle } = this.state;
+  //   // send new trip data then
+  //   axios.post('http://localhost:4000/api/newTrip', { newTripTitle })
+  //     .then((result) => {
+
+  //     });
+  // }
+
+  // const [user, setData] = useState([]);
+
+  // useEffect(() => {
+  //   // a nested function that fetches the data
+  //   async function fetchData() {
+  //     // axios is a 3rd-party module for fetching data from servers
+  //     const result = await axios(
+  //       // retrieving some mock data about users
+  //       "https://my.api.mockaroo.com/users.json?key=4e1c2150"
+  //     );
+  //     // set the state variable
+  //     // this will cause a re-render of this component
+  //     setData(result.data);
+  //     console.log(result.data)
+  //   }
+
+  //   // fetch the data!
+  //   fetchData();
+  //   // the blank array below causes this callback to be executed only once on component load
+  // }, []);
 
 
-//one onChange for trip title - not sure how to handle other inputs for friends/preferences etc
-const onChangeTripTitle = (e) => {
-  this.setTripTitle({[e.target.name]: e.target.value});
-}
-
-const onSubmit = (e) => {
-  e.preventDefault() 
-  const {newTripTitle} = this.state;
-  // send new trip data then
-  axios.post('http://localhost:4000/api/newTrip', {newTripTitle})
-      .then((result) => {
-
-      });
-
-
-}
-
-const NewTrip = (props) => {
-
-  const [newTripTitle, setTripTitle] = useState("");
+  // const [newTripTitle, setTripTitle] = useState("");
   return (
     <div className="NewTrip">
 
@@ -44,15 +79,15 @@ const NewTrip = (props) => {
                 placeholder="Trip Name"
                 aria-label="Trip Name"
                 aria-describedby="basic-addon2"
-                value={newTripTitle} onChange={this.onChangeTripTitle}
+                //value={newTripTitle} onChange={this.onChangeTripTitle}
               />
             </InputGroup>
           </div>
 
           <div className="new-trip-buttons">
-              <Button href="#">Add Friends</Button>
-              <Button href="/CPoll">Create Poll</Button>
-              <Button href="#">Ask for Rec</Button>
+            <Button href="#">Add Friends</Button>
+            <Button href="/CPoll">Create Poll</Button>
+            <Button href="#">Ask for Rec</Button>
 
           </div>
 

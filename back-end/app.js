@@ -196,11 +196,15 @@ app.get('/api/currentTrip', (req,res) => {
 
 
 app.post('/api/newTrip', (req,res, next) => {
-    response = {
-        // to do once we set up db ? 
-    }
-    console.log('New Trip Created!')
-    .catch(err => next(err))
+    //Without a database this is just linking to mockaroo
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    .then(user => {
+        //Map the response onto the User data
+        res.json(user.data);
+        console.log('New trip');
+        })
+    .catch(err => next(err)) 
 });
 
 
