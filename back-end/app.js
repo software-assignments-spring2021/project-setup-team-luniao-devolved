@@ -48,6 +48,24 @@ app.post("/api/signup", (req, res) => {
     res.json(user);
 });
 
+/* Past Trips Page Routes */
+// An api endpoint that returns list of past trips
+app.get('/api/pasttrips', (req,res) => {
+
+    /*
+    Once mongoose is setup, we would retrieve the data of past trips stored by unique user id. However, as we don't
+    mongo set up, I just retrieve mock data from mockaroo.
+    */
+    axios
+    .get("https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0")
+    .then(pastTrips => {
+        
+        res.json(pastTrips.data);
+        console.log('Retrieved past trips');
+        }) // pass data along directly to client
+    .catch(err => next(err)) // pass any errors to express
+});
+
 /* Recommendations Page Routes */
 app.post("/api/recommendations", (req, res) => {
     
@@ -95,6 +113,7 @@ app.post("/api/recommendations", (req, res) => {
 
 app.use(morgan('tiny'));//for logging incoming requests
 //app.use('/Cpoll, pollRoute');
+
 
 /* Create Post Page Routes */
 app.post("/api/createpost", (req, res) => {
@@ -233,6 +252,8 @@ app.post('/api/EditProfile', (req,res, next) => {
     .catch(err => next(err))
 
 });
+
+
 /*
 //Upload picture route
 //configure storage
