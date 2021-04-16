@@ -4,6 +4,8 @@ import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
+import useState from 'react';
+import axios from 'axios'
 
 const [newTripTitle, setTripTitle] = useState("");
 

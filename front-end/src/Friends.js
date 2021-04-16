@@ -4,6 +4,9 @@ import './Friends.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+
+const setData = useState([]);
 
 const Friends = (props) => {
 

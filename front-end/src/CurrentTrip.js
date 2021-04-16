@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react'
 import './CurrentTrip.css'
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import axios from 'axios';
 
+const setData = useState([]);
 
   // not sure about the axios stuff but this was similar to what another person did 
   axios({
