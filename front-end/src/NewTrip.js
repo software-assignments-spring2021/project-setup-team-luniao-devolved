@@ -4,64 +4,66 @@ import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import ListGroup from 'react-bootstrap/ListGroup';
+
+const [newTripTitle, setTripTitle] = useState("");
+
+//one onChange for trip title - not sure how to handle other inputs for friends/preferences etc
+onChangeTripTitle = (e) => {
+  this.setTripTitle({[e.target.name]: e.target.value});
+}
+
+onSubmit = (e) => {
+  e.preventDefault() 
+  const {newTripTitle} = this.state;
+  // send new trip data then
+  axios.post('http://localhost:4000/api/newTrip', {newTripTitle})
+      .then((result) => {
+
+      });
+
+
+}
 
 const NewTrip = (props) => {
 
   return (
     <div className="NewTrip">
-      <h3>New Trip</h3>
-      <section className="main-content">
 
+      <section className="main-content">
+        <h1>New Trip</h1>
         <div class='flex-container'>
           <div>
 
           </div>
 
-          <div>
+          <div className="new-trip-inputname">
             <InputGroup className="mb-3">
               <FormControl
                 placeholder="Trip Name"
                 aria-label="Trip Name"
                 aria-describedby="basic-addon2"
+                value={newTripTitle} onChange={this.onChangeTripTitle}
               />
             </InputGroup>
           </div>
 
-          <div>
-            <Button href="/addfriends">Add Friends</Button>
-            <Button href="/createpoll">Create Poll</Button>
-            <Button href="/recommendations">Ask for Rec</Button>
+          <div className="new-trip-buttons">
+              <Button href="#">Add Friends</Button>
+              <Button href="/CPoll">Create Poll</Button>
+              <Button href="#">Ask for Rec</Button>
+
           </div>
-          <br />
+
           <div>
             <p>To-do List:</p>
-            <ListGroup>
-              <ListGroup.Item>
-                Edit to add
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-
-                Edit to add
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                Edit to add
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-              </ListGroup.Item>
-            </ListGroup>
+            {/* Need help creating blank list and populating with items */}
           </div>
-          <br />
-          <div>
-            <Button href="/currenttrip">Add</Button>
+
+          <div className="new-trip-backbtn">
+            <Button href="#">Back</Button>
+            <Button href="#">Add</Button>
           </div>
-          <br />
-          <div>
-            <Button href="/dashboard">Back</Button>
-          </div>
+
         </div>
 
       </section>

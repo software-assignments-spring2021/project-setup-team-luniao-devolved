@@ -3,6 +3,19 @@ import React, { useState, useEffect } from 'react'
 import './CurrentTrip.css'
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+
+
+  // not sure about the axios stuff but this was similar to what another person did 
+  axios({
+    method: "GET",
+    url: "http://localhost:4000/api/currentTrip",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(post => {
+        setData(post.data);
+  });
+
 const CurrentTrip = (props) => {
 
   return (
