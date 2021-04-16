@@ -145,6 +145,19 @@ app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 
 
+app.get('/api/currentTrip', (req,res) => {
+    // same as for the mockaroo data for friends...
+    // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    .then(currentTrip => {
+
+        res.json(currentTrip.data);
+        console.log('Retrieved current trip!');
+        }) 
+    .catch(err => next(err)) 
+
+
 app.post('/api/newTrip', (req,res, next) => {
 
     response = {
@@ -188,6 +201,8 @@ app.use('/itinerary', itinRoute);
 app.listen(PORT, () => {
     console.log('server start on port 4000');
 
+
 });
+
 // export the express app we created to make it available to other modules
 module.exports = app
