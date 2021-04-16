@@ -144,6 +144,19 @@ prefRoute.route('/').post(function (req, res) {
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 
+//Dashboard Routes
+//Here we send a get request to display the recent posts from the users' friends
+app.get("/api/Dashboard", (req, res) => {
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
+    .then(post => {
+
+        res.json(post.data);
+        console.log('Posts received')
+    })
+    .catch(err => next(err))
+})
+
 //View Profile routes
 app.get("/api/ProfilePage", (req, res) => {
     //Without a database this is just linking to mockaroo
