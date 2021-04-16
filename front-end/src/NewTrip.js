@@ -7,14 +7,13 @@ import FormControl from 'react-bootstrap/FormControl';
 import useState from 'react';
 import axios from 'axios'
 
-const [newTripTitle, setTripTitle] = useState("");
 
 //one onChange for trip title - not sure how to handle other inputs for friends/preferences etc
-onChangeTripTitle = (e) => {
+const onChangeTripTitle = (e) => {
   this.setTripTitle({[e.target.name]: e.target.value});
 }
 
-onSubmit = (e) => {
+const onSubmit = (e) => {
   e.preventDefault() 
   const {newTripTitle} = this.state;
   // send new trip data then
@@ -28,6 +27,7 @@ onSubmit = (e) => {
 
 const NewTrip = (props) => {
 
+  const [newTripTitle, setTripTitle] = useState("");
   return (
     <div className="NewTrip">
 

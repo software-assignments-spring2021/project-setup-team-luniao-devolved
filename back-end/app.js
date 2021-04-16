@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const app = express() // instantiate an Express object
 //const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
 const itinRoute = express.Router();//router for itinerary
 

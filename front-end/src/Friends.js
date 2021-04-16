@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState} from 'react';
 // import logo from './logo.svg';
 import './Friends.css';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -6,10 +6,11 @@ import Image from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-const setData = useState([]);
 
 const Friends = (props) => {
 
+
+const setData = useState([]);
   // not sure about the axios stuff but this was similar to what another person did 
   axios({
     method: "GET",

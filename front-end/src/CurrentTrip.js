@@ -5,7 +5,10 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
 
-const setData = useState([]);
+
+const CurrentTrip = (props) => {
+  const setData = useState([]);
+
 
   // not sure about the axios stuff but this was similar to what another person did 
   axios({
@@ -17,9 +20,7 @@ const setData = useState([]);
   }).then(post => {
         setData(post.data);
   });
-
-const CurrentTrip = (props) => {
-
+  
   return (
     <div className="CurrentTrip">
       <h3>Current Trip</h3>
