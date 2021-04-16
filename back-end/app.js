@@ -6,15 +6,10 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express() // instantiate an Express object
-const cors = require("cors");
 //const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const axios = require("axios");
 const PORT = process.env.PORT || 4000;
-const pollRoute = express.Router();//router for createpoll
-const prefRoute = express.Router();//router for preferences
+
 const itinRoute = express.Router();//router for itinerary
-const mongoose = require('mongoose');//for future use
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }))
@@ -51,7 +46,7 @@ app.post("/api/signup", (req, res) => {
 
     console.log(user);
     res.json(user);
-})
+});
 
 /* Recommendations Page Routes */
 app.post("/api/recommendations", (req, res) => {
@@ -95,7 +90,7 @@ app.post("/api/recommendations", (req, res) => {
             console.error(error);
         });
     }
-  })
+});
 
 
 app.use(morgan('tiny'));//for logging incoming requests
@@ -134,14 +129,12 @@ pollRoute.route('/').post(function (req, res) {
     // .catch(err => {
     //     res.status(400).send('failed to create poll')
     // })
-})
+});
 
 prefRoute.route('/').post(function (req, res) {
     res.status(200).json({ 'p': 'added' });
     console.log(req.body);
-})
-app.use('/createpoll', pollRoute);
-app.use('/preferences', prefRoute);
+});
 
 //Dashboard Routes
 //Here we send a get request to display the recent posts from the users' friends
@@ -154,7 +147,7 @@ app.get("/api/Dashboard", (req, res) => {
         console.log('Posts received')
     })
     .catch(err => next(err))
-})
+});
 
 //View Profile routes
 app.get("/api/ProfilePage", (req, res) => {
@@ -168,7 +161,7 @@ app.get("/api/ProfilePage", (req, res) => {
         })
     .catch(err => next(err)) 
 
-})
+});
 
 app.get('/api/currentTrip', (req,res) => {
     // same as for the mockaroo data for friends...
@@ -176,20 +169,20 @@ app.get('/api/currentTrip', (req,res) => {
     axios
     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
     .then(currentTrip => {
-
         res.json(currentTrip.data);
         console.log('Retrieved current trip!');
-        }) 
-    .catch(err => next(err)) 
+        })
+    .catch(err => next(err))
+});
 
 
 app.post('/api/newTrip', (req,res, next) => {
-
     response = {
         // to do once we set up db ? 
     }
     console.log('New Trip Created!')
     .catch(err => next(err))
+});
 
 
 app.get('/api/friends', (req,res) => {
@@ -197,7 +190,6 @@ app.get('/api/friends', (req,res) => {
     axios
     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
     .then(friends => {
-        
         res.json(friends.data);
         console.log('Retrieved friends list');
         }) 
@@ -209,22 +201,21 @@ itinRoute.route('/').get(function (req, res) {
     axios//currently obtaining items from Mockaroo in place of database
         .get("https://my.api.mockaroo.com/itinerary_items.json?key=f3836780")
         .then(itin => {
-
             res.json(itin.data);
             console.log('Retrieved itinerary items');
         })
-})
+});
+
 //POST route for itinerary
 itinRoute.route('/').post(function (req, res) {
     res.status(200).json({ 'p': 'added' });
     console.log(req.body);//printing JSON data
-})
+});
+
 //Router configuration
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 app.use('/itinerary', itinRoute);
-app.listen(PORT, () => {
-    console.log('server start on port 4000');
 
 // Edit Profile Routes 
 //This will send a get request for the EditProfile page and lay the groundwork for updating the user's data
@@ -265,9 +256,12 @@ const upload = multer({storage})
 app.post('/EditProfile', upload.single('selectedFile'), (req, res) =>{
     res.send();
 })
-*/ 
 
+
+});*/
+
+app.listen(PORT, () => {
+    console.log('server start on port 4000');
 });
-
 // export the express app we created to make it available to other modules
-module.exports = app
+module.exports = app;
