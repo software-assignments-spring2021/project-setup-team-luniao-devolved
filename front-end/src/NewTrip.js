@@ -5,6 +5,25 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
+const [newTripTitle, setTripTitle] = useState("");
+
+//one onChange for trip title - not sure how to handle other inputs for friends/preferences etc
+onChangeTripTitle = (e) => {
+  this.setTripTitle({[e.target.name]: e.target.value});
+}
+
+onSubmit = (e) => {
+  e.preventDefault() 
+  const {newTripTitle} = this.state;
+  // send new trip data then
+  axios.post('http://localhost:4000/api/newTrip', {newTripTitle})
+      .then((result) => {
+
+      });
+
+
+}
+
 const NewTrip = (props) => {
 
   return (
@@ -23,6 +42,7 @@ const NewTrip = (props) => {
                 placeholder="Trip Name"
                 aria-label="Trip Name"
                 aria-describedby="basic-addon2"
+                value={newTripTitle} onChange={this.onChangeTripTitle}
               />
             </InputGroup>
           </div>

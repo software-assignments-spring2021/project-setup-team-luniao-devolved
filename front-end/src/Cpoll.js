@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 function Cpoll(props) {
-
+    //vars to hold form data
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [message, setMessage] = useState("");
@@ -19,7 +19,7 @@ function Cpoll(props) {
     const [opb, setOpb] = useState("");
     const [opc, setOpc] = useState("");
 
-
+    //handling form data
     const onSubmit = (e) => {
         console.log("data saved");
         e.preventDefault();
@@ -33,6 +33,7 @@ function Cpoll(props) {
 
         };
         // console.log(nPoll);
+        //posting form data
         axios.post('http://localhost:4000/createpoll', nPoll)
             .then(res => console.log(res.data));
     }
