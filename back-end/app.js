@@ -144,6 +144,16 @@ prefRoute.route('/').post(function (req, res) {
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 
+
+app.post('/api/newTrip', (req,res, next) => {
+
+    response = {
+        // to do once we set up db ? 
+    }
+    console.log('New Trip Created!')
+    .catch(err => next(err))
+
+
 app.get('/api/friends', (req,res) => {
     // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
     axios
@@ -177,6 +187,7 @@ app.use('/preferences', prefRoute);
 app.use('/itinerary', itinRoute);
 app.listen(PORT, () => {
     console.log('server start on port 4000');
+
 });
 // export the express app we created to make it available to other modules
 module.exports = app
