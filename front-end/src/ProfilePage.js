@@ -28,6 +28,7 @@ function ProfilePage(){
     const [user, setData] = useState([]);
 
     useEffect(() => {
+    /* This block of code was for using Mockaroo
       // a nested function that fetches the data
       async function fetchData() {
         // axios is a 3rd-party module for fetching data from servers
@@ -44,6 +45,18 @@ function ProfilePage(){
       // fetch the data!
       fetchData();
       // the blank array below causes this callback to be executed only once on component load
+      */
+      //New route 
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/ProfilePage",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(user => {
+      setData(user.data);
+    });
+
     }, []);
 
     return(
