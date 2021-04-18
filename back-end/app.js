@@ -5,6 +5,12 @@ const axios = require("axios")
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+// database set up
+require('./db');
+const User = mongoose.model('User');
+const dotenv = require("dotenv");
+dotenv.config();
+
 const app = express() // instantiate an Express object
 //const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 5000;
@@ -38,6 +44,19 @@ app.post("/api/signup", (req, res) => {
     // currently, we're not saving new users to the database
     // prints out the inputted new user to prove back-end is working as of now
 
+    new User({
+        fullname: req.body.fullname,
+        email: req.body.email,
+        password: req.body.password
+    }).save(function(err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log('saved!');
+        }
+    });
+/*
     const user = {
         fullname: req.body.fullname,
         email: req.body.email,
@@ -46,6 +65,7 @@ app.post("/api/signup", (req, res) => {
 
     console.log(user);
     res.json(user);
+*/
 });
 
 /* Past Trips Page Routes */
