@@ -5,16 +5,17 @@ const axios = require("axios")
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+// database set up
+require('./db');
+const User = mongoose.model('User');
+const dotenv = require("dotenv");
+dotenv.config();
+
 const app = express() // instantiate an Express object
-const cors = require("cors");
 //const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const axios = require("axios");
-const PORT = process.env.PORT || 4000;
-const pollRoute = express.Router();//router for createpoll
-const prefRoute = express.Router();//router for preferences
+const PORT = process.env.PORT || 5000;
+
 const itinRoute = express.Router();//router for itinerary
-const mongoose = require('mongoose');//for future use
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }))
@@ -29,6 +30,19 @@ app.post("/api/login", (req, res) => {
     // currently, we're not using mongoose so cannot check whether the user is in the database
     // printing out the inputted user to prove back-end is working as of now
 
+    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+        if (user) {
+            console.log("logged in!");
+        }
+        else {
+            console.log("You must sign up!");
+        }
+    })
+
+    /*
     const user = {
         email: req.body.email,
         password: req.body.password
@@ -36,6 +50,7 @@ app.post("/api/login", (req, res) => {
 
     console.log(user);
     res.json(user);
+    */
 });
 
 /* Sign Up Page Router */
@@ -43,15 +58,53 @@ app.post("/api/signup", (req, res) => {
     // currently, we're not saving new users to the database
     // prints out the inputted new user to prove back-end is working as of now
 
-    const user = {
-        fullname: req.body.fullname,
-        email: req.body.email,
-        password: req.body.password
-    };
+        User.findOne({email: req.body.email}, function(err, user) {
+            if (err) {
+                console.log(err);
+            }
+            if (user) {
+                res.send("alreadyuser");
+            }
+            else {
+                if (req.body.password !== req.body.repassword) {
+                    res.send("incorrectpw");
+                }
 
-    console.log(user);
-    res.json(user);
-})
+                else {
+                new User({
+                    fullname: req.body.fullname,
+                    email: req.body.email,
+                    password: req.body.password
+                }).save(function(err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log('saved!');
+                        res.send("success");
+                    }
+                });
+            }}
+    });
+});
+
+/* Past Trips Page Routes */
+// An api endpoint that returns list of past trips
+app.get('/api/pasttrips', (req,res) => {
+
+    /*
+    Once mongoose is setup, we would retrieve the data of past trips stored by unique user id. However, as we don't
+    mongo set up, I just retrieve mock data from mockaroo.
+    */
+    axios
+    .get("https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0")
+    .then(pastTrips => {
+        
+        res.json(pastTrips.data);
+        console.log('Retrieved past trips');
+        }) // pass data along directly to client
+    .catch(err => next(err)) // pass any errors to express
+});
 
 /* Recommendations Page Routes */
 app.post("/api/recommendations", (req, res) => {
@@ -95,11 +148,12 @@ app.post("/api/recommendations", (req, res) => {
             console.error(error);
         });
     }
-  })
+});
 
 
 app.use(morgan('tiny'));//for logging incoming requests
 //app.use('/Cpoll, pollRoute');
+
 
 /* Create Post Page Routes */
 app.post("/api/createpost", (req, res) => {
@@ -134,15 +188,39 @@ pollRoute.route('/').post(function (req, res) {
     // .catch(err => {
     //     res.status(400).send('failed to create poll')
     // })
-})
+});
 
 prefRoute.route('/').post(function (req, res) {
     res.status(200).json({ 'p': 'added' });
     console.log(req.body);
-})
-app.use('/createpoll', pollRoute);
-app.use('/preferences', prefRoute);
+});
 
+//Dashboard Routes
+//Here we send a get request to display the recent posts from the users' friends
+app.get("/api/Dashboard", (req, res) => {
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
+    .then(post => {
+
+        res.json(post.data);
+        console.log('Posts received')
+    })
+    .catch(err => next(err))
+});
+
+//View Profile routes
+app.get("/api/ProfilePage", (req, res) => {
+    //Without a database this is just linking to mockaroo
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    .then(user => {
+        //Map the response onto the User data
+        res.json(user.data);
+        console.log('Retrieved User data');
+        })
+    .catch(err => next(err)) 
+
+});
 
 app.get('/api/currentTrip', (req,res) => {
     // same as for the mockaroo data for friends...
@@ -150,20 +228,24 @@ app.get('/api/currentTrip', (req,res) => {
     axios
     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
     .then(currentTrip => {
-
         res.json(currentTrip.data);
         console.log('Retrieved current trip!');
-        }) 
-    .catch(err => next(err)) 
+        })
+    .catch(err => next(err))
+});
 
 
 app.post('/api/newTrip', (req,res, next) => {
-
-    response = {
-        // to do once we set up db ? 
-    }
-    console.log('New Trip Created!')
-    .catch(err => next(err))
+    //Without a database this is just linking to mockaroo
+    axios
+    .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    .then(user => {
+        //Map the response onto the User data
+        res.json(user.data);
+        console.log('New trip');
+        })
+    .catch(err => next(err)) 
+});
 
 
 app.get('/api/friends', (req,res) => {
@@ -171,7 +253,6 @@ app.get('/api/friends', (req,res) => {
     axios
     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
     .then(friends => {
-        
         res.json(friends.data);
         console.log('Retrieved friends list');
         }) 
@@ -183,22 +264,21 @@ itinRoute.route('/').get(function (req, res) {
     axios//currently obtaining items from Mockaroo in place of database
         .get("https://my.api.mockaroo.com/itinerary_items.json?key=f3836780")
         .then(itin => {
-
             res.json(itin.data);
             console.log('Retrieved itinerary items');
         })
-})
+});
+
 //POST route for itinerary
 itinRoute.route('/').post(function (req, res) {
     res.status(200).json({ 'p': 'added' });
     console.log(req.body);//printing JSON data
-})
+});
+
 //Router configuration
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
 app.use('/itinerary', itinRoute);
-app.listen(PORT, () => {
-    console.log('server start on port 4000');
 
 // Edit Profile Routes 
 //This will send a get request for the EditProfile page and lay the groundwork for updating the user's data
@@ -216,6 +296,8 @@ app.post('/api/EditProfile', (req,res, next) => {
     .catch(err => next(err))
 
 });
+
+
 /*
 //Upload picture route
 //configure storage
@@ -239,9 +321,12 @@ const upload = multer({storage})
 app.post('/EditProfile', upload.single('selectedFile'), (req, res) =>{
     res.send();
 })
-*/ 
 
+
+});*/
+
+app.listen(PORT, () => {
+    console.log('server start on port 4000');
 });
-
 // export the express app we created to make it available to other modules
-module.exports = app
+module.exports = app;

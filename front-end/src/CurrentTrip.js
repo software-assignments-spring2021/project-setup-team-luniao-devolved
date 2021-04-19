@@ -3,21 +3,39 @@ import React, { useState, useEffect } from 'react'
 import './CurrentTrip.css'
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import axios from 'axios';
 
-
-  // not sure about the axios stuff but this was similar to what another person did 
-  axios({
-    method: "GET",
-    url: "http://localhost:4000/api/currentTrip",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(post => {
-        setData(post.data);
-  });
 
 const CurrentTrip = (props) => {
 
+  const [user, setData] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/CurrentTrip",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(user => {
+      setData(user.data);
+    });
+
+    }, []);
+  // const setData = useState([]);
+
+
+  // // not sure about the axios stuff but this was similar to what another person did 
+  // axios({
+  //   method: "GET",
+  //   url: "http://localhost:4000/api/currentTrip",
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   }
+  // }).then(post => {
+  //       setData(post.data);
+  // });
+  
   return (
     <div className="CurrentTrip">
       <h3>Current Trip</h3>
