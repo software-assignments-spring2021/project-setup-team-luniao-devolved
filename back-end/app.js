@@ -30,6 +30,19 @@ app.post("/api/login", (req, res) => {
     // currently, we're not using mongoose so cannot check whether the user is in the database
     // printing out the inputted user to prove back-end is working as of now
 
+    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+        if (user) {
+            console.log("logged in!");
+        }
+        else {
+            console.log("You must sign up!");
+        }
+    })
+
+    /*
     const user = {
         email: req.body.email,
         password: req.body.password
@@ -37,6 +50,7 @@ app.post("/api/login", (req, res) => {
 
     console.log(user);
     res.json(user);
+    */
 });
 
 /* Sign Up Page Router */
@@ -44,28 +58,34 @@ app.post("/api/signup", (req, res) => {
     // currently, we're not saving new users to the database
     // prints out the inputted new user to prove back-end is working as of now
 
-    new User({
-        fullname: req.body.fullname,
-        email: req.body.email,
-        password: req.body.password
-    }).save(function(err) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log('saved!');
-        }
-    });
-/*
-    const user = {
-        fullname: req.body.fullname,
-        email: req.body.email,
-        password: req.body.password
-    };
+        User.findOne({email: req.body.email}, function(err, user) {
+            if (err) {
+                console.log(err);
+            }
+            if (user) {
+                res.send("alreadyuser");
+            }
+            else {
+                if (req.body.password !== req.body.repassword) {
+                    res.send("incorrectpw");
+                }
 
-    console.log(user);
-    res.json(user);
-*/
+                else {
+                new User({
+                    fullname: req.body.fullname,
+                    email: req.body.email,
+                    password: req.body.password
+                }).save(function(err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log('saved!');
+                        res.send("success");
+                    }
+                });
+            }}
+    });
 });
 
 /* Past Trips Page Routes */
