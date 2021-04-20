@@ -6,7 +6,8 @@ const url = `mongodb+srv://${process.env.DB_EMAIL}:${process.env.DB_PASSWORD}@tr
 const User = new mongoose.Schema({
     fullname: String,
     email: String,
-    password: String
+    password: String,
+    picture: String
 });
 
 mongoose.model('User', User);
