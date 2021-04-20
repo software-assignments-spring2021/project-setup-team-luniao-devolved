@@ -4,6 +4,7 @@ const morgan = require("morgan") // middleware for nice logging of incoming HTTP
 const axios = require("axios")
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // database set up
 require('./db');
@@ -19,58 +20,47 @@ const itinRoute = express.Router();//router for itinerary
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }))
-//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(cors());
 
 // not making routes for Guest Dashboard because doesn't require any data from back end
 
 /* Login Page Router */
-app.post("/api/login", (req, res) => {
-    // currently, we're not using mongoose so cannot check whether the user is in the database
-    // printing out the inputted user to prove back-end is working as of now
-
-    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+app.get("/api/login", (req, res) => {
+    console.log(req.query);
+    User.findOne({email: req.query.email}, function(err, user) {
         if (err) {
             console.log(err);
         }
         if (user) {
-            console.log("logged in!");
+            if (user.password === req.query.password) {
+                res.send("success");
+            }
+            else {
+                res.send("incorrectpw");
+            }
         }
         else {
-            console.log("You must sign up!");
+            res.send("nouser");
         }
     })
-
-    /*
-    const user = {
-        email: req.body.email,
-        password: req.body.password
-    };
-
-    console.log(user);
-    res.json(user);
-    */
 });
 
 /* Sign Up Page Router */
 app.post("/api/signup", (req, res) => {
-    // currently, we're not saving new users to the database
-    // prints out the inputted new user to prove back-end is working as of now
-
-        User.findOne({email: req.body.email}, function(err, user) {
-            if (err) {
-                console.log(err);
-            }
-            if (user) {
-                res.send("alreadyuser");
+    User.findOne({email: req.body.email}, function(err, user) {
+        if (err) {
+            console.log(err);
+        }
+        if (user) {
+            res.send("alreadyuser");
+        }
+        else {
+            if (req.body.password !== req.body.repassword) {
+                res.send("incorrectpw");
             }
             else {
-                if (req.body.password !== req.body.repassword) {
-                    res.send("incorrectpw");
-                }
-
-                else {
                 new User({
                     fullname: req.body.fullname,
                     email: req.body.email,
@@ -84,7 +74,8 @@ app.post("/api/signup", (req, res) => {
                         res.send("success");
                     }
                 });
-            }}
+            }
+        }
     });
 });
 
