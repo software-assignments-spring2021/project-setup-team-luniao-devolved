@@ -11,6 +11,28 @@ const User = new mongoose.Schema({
 
 mongoose.model('User', User);
 
+
+
+/**** Past Trips ****/
+
+
+//Todo -- add more/relevant items as is in the itenerary schema
+const pastTripsSchema = new mongoose.Schema({
+    location:  String, 
+    friends:   [{id: mongoose.Schema.Types.ObjectId], // {object id in friends database}
+    startDate: { type: Date},
+    endDate: { type: Date},
+    todoList: [{text:"string"}],
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+});
+
+mongoose.model('PastTrips', pastTripsSchema);
+
+
+
+
+
+
 mongoose.connect(url)
     .then(() => {
         console.log('Connected to database!')
