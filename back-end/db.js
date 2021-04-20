@@ -19,7 +19,7 @@ mongoose.model('User', User);
 //Todo -- add more/relevant items as is in the itenerary schema
 const pastTripsSchema = new mongoose.Schema({
     location:  String, 
-    friends:   [{id: mongoose.Schema.Types.ObjectId], // {object id in friends database}
+    friends:   [{id: mongoose.Schema.Types.ObjectId}], // {object id in friends database}
     startDate: { type: Date},
     endDate: { type: Date},
     todoList: [{text:"string"}],
