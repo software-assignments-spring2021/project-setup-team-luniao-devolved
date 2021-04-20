@@ -5,11 +5,15 @@ const axios = require("axios")
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+//import and load environment variable
+const dotenv = require("dotenv");
+dotenv.config();
+
 // database set up
 require('./db');
 const User = mongoose.model('User');
-const dotenv = require("dotenv");
-dotenv.config();
+const Post = mongoose.model('Post');
+
 
 const app = express() // instantiate an Express object
 //const bodyParser = require("body-parser");
@@ -164,6 +168,29 @@ app.post("/api/createpost", (req, res) => {
     // now, we would use mongoose to save the post data in a database. But to prove the back-end
     // is working, I output the post data to the console of the server.
     console.log(recForm);
+
+    //saving post into database
+    new Post({ 
+        title: recForm.title,
+        body: recForm.post,
+        date: new Date(),
+        comments: [], //TODO: Add comment functionality
+        //postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, //once passport is setup, will be `req.user`
+    }).save(function(err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log('post saved!');
+        }
+    });
+
+    //test by printing out all documents in the Post collection - delete once user database is implemented, connected and tested
+    Post.find(function (err, posts) {
+        if (err) return console.error(err);
+        console.log(posts);
+      })
+
     res.end();
     
 });
