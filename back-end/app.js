@@ -5,12 +5,21 @@ const axios = require("axios")
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport')
+
+//passport set up
+require('./config/passport')
 
 // database set up
 require('./db');
-const User = mongoose.model('User');
 const dotenv = require("dotenv");
 dotenv.config();
+
+//require all db models
+var User = require('./models/user');
+
+
+
 
 const app = express() // instantiate an Express object
 //const bodyParser = require("body-parser");
@@ -23,61 +32,74 @@ app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(cors());
+app.use(passport.initialize());
 
 // not making routes for Guest Dashboard because doesn't require any data from back end
 
+
+//Importing passport routes
+require('./routes/loginUser')(app);
+require('./routes/registerUser')(app);
+
 /* Login Page Router */
-app.get("/api/login", (req, res) => {
-    console.log(req.query);
-    User.findOne({email: req.query.email}, function(err, user) {
-        if (err) {
-            console.log(err);
-        }
-        if (user) {
-            if (user.password === req.query.password) {
-                res.send("success");
-            }
-            else {
-                res.send("incorrectpw");
-            }
-        }
-        else {
-            res.send("nouser");
-        }
-    })
-});
+// app.get("/api/login", (req, res) => {
+//     console.log(req.query);
+//     User.findOne({email: req.query.email}, function(err, user) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         if (user) {
+//             if (user.password === req.query.password) {
+//                 res.send("success");
+//             }
+//             else {
+//                 res.send("incorrectpw");
+//             }
+//         }
+//         else {
+//             res.send("nouser");
+//         }
+//     })
+// });
 
 /* Sign Up Page Router */
-app.post("/api/signup", (req, res) => {
-    User.findOne({email: req.body.email}, function(err, user) {
-        if (err) {
-            console.log(err);
-        }
-        if (user) {
-            res.send("alreadyuser");
-        }
-        else {
-            if (req.body.password !== req.body.repassword) {
-                res.send("incorrectpw");
-            }
-            else {
-                new User({
-                    fullname: req.body.fullname,
-                    email: req.body.email,
-                    password: req.body.password
-                }).save(function(err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        console.log('saved!');
-                        res.send("success");
-                    }
-                });
-            }
-        }
-    });
-});
+// app.post("/api/signup", (req, res) => {
+//     User.findOne({email: req.body.email}, function(err, user) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         if (user) {
+//             res.send("alreadyuser");
+//         }
+//         else {
+//             if (req.body.password !== req.body.repassword) {
+//                 res.send("incorrectpw");
+//             }
+//             else {
+//                 new User({
+//                     fullname: req.body.fullname,
+//                     email: req.body.email,
+//                     password: req.body.password
+//                 }).save(function(err) {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                     else {
+//                         console.log('saved!');
+//                         res.send("success");
+//                     }
+//                 });
+//             }
+//         }
+//     });
+// });
+
+//delete user database docs -- for testing purposes
+// User.deleteMany({}, function (err, posts) {} );
+User.find({}, function (err, posts) { 
+    if (err) return console.error(err);
+    console.log(posts);
+})
 
 /* Past Trips Page Routes */
 // An api endpoint that returns list of past trips
