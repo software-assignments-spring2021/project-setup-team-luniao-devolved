@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 // database set up
 require('./db');
 const User = mongoose.model('User');
+const PastTrips = mongoose.model('PastTrips');
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -104,6 +105,18 @@ app.get('/api/pasttrips', (req,res) => {
         console.log('Retrieved past trips');
         }) // pass data along directly to client
     .catch(err => next(err)) // pass any errors to express
+
+    /* Can only be applied once passport user database is setup
+    /* Remember to update front-end to correct json keys
+
+    // PastTrips.find({ user: req.user }, function (err, posts) { 
+
+    //     if (err) return console.error(err);
+    //     console.log(posts);
+    //   })
+
+
+
 });
 
 /* Recommendations Page Routes */
