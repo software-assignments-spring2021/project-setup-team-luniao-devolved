@@ -107,15 +107,13 @@ app.get('/api/pasttrips', (req,res) => {
     .catch(err => next(err)) // pass any errors to express
 
     /* Can only be applied once passport user database is setup
-    /* Remember to update front-end to correct json keys
+    /* Remember to update front-end to correct json keys */
 
     // PastTrips.find({ user: req.user }, function (err, posts) { 
 
     //     if (err) return console.error(err);
     //     console.log(posts);
     //   })
-
-
 
 });
 
