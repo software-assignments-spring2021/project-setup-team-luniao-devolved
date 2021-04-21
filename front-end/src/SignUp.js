@@ -34,7 +34,7 @@ function SignUp() {
             alert("User already exists!");
           }
           else if (res.data === "success") {
-            console.log("success");
+            console.log("successful sign up");
             setRedirect(true);
           }
         }
@@ -45,42 +45,42 @@ function SignUp() {
     }
 
     
-      if (redirect === false) {
-        return (
-          <Container>
-            <Row>
-            <Col><img src="logo2.png" alt="logo"></img></Col>
-            <Col>
-              <h3>Sign Up</h3>
-              <Form>
-              <Form.Group className="form" controlId="fullname">
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control value={fullname} onChange={(e) => setName(e.target.value)} placeholder="Enter full name"/>
-              </Form.Group>
+    if (redirect === false) {
+      return (
+        <Container>
+          <Row>
+          <Col><img src="logo2.png" alt="logo"></img></Col>
+          <Col>
+            <h3>Sign Up</h3>
+            <Form>
+            <Form.Group className="form" controlId="fullname">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control value={fullname} onChange={(e) => setName(e.target.value)} placeholder="Enter full name"/>
+            </Form.Group>
 
-              <Form.Group className="form" controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email"/>
-              </Form.Group>
+            <Form.Group className="form" controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email"/>
+            </Form.Group>
 
-              <Form.Group className="form" controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
-              </Form.Group>
+            <Form.Group className="form" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
+            </Form.Group>
 
-              <Form.Group className="form" controlId="repassword">
-                <Form.Label>Confirm password</Form.Label>
-                <Form.Control value={repassword} onChange={(e) => setRepassword(e.target.value)} placeholder="Re-enter password"/>
-              </Form.Group>
-              
-              <Button block size="lg" disabled={!checkTyped()} onClick={handleSubmit}>Sign Up</Button>
-              </Form>
-              <h2>Already have an account? <Link to='/'>Click to Login</Link></h2>
-              <h2>Click to continue as <Link to='/guestdashboard'>Guest</Link></h2>
-            </Col>
-            </Row>
-          </Container>
-        )
+            <Form.Group className="form" controlId="repassword">
+              <Form.Label>Confirm password</Form.Label>
+              <Form.Control value={repassword} onChange={(e) => setRepassword(e.target.value)} placeholder="Re-enter password"/>
+            </Form.Group>
+            
+            <Button block size="lg" disabled={!checkTyped()} onClick={handleSubmit}>Sign Up</Button>
+            </Form>
+            <h2>Already have an account? <Link to='/'>Click to Login</Link></h2>
+            <h2>Click to continue as <Link to='/guestdashboard'>Guest</Link></h2>
+          </Col>
+          </Row>
+        </Container>
+      )
     }
     else {
       return <Redirect to='/dashboard'/>
