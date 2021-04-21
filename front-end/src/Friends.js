@@ -67,10 +67,10 @@ function Friends() {
             <Button href="/profile">Back</Button>
           </div>
 
-          <div>
+          {/* <div>
             <Button href="/createpost">New Post</Button>
             <Button href="/editprofile">Edit Profile</Button>
-          </div>
+          </div> */}
 
         </div>
       </section>

@@ -2,6 +2,7 @@ import './Dashboard.css'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 
 function Dashboard(){
     const [user, setData] = useState([]);
@@ -43,8 +44,13 @@ function Dashboard(){
             <div className="dashboard-header">
                 <h3>Dashboard</h3>
             </div>
-            <textarea class="postform" rows="3" placeholder="How is your vacation going?"></textarea>
-            <button type="submit" class="btn btn-default">Post</button>
+            {/* <textarea class="postform" rows="3" placeholder="How is your vacation going?"></textarea> 
+                        <button type="submit" class="btn btn-default">Post</button>
+            */}
+            <div>
+            <Button href="/createpost">New Post</Button>
+            </div>
+
             <h2><strong>Here's what your friends have been up to:</strong></h2>
             <div class="container">
             <div>
