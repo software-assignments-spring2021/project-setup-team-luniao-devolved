@@ -5,6 +5,7 @@ import "./Login.css";
 import { Link, Redirect } from 'react-router-dom';
 import axios from "axios";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,24 +15,28 @@ const Login = () => {
     return email.length > 0 && password.length > 0;
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     const user = {email, password};
-    console.log(user);
+    event.preventDefault();
 
     axios({
-      method: "get",
+      method: "post",
       url: "http://localhost:4000/api/login",
-      data: user
+      data: user,
+      headers: { Authorization: `JWT ${localStorage.getItem('JWT')}`}
     })
     .then((res) => {
+      console.log("here");
       console.log(res);
       if (res.data === "nouser") {
         alert("Your account does not exist!");
+        // setReload(true);
       }
       else if (res.data === "incorrectpw") {
         alert("Your password is incorrect!");
+        // setReload(true);
       }
-      else if (res.data === "success") {
+      else if (res.data.message === "success") {
         console.log("successful login");
         setRedirect(true);
       }
@@ -42,6 +47,7 @@ const Login = () => {
   }
 
   if (redirect === false) {
+
     return (
       <Container>
       <Row>
@@ -56,7 +62,7 @@ const Login = () => {
   
           <Form.Group className="form" controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
+            <Form.Control value={password} type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
           </Form.Group>
   
             <Button type="submit" block size="lg" disabled={!checkTyped()} onClick={handleSubmit}>Login</Button>

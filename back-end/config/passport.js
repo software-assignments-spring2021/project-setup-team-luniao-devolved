@@ -12,7 +12,7 @@ ExtractJWT = require('passport-jwt').ExtractJwt;
 var User = require('../models/user');
 
 
-passport.use( 'register', new localStrategy(
+passport.use('register', new localStrategy(
     {
       usernameField: 'email',
       passwordField: 'password',
@@ -47,24 +47,20 @@ passport.use('login', new localStrategy(
       session: false,
     },
     (email, password, done) => {
+      console.log("here");
       try {
-        User.findOne({
-          where: {
-            email: email,
-          },
-        }).then(user => {
-          if (user === null) {
-            return done(null, false, { message: 'Your email is invalid. Please try again.' });
-          } else {
-            bcrypt.compare(password, user.password).then(response => {
-              if (response !== true) {
-                console.log('Your password is incorrect. Please try again.');
-                return done(null, false, { message: 'Incorrect password.' });
-              }
-              console.log('Your account is authenticated.');
-              return done(null, user);
-            });
-          }
+        User.findOne({email: email}, function(err, user) {
+            if (user === null) {
+                return done(null, false, { message: 'nouser'});
+              } else {
+                bcrypt.compare(password, user.password).then(response => {
+                    if (response !== true) {
+                        return done(null, false, { message: 'incorrectpw' });
+                    }
+                    console.log('Your account is authenticated.');
+                    return done(null, user);
+                });
+            }
         });
       } catch (err) {
         done(err);
