@@ -38,6 +38,7 @@ const Login = () => {
       }
       else if (res.data.message === "success") {
         console.log("successful login");
+        localStorage.setItem('JWT', res.data.token);
         setRedirect(true);
       }
     })
