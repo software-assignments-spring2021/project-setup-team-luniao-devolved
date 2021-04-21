@@ -79,14 +79,14 @@ function NewTrip() {
                 placeholder="Trip Name"
                 aria-label="Trip Name"
                 aria-describedby="basic-addon2"
-                //value={newTripTitle} onChange={this.onChangeTripTitle}
+              //value={newTripTitle} onChange={this.onChangeTripTitle}
               />
             </InputGroup>
           </div>
 
           <div className="new-trip-buttons">
             <Button href="#">Add Friends</Button>
-            <Button href="/CPoll">Create Poll</Button>
+            <Button href="/createpoll">Create Poll</Button>
             <Button href="#">Ask for Rec</Button>
 
           </div>

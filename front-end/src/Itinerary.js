@@ -80,19 +80,17 @@ function Itinerary(props) {
 
     const [itin, setItin] = useState([]);
 
-    useEffect(() => {
 
-        axios({
-            method: "GET",
-            url: "http://localhost:4000/itinerary",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(itinerary => {
-            console.log(itinerary.data)
-            setItin(itinerary.data);
-        });
-    }, [])
+    useEffect(() => {
+        axios.get('http://localhost:4000/itinerary/')
+            .then(response => {
+                this.setItin(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+        , [])
 
     return (
         // Container for page
