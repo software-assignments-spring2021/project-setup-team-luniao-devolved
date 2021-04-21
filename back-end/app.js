@@ -284,12 +284,17 @@ app.use('/itinerary', itinRoute);
 //This will send a get request for the EditProfile page and lay the groundwork for updating the user's data
 app.post('/api/EditProfile', (req,res, next) => {
 
-    response = {
+    res = {
+        
         /*
         Without a database setup it is hard to actually change the User's data,
-        but this will happen here in a fashion similar to this 
-        email:req.body.newEmail,
-        password:req.body.newPW
+        but this will happen here in a fashion similar to this
+        await db.collection('User').updateOne{ 
+            {
+                $set: {'email': req.body.newEmail},
+                $set: {'password' :req.body.newPW}
+            }
+        }
         */
     }
     console.log('User profile updated')
