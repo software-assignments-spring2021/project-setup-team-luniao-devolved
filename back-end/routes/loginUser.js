@@ -1,5 +1,5 @@
 var User = require('../models/user');
-const {jwtSecret} = require('../config/jwtConfig');
+const jwtSecret = require('../config/jwtConfig');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
