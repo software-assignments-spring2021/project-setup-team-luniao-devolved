@@ -79,7 +79,7 @@ function NewTrip() {
                 placeholder="Trip Name"
                 aria-label="Trip Name"
                 aria-describedby="basic-addon2"
-                //value={newTripTitle} onChange={this.onChangeTripTitle}
+              //value={newTripTitle} onChange={this.onChangeTripTitle}
               />
             </InputGroup>
           </div>
