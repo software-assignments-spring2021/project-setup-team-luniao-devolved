@@ -6,13 +6,15 @@ const url = `mongodb+srv://yushin420:Dbtlsld9317@travelwise.dwvrv.mongodb.net/us
 const client = new MongoClient(url);
 
 client.connect();
+/*
 const User = new mongoose.Schema({
     fullname: String,
     email: String,
-    password: String
+    password: String,
+    picture: String
 });
-
-mongoose.model('User', User);
+*/
+//mongoose.model('User', User);
 
 const Pollschema = new mongoose.Schema({
     name: String,
