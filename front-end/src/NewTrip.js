@@ -85,9 +85,9 @@ function NewTrip() {
           </div>
 
           <div className="new-trip-buttons">
-            <Button href="#">Add Friends</Button>
-            <Button href="/CPoll">Create Poll</Button>
-            <Button href="#">Ask for Rec</Button>
+            <Button href="/addfriends">Add Friends</Button>
+            <Button href="/createpoll">Create Poll</Button>
+            <Button href="/recommendations">Ask for Rec</Button>
 
           </div>
 
