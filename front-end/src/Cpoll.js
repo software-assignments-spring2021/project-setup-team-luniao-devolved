@@ -24,12 +24,13 @@ function Cpoll(props) {
         console.log("data saved");
         e.preventDefault();
         const nPoll = {
-            poll_name: { name },
+            name, date, message, opa, opb, opc
+            /*poll_name: { name },
             poll_date: { date },
             poll_message: { message },
             poll_opa: { opa },
             poll_opb: { opb },
-            poll_opc: { opc }
+            poll_opc: { opc }*/
 
         };
         // console.log(nPoll);
