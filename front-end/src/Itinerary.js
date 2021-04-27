@@ -3,8 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import CardColumns from 'react-bootstrap/CardColumns';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -21,12 +19,11 @@ function AddItem(props) {
         console.log("data saved");
         e.preventDefault();
         const itinItem = {
-            item_name: { name },
+            name, time, type, location
+            /*item_name: { name },
             item_time: { time },
             item_type: { type },
-            item_location: { location }
-
-
+            item_location: { location }*/
         };
         axios.post('http://localhost:4000/itinerary', itinItem)
             .then(res => console.log(res.data));
@@ -84,7 +81,8 @@ function Itinerary(props) {
     useEffect(() => {
         axios.get('http://localhost:4000/itinerary/')
             .then(response => {
-                this.setItin(response.data);
+                setItin(response.data);
+                console.log("This is itin: ", itin);
             })
             .catch(function (error) {
                 console.log(error);
@@ -123,13 +121,13 @@ function Itinerary(props) {
                         {itin.map(e => (
                             <Card border="primary">
                                 <Card.Body>
-                                    <Card.Title>{e["type"]}</Card.Title>
+                                    <Card.Title>{e.type}</Card.Title>
                                     <Card.Text>
-                                        {e["name"]}
+                                        {e.name}
                                         <br />
-                                        {e["location"]}
+                                        {e.location}
                                         <br />
-                                        {e["time"]}
+                                        {e.time}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

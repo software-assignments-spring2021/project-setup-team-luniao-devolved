@@ -33,7 +33,8 @@ const Pref = new mongoose.Schema({
     length: Number,
     type: String,
     rating: Number,
-    transport: String
+    transport: String,
+    user: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 mongoose.model('Pref', Pref);

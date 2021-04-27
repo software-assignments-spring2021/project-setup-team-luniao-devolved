@@ -57,10 +57,12 @@ ReactDOM.render(
             <CurrentTrip/>
           </Route>
 
-          {/* <Route exact path="/editprofile">
+          {/*
+          <Route exact path="/editprofile">
             <NavBar/>
             <EditProfile/>
-          </Route> */}
+          </Route>
+          */}
 
           <Route exact path="/createpost">
             <NavBar/>

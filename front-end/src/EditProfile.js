@@ -159,15 +159,15 @@ const [newPFP, setSelectedFile] = useState(null);
     }
 */
 //one onChange for each- pw and email
-    onChangeEmail = (e) => {
+    const onChangeEmail = (e) => {
         this.setEmail({[e.target.name]: e.target.value});
     }
 
-    onChangePW = (e) => {
+    const onChangePW = (e) => {
         this.setPW({[e.target.name]: e.target.value});
     }
 
-    onSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault() 
         const {newEmail, newPW, newPFP} = this.state;
         //check that the passwords are the same, send only one password

@@ -8,7 +8,7 @@ const connection = mongoose.connection;
 
 // database set up
 require('./db');
-const User = mongoose.model('User');
+//const User = mongoose.model('User');
 const Poll = mongoose.model('Poll');
 const Pref = mongoose.model('Pref');
 const Itin = mongoose.model('Itin');
@@ -84,42 +84,6 @@ require('./routes/registerUser')(app);
 //         }
 //     })
 // });
-
-/* Sign Up Page Router */
-app.post("/api/signup", (req, res) => {
-    // currently, we're not saving new users to the database
-    // prints out the inputted new user to prove back-end is working as of now
-
-    User.findOne({ email: req.body.email }, function (err, user) {
-        if (err) {
-            console.log(err);
-        }
-        if (user) {
-            res.send("alreadyuser");
-        }
-        else {
-            if (req.body.password !== req.body.repassword) {
-                res.send("incorrectpw");
-            }
-
-            else {
-                new User({
-                    fullname: req.body.fullname,
-                    email: req.body.email,
-                    password: req.body.password
-                }).save(function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        console.log('saved!');
-                        res.send("success");
-                    }
-                });
-            }
-        }
-    });
-});
 
 // app.post("/api/signup", (req, res) => {
 //     User.findOne({email: req.body.email}, function(err, user) {
@@ -381,7 +345,7 @@ itinRoute.route('/').get(function (req, res) {
     //         res.json(itin.data);
     //         console.log('Retrieved itinerary items');
     //     })
-    Itin.find(function (err, items) {
+    Itin.find({}, function (err, items) {
         if (err) {
             console.log(err);
         } else {
@@ -392,20 +356,18 @@ itinRoute.route('/').get(function (req, res) {
 
 //POST route for itinerary
 itinRoute.route('/').post(function (req, res) {
-    const npoll = new Pollschema({
+    const itin = new Itin({
         type: req.body.type,
         name: req.body.name,
         location: req.body.location,
         time: req.body.time
-
-
     }).save()
         .then(npoll => {
             res.status(200).json({ 'Itinerary item': 'saved successfully' });
         })
         .catch(err => {
             res.status(400).send('failed to create item');
-        })
+        });
 });
 
 //Router configuration
