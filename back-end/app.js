@@ -8,7 +8,7 @@ const connection = mongoose.connection;
 // database set up
 require('./db');
 const User = mongoose.model('User');
-const Pollschema = mongoose.model('Pollschema');
+const Poll = mongoose.model('Poll');
 const Pref = mongoose.model('Pref');
 const Itin = mongoose.model('Itin');
 const dotenv = require("dotenv");
@@ -182,20 +182,27 @@ const prefRoute = express.Router();
 pollRoute.route('/').post(function (req, res) {
     //console.log(p);
 
-    const npoll = new Pollschema({
+    const npoll = new Poll({
         name: req.body.name,
         date: req.body.date,
         message: req.body.message,
         opa: req.body.opa,
         opb: req.body.opb,
         opc: req.body.opc
-    }).save()
-        .then(npoll => {
+    }).save(function(err) {
+        if (err) {
+            res.status(400).send('failed to craete poll');
+        }
+        else {
+            res.status(200).json({ 'poll': 'saved successfully' });
+        }
+    });
+        /*.then(npoll => {
             res.status(200).json({ 'poll': 'saved successfully' });
         })
         .catch(err => {
             res.status(400).send('failed to create poll');
-        })
+        })*/
     //console.log(req.body);
     //res.send("heY!")
     // poll.save()

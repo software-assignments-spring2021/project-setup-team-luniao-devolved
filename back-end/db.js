@@ -14,7 +14,7 @@ const User = new mongoose.Schema({
 
 mongoose.model('User', User);
 
-const Pollschema = new mongoose.Schema({
+const Poll = new mongoose.Schema({
     name: String,
     date: String,
     message: String,
@@ -23,7 +23,8 @@ const Pollschema = new mongoose.Schema({
     opc: String
 });
 
-mongoose.model('Pollschema', Pollschema);
+mongoose.model('Poll', Poll);
+
 const Pref = new mongoose.Schema({
     budget: Number,
     time: String,
