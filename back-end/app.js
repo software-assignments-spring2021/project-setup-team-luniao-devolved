@@ -189,7 +189,6 @@ pollRoute.route('/').post(function (req, res) {
         opa: req.body.opa,
         opb: req.body.opb,
         opc: req.body.opc
-
     }).save()
         .then(npoll => {
             res.status(200).json({ 'poll': 'saved successfully' });
@@ -208,7 +207,8 @@ pollRoute.route('/').post(function (req, res) {
     // })
 });
 
-prefRoute.route('/').post(function (req, res) {
+//prefRoute.route('/').post(function (req, res) {
+app.post("/api/preferences", (req, res) => {
     const npref = new Pref({
         budget: req.body.budget,
         time: req.body.time,
@@ -216,14 +216,21 @@ prefRoute.route('/').post(function (req, res) {
         type: req.body.type,
         rating: req.body.rating,
         transport: req.body.transport
-
-    }).save()
-        .then(npref => {
+    }).save(function(err) {
+        if (err) {
+            res.status(400).send('failed to save preferences');
+        }
+        else {
+            res.status(200).json({ 'preferences': 'saved successfully' });
+        }
+    });
+        /*.then(npref => {
+            console.log(npref);
             res.status(200).json({ 'preferences': 'saved successfully' });
         })
         .catch(err => {
             res.status(400).send('failed to save preferences');
-        })
+        })*/
 });
 
 //Dashboard Routes

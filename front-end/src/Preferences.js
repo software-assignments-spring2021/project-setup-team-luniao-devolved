@@ -20,15 +20,21 @@ function Preferences() {
         console.log("data saved");
         e.preventDefault();
         const nPref = {
-            pref_budget: { budget },
+            budget,
+            time,
+            length,
+            type,
+            rating,
+            transport
+            /*pref_budget: { budget },
             pref_time: { time },
             pref_length: { length },
             pref_type: { type },
             pref_rating: { rating },
-            pref_transport: { transport }
+            pref_transport: { transport }*/
 
         };
-        axios.post('http://localhost:4000/preferences', nPref)
+        axios.post('http://localhost:4000/api/preferences', nPref)
             .then(res => console.log(res.data));
 
     }
