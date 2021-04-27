@@ -58,6 +58,7 @@ app.post("/api/login", (req, res) => {
             console.log("You must sign up!");
         }
     })
+});
 
 //Importing passport routes
 require('./routes/loginUser')(app);
