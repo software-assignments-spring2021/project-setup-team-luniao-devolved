@@ -21,7 +21,7 @@ const NavBar = (props) => {
                         <NavDropdown.Item href="/editprofile">Edit Profile</NavDropdown.Item>
                         <NavDropdown.Item href="preferences">Preferences</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="/">Sign Out</NavDropdown.Item>
+                        <NavDropdown.Item href="/logout">Sign Out</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
