@@ -43,22 +43,22 @@ app.use(passport.initialize());
 // not making routes for Guest Dashboard because doesn't require any data from back end
 
 /* Login Page Router */
-app.post("/api/login", (req, res) => {
-    // currently, we're not using mongoose so cannot check whether the user is in the database
-    // printing out the inputted user to prove back-end is working as of now
+// app.post("/api/login", (req, res) => {
+//     // currently, we're not using mongoose so cannot check whether the user is in the database
+//     // printing out the inputted user to prove back-end is working as of now
 
-    User.findOne({ email: req.body.email, password: req.body.password }, function (err, user) {
-        if (err) {
-            console.log(err);
-        }
-        if (user) {
-            console.log("logged in!");
-        }
-        else {
-            console.log("You must sign up!");
-        }
-    })
-});
+//     User.findOne({ email: req.body.email, password: req.body.password }, function (err, user) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         if (user) {
+//             console.log("logged in!");
+//         }
+//         else {
+//             console.log("You must sign up!");
+//         }
+//     })
+// });
 
 //Importing passport routes
 require('./routes/loginUser')(app);
@@ -336,6 +336,11 @@ app.get('/api/friends', (req, res) => {
         })
         .catch(err => next(err))
 });
+
+app.get('/logout', (req, res) => {
+    req.logout();
+});
+
 
 //GET route for itinerary
 itinRoute.route('/').get(function (req, res) {
