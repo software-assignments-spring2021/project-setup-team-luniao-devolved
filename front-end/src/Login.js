@@ -47,6 +47,8 @@ const Login = () => {
     });
   }
 
+  //note from tutor - redirect in react based on jwt in local storage
+
   if (redirect === false) {
 
     return (
