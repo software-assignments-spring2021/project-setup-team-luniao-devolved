@@ -142,22 +142,20 @@ function Friends() {
       <h3>{userData["fullname"]}'s Friends</h3>
       <section className="main-content">
 
-      
-
-        <div class='addButton'> 
-          <Button variant="primary" onClick={() => setModalShow(true)}>
-            Add Friends
-          </Button>
-
-          <AddFriendsModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
-        </div>
-
-
-
         <div class='flex-container'>
+
+          <div class='addButton'> 
+            <Button variant="primary" onClick={() => setModalShow(true)}>
+              Add Friends
+            </Button>
+
+            <AddFriendsModal
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
+          </div>
+
+          <br/> <br/>
           
           {/* <div>
           <img src="logo192.png" alt=""></img>
@@ -169,7 +167,7 @@ function Friends() {
           </div> */}
 
           <div class="friendscard">
-            <CardColumns>
+            <CardColumns class="card-columns addborderfriends">
               {friends.map(e => (
                   <Card border="primary">
                     <Card.Body>
@@ -182,6 +180,9 @@ function Friends() {
                 ))}
             </CardColumns>
           </div>
+
+
+          <br/> <br/><br/>
 
           <div>
             <Button href="/profile">Back</Button>
