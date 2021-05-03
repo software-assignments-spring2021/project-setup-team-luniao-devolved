@@ -1,14 +1,21 @@
 import './Dashboard.css'
+import ReactDOM from 'react-dom';
+
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
+import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
 
 function Dashboard(){
+
     const [user, setData] = useState([]);
+    const history = useHistory();
+
+    // const [hasJWT, sethasJWT] = useState(localStorage.getItem('JWT'));
+    // const hasJWT = localStorage.getItem('JWT');
 
     useEffect(() => {
-
     /*
       // a nested function that fetches the data
       async function fetchData() {
@@ -27,6 +34,12 @@ function Dashboard(){
       fetchData();
       // the blank array below causes this callback to be executed only once on component load
       */
+      if (localStorage.getItem('JWT')) {
+      } else {
+        history.push({
+            pathname:  "/",
+          });    
+      }
 
       axios({
         method: "GET",
@@ -41,6 +54,7 @@ function Dashboard(){
     }, []);
     return(
         <div className="dashboard">
+
             <div className="dashboard-header">
                 <h3>Dashboard</h3>
             </div>

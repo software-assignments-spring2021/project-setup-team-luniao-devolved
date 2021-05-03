@@ -2,15 +2,25 @@ import React, { useState } from "react";
 import {Form, Button, Container, Row, Col} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./Login.css";
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect,Router, Route, Switch, BrowserRouter, useHistory} from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import axios from "axios";
 
+import Dashboard from './Dashboard';
+import NavBar from './components/NavBar';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  
+  const history = useHistory();
+
+  if (localStorage.getItem('JWT')) {
+    history.push({
+      pathname:  "/dashboard",
+    }); 
+  } 
+
   function checkTyped() {
     return email.length > 0 && password.length > 0;
   }
@@ -47,11 +57,12 @@ const Login = () => {
     });
   }
 
-  if (redirect === false) {
+  //note from tutor - redirect in react based on jwt in local storage
 
+  if (redirect === false) {
     return (
       <Container>
-      <Row>
+      <Row>cc
         <Col><img src="logo2.png" alt="logo"></img></Col>
         <Col>
           <div className="signin"><h3>Sign In</h3></div>
@@ -76,8 +87,12 @@ const Login = () => {
     )
   }
   else {
-    return <Redirect to='/dashboard'/>
+    return (
+      <Redirect to='/dashboard'/>
+    )
   }
+
+
 }
 
 export default Login;
