@@ -5,13 +5,16 @@
   } */
 
 
-  .new-trip-buttons{
+.new-trip-buttons {
     display: flex;
     justify-content: space-evenly;
-  }
+}
 
-  .new-trip-backbtn{
+.new-trip-backbtn {
     display: flex;
     justify-content: space-between;
-  }
+}
 
+.buttons {
+    margin: 5px;
+}

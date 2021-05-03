@@ -69,9 +69,6 @@ function NewTrip() {
       <section className="main-content">
         <h1>New Trip</h1>
         <div class='flex-container'>
-          <div>
-
-          </div>
 
           <div className="new-trip-inputname">
             <InputGroup className="mb-3">
@@ -85,9 +82,9 @@ function NewTrip() {
           </div>
 
           <div className="new-trip-buttons">
-            <Button href="/addfriends">Add Friends</Button>
-            <Button href="/createpoll">Create Poll</Button>
-            <Button href="/recommendations">Ask for Rec</Button>
+            <Button href="/addfriends" className="buttons">Add Friends</Button>
+            <Button href="/createpoll" className="buttons">Create Poll</Button>
+            <Button href="/recommendations" className="buttons">Ask for Rec</Button>
 
           </div>
 
@@ -97,10 +94,10 @@ function NewTrip() {
           </div>
 
           <div className="new-trip-backbtn">
-            <Button href="#">Back</Button>
-            <Button href="#">Add</Button>
+            <Button href="/currenttrip" className="buttons">Add</Button>
+            <Button href="pasttrips" className="buttons">Archive</Button>
+            <Button href="/dashboard" className="buttons">Back</Button>
           </div>
-
         </div>
 
       </section>
