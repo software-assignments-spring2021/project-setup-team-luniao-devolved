@@ -248,11 +248,23 @@ app.post("/api/preferences", (req, res) => {
         }
 
         Pref.findOne({user: user._id}, function(err, curr) {
+
+            console.log(curr);
+
             // create new preference
             if (curr === null) {
                 new Pref(pref).save(function(err, result) {
                     if (err) console.log(err);
-                    else console.log("saved!", result);
+                    else {
+                        console.log("saved!", result);
+                        // link to User Schema
+                        Pref.findOne({user: user._id}, function(err, pref) {
+                            User.findByIdAndUpdate(user._id, {preference: pref._id}, function(err, result) {
+                                if (err) console.log(err);
+                                else console.log("success!");
+                            });
+                        });
+                    }
                 });
             }
             // update if preference already exists
@@ -260,16 +272,17 @@ app.post("/api/preferences", (req, res) => {
                 const userId = {user: user._id};
                 Pref.update(userId, {$set: pref}, function(err, updated) {
                     if (err) console.log(err);
+                    else {
+                        // link to User Schema
+                        Pref.findOne({user: user._id}, function(err, pref) {
+                            User.findByIdAndUpdate(user._id, {preference: pref._id}, function(err, result) {
+                                if (err) console.log(err);
+                                else console.log("success!");
+                            });
+                        });
+                    }
                 });
             }
-
-            // link to User Schema
-            Pref.findOne({user: user._id}, function(err, pref) {
-                User.findByIdAndUpdate(user._id, {preference: pref._id}, function(err, result) {
-                    if (err) console.log(err);
-                    else console.log("success!");
-                });
-            });
         });
     });
     res.end();

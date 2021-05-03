@@ -64,21 +64,38 @@ function Preferences() {
         showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Preferences submitted.</Alert>;
     }
 
+    function showPref(a) {
+        if (a !== null) {
+            return (
+                <div>
+                    <p className="preference">This is your current preferences:</p>
+                    <ul className="preference">
+                        <li>Trip Budget: ${a.budget}</li>
+                        <li>Departure Time: {a.time}</li>
+                        <li>Duration (days): {a.length}</li>
+                        <li>Stay Type: {a.type}</li>
+                        <li>Stay rating: {a.rating}</li>
+                        <li>Transportation: {a.transport}</li>
+                    </ul>
+                </div>
+            )
+        }
+        else {
+            return (
+                <p className="nopref">You currently did not set up preferences!</p>
+            );
+        }
+    }
+
     return (
         // Container with padding
         <Container className="p-3">
             <Jumbotron>
                 <h1>Trip Preferences</h1>
                 <br />
-                <p className="preference">This is your current preferences:</p>
-                <ul className="preference">
-                    <li>Trip Budget: ${pref.budget}</li>
-                    <li>Departure Time: {pref.time}</li>
-                    <li>Duration (days): {pref.length}</li>
-                    <li>Stay Type: {pref.type}</li>
-                    <li>Stay rating: {pref.rating}</li>
-                    <li>Transportation: {pref.transport}</li>
-                </ul>
+
+                {showPref(pref)}
+
             </Jumbotron>
 
             {showSaved}
