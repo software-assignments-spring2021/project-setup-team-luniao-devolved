@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Form, Button, Container, Row, Col } from "react-bootstrap";
+import {Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
@@ -11,6 +11,7 @@ function SignUp() {
     const [password, setPassword] = useState("");
     const [repassword, setRepassword] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const [show, setShow] = useState(false);
 
     function checkTyped() {
         return email.length > 0 && password.length > 0 && fullname.length > 0 && repassword.length > 0;
@@ -39,7 +40,8 @@ function SignUp() {
           }
           else if (res.data === "success") {
             console.log("successful sign up");
-            setRedirect(true);
+            // setRedirect(true);
+            setShow(true);
           }
         }
       })
@@ -48,10 +50,17 @@ function SignUp() {
       });
     }
 
+    let showFunc = null;
+    if (show === true) {
+      showFunc = <Alert variant="success" onClose={() => setShow(false)} dismissible> You have successfully signed up!. Click <Alert.Link href="/">here</Alert.Link> to login.</Alert>;
+      // setShow(false);
+    }
     
     if (redirect === false) {
       return (
+
         <Container>
+        {showFunc}
           <Row>
           <Col><img src="logo2.png" alt="logo"></img></Col>
           <Col>
@@ -87,7 +96,8 @@ function SignUp() {
       )
     }
     else {
-      return <Redirect to='/dashboard'/>
+      // return <Redirect to='/dashboard'/>
+      return;
     }
 }
 
