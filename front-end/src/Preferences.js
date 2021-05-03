@@ -3,52 +3,87 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Alert } from 'react-bootstrap';
 import axios from 'axios';
-
+import "./Preferences.css";
 
 function Preferences() {
-    const [budget, setBudget] = useState(0);
+    const [budget, setBudget] = useState("");
     const [time, setTime] = useState('Morning');
-    const [length, setLength] = useState(0);
+    const [length, setLength] = useState("");
     const [type, setType] = useState('Hotel');
     const [rating, setRating] = useState(0);
     const [transport, setTransport] = useState('Flight');
+    const [pref, setPref] = useState({});
+    const [show, setShow] = useState(false);
 
-
-    const onSubmit = (e) => {
-        console.log("data saved");
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const nPref = {
-            budget,
-            time,
-            length,
-            type,
-            rating,
-            transport
-            /*pref_budget: { budget },
-            pref_time: { time },
-            pref_length: { length },
-            pref_type: { type },
-            pref_rating: { rating },
-            pref_transport: { transport }*/
 
-        };
-        axios.post('http://localhost:4000/api/preferences', nPref)
-            .then(res => console.log(res.data));
+        let prefData = new Object();
+        prefData.budget = budget;
+        prefData.time = time;
+        prefData.length = length;
+        prefData.type = type;
+        prefData.rating = rating;
+        prefData.transport = transport;
+        let prefString = JSON.stringify(prefData);
 
+        axios({
+            method: "post",
+            url: "http://localhost:4000/api/preferences",
+            data: prefString,
+            headers: {"Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`}
+        })
+        .then(function(res){
+            console.log("data saved!");
+        })
+        .catch(function(res) {
+            console.log(res);
+        });
+
+        setShow(true);
     }
+
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: "http://localhost:4000/api/preferences",
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem('JWT')}`
+            }
+        }).then(user => {
+            setPref(user.data);
+        });
+    }, []);
+
+    let showSaved = null;
+    if (show === true) {
+        showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Preferences submitted.</Alert>;
+    }
+
     return (
         // Container with padding
         <Container className="p-3">
-
             <Jumbotron>
                 <h1>Trip Preferences</h1>
-                <p>
-                    Customize preferences for your upcoming trip!
-        </p>
+                <br />
+                <p className="preference">This is your current preferences:</p>
+                <ul className="preference">
+                    <li>Trip Budget: ${pref.budget}</li>
+                    <li>Departure Time: {pref.time}</li>
+                    <li>Duration (days): {pref.length}</li>
+                    <li>Stay Type: {pref.type}</li>
+                    <li>Stay rating: {pref.rating}</li>
+                    <li>Transportation: {pref.transport}</li>
+                </ul>
             </Jumbotron>
-            <Form onSubmit={e => { onSubmit(e) }}>
+
+            {showSaved}
+
+            <Form onSubmit={e => { handleSubmit(e) }}>
                 <Form.Group controlId="TripBudget">
                     <Form.Label>Trip Budget</Form.Label>
                     <Form.Control size="sm" type="text" placeholder="$" value={budget} onChange={e => { setBudget(e.target.value) }} />
@@ -77,11 +112,11 @@ function Preferences() {
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="Rating">
-                    <Form.Label>Rating</Form.Label>
+                    <Form.Label>Stay Rating</Form.Label>
                     <Form.Control size="sm" as="select" value={rating} onChange={e => { setRating(e.target.value) }}>
                         <option>1</option>
                         <option>2</option>
-                        <option>3 </option>
+                        <option>3</option>
                         <option>4</option>
                         <option>5</option>
                     </Form.Control>
@@ -95,22 +130,13 @@ function Preferences() {
                         <option>Personal</option>
                     </Form.Control>
                 </Form.Group>
-                <Button type="submit" variant="outline-success">Confirm</Button>
+                <div class="col-sm-12 text-center">
+                    <Button type="submit" variant="outline-success" className="buttons">Confirm</Button>
+                    <Button variant="outline-danger" href='/profile' className="buttons">Back to Profile</Button>
+                </div>
             </Form >
-            <>
-
-                <Button variant="outline-danger" href='/profile'>Back to Profile</Button>
-
-                <br />
-            </>
-
         </Container >
-
-
     );
 }
-
-
-
 
 export default Preferences;
