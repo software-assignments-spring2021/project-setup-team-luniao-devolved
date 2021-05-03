@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import './index.css';
 import Login from './Login';
+import Logout from './Logout';
 import GuestDashboard from './GuestDashboard';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
@@ -144,6 +145,12 @@ if (isLoggedIn) {
               <NavBar/>
               <Recommendations/>
             </Route>
+
+            <Route exact path="/logout">
+              <Logout />
+            </Route>
+
+
         </Switch>
     </Router>,
     document.getElementById('root')
@@ -233,6 +240,12 @@ if (isLoggedIn) {
                 <NavBar/>
                 <Recommendations/>
               </Route>
+
+              <Route exact path="/logout">
+                <Logout />
+              </Route>
+
+
           </Switch>
       </Router>,
       document.getElementById('root')

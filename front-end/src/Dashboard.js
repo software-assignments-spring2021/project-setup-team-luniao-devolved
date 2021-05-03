@@ -16,7 +16,6 @@ function Dashboard(){
     // const hasJWT = localStorage.getItem('JWT');
 
     useEffect(() => {
-
     /*
       // a nested function that fetches the data
       async function fetchData() {
