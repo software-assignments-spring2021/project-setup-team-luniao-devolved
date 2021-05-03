@@ -10,6 +10,8 @@ import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'reac
 function Dashboard(){
 
     const [user, setData] = useState([]);
+    const [userData, setUserData] = useState({});
+
     const history = useHistory();
 
     // const [hasJWT, sethasJWT] = useState(localStorage.getItem('JWT'));
@@ -51,12 +53,24 @@ function Dashboard(){
             setData(post.data);
       });
 
+      axios({
+        method: "GET",
+        url: "http://localhost:4000/api/userinfo",
+        headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+        }
+      }).then(userinfo => {
+          setUserData(userinfo.data);
+      });
+
+
     }, []);
     return(
         <div className="dashboard">
 
             <div className="dashboard-header">
-                <h3>Dashboard</h3>
+                <h3> {userData["fullname"]}'s Dashboard</h3>
             </div>
             {/* <textarea class="postform" rows="3" placeholder="How is your vacation going?"></textarea> 
                         <button type="submit" class="btn btn-default">Post</button>

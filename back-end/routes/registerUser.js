@@ -49,6 +49,9 @@ module.exports = app => {
       } else {
         req.login(user, err => {
           User.findOne({email: user.email}, function (err, user) {
+            user.fullname = req.body.fullname;
+            console.log("************");
+            console.log(user);
             user.save(function(err, result){
                 if (err){
                     console.log(err);
