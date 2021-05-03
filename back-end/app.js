@@ -49,9 +49,79 @@ app.use(passport.initialize());
 
 // not making routes for Guest Dashboard because doesn't require any data from back end
 
+/* Login Page Router */
+// app.post("/api/login", (req, res) => {
+//     // currently, we're not using mongoose so cannot check whether the user is in the database
+//     // printing out the inputted user to prove back-end is working as of now
+
+//     User.findOne({ email: req.body.email, password: req.body.password }, function (err, user) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         if (user) {
+//             console.log("logged in!");
+//         }
+//         else {
+//             console.log("You must sign up!");
+//         }
+//     })
+// });
+
 //Importing passport routes
 require('./routes/loginUser')(app);
 require('./routes/registerUser')(app);
+
+/* Login Page Router */
+// app.get("/api/login", (req, res) => {
+//     console.log(req.query);
+//     User.findOne({email: req.query.email}, function(err, user) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         if (user) {
+//             if (user.password === req.query.password) {
+//                 res.send("success");
+//             }
+//             else {
+//                 res.send("incorrectpw");
+//             }
+//         }
+//         else {
+//             res.send("nouser");
+//         }
+//     })
+// });
+
+// app.post("/api/signup", (req, res) => {
+//     User.findOne({email: req.body.email}, function(err, user) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         if (user) {
+//             res.send("alreadyuser");
+//         }
+//         else {
+//             if (req.body.password !== req.body.repassword) {
+//                 res.send("incorrectpw");
+//             }
+//             else {
+//                 new User({
+//                     fullname: req.body.fullname,
+//                     email: req.body.email,
+//                     password: req.body.password
+//                 }).save(function(err) {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                     else {
+//                         console.log('saved!');
+//                         res.send("success");
+//                     }
+//                 });
+//             }
+//         }
+//     });
+// });
 
 //delete user database docs -- for testing purposes
 // User.deleteMany({}, function (err, posts) {} );
@@ -141,8 +211,10 @@ app.post("/api/recommendations", (req, res) => {
 //for logging incoming requests
 //app.use('/Cpoll, pollRoute');
 
+
 /* Create Post Page Routes */
 app.post("/api/createpost", (req, res) => {
+
     // now we have the data
     recForm = req.body;
     userHash = req.header('Authorization').slice(4);
@@ -151,6 +223,8 @@ app.post("/api/createpost", (req, res) => {
     //get user mongoose object id
     User.findOne({ email: decodedUser}, function (err, user) {
         //validation for the post
+
+
 
         //save in the database
         new Post({
@@ -170,7 +244,13 @@ app.post("/api/createpost", (req, res) => {
         console.log(decodedUser);
         console.log(user._id);
     });
+    
     res.end();
+
+
+
+    
+
 });
 
 /* Preferences Page Routes */
@@ -216,63 +296,30 @@ pollRoute.route('/').post(function (req, res) {
     // })
 });
 
-/* Preferences Page */
-app.get('/api/preferences', (req, res) => {
-    recForm = req.body;
-    userHash = req.header('Authorization').slice(4);
-    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
-
-    User.findOne({ email: decodedUser }, function (err, user) {
-        console.log(user);
-        Pref.findOne({user: user._id}, function(err, pref) {
-            console.log(pref);
-            res.json(pref);
-        });
-    });
-});
-
+//prefRoute.route('/').post(function (req, res) {
 app.post("/api/preferences", (req, res) => {
-    const userHash = req.header('Authorization').slice(4);
-    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
-    
-    User.findOne({email: decodedUser}, function(err, user) {
-        
-        const pref = {
-            budget: req.body.budget,
-            time: req.body.time,
-            length: req.body.length,
-            type: req.body.type,
-            rating: req.body.rating,
-            transport: req.body.transport,
-            user: user._id
+    const npref = new Pref({
+        budget: req.body.budget,
+        time: req.body.time,
+        length: req.body.length,
+        type: req.body.type,
+        rating: req.body.rating,
+        transport: req.body.transport
+    }).save(function(err) {
+        if (err) {
+            res.status(400).send('failed to save preferences');
         }
-
-        Pref.findOne({user: user._id}, function(err, curr) {
-            // create new preference
-            if (curr === null) {
-                new Pref(pref).save(function(err, result) {
-                    if (err) console.log(err);
-                    else console.log("saved!", result);
-                });
-            }
-            // update if preference already exists
-            else {
-                const userId = {user: user._id};
-                Pref.update(userId, {$set: pref}, function(err, updated) {
-                    if (err) console.log(err);
-                });
-            }
-
-            // link to User Schema
-            Pref.findOne({user: user._id}, function(err, pref) {
-                User.findByIdAndUpdate(user._id, {preference: pref._id}, function(err, result) {
-                    if (err) console.log(err);
-                    else console.log("success!");
-                });
-            });
-        });
+        else {
+            res.status(200).json({ 'preferences': 'saved successfully' });
+        }
     });
-    res.end();
+        /*.then(npref => {
+            console.log(npref);
+            res.status(200).json({ 'preferences': 'saved successfully' });
+        })
+        .catch(err => {
+            res.status(400).send('failed to save preferences');
+        })*/
 });
 
 //Dashboard Routes
