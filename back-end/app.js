@@ -407,30 +407,51 @@ app.get('/api/friends', (req, res) => {
     userHash = req.header('Authorization').slice(4);
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-    //get user mongoose object id
     User.findOne({ email: decodedUser}, function (err, user) {
 
         if (err) {
             console.log(err);
         }
-        
-        //find another user with that email
-        User.find({ email: req.body.email}, function (err, friend) {
 
-
+        User.find({'_id': { $in: user.friends}
+        }, function(err, docs){
             if (err) {
                 console.log(err);
             }
+            return res.json(docs);
+        });
+    });
+});
 
-            User.find({'_id': { $in: user.friends}}, function(err, docs){
-                if (err) {
-                    console.log(err);
-                }
 
-                return res.json(docs);
+app.post('/api/delfriend', (req, res, next) => {
 
-            });
-          
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    console.log(req.body);
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        //find another user with that email
+        User.findOne({ email: req.body.email}, function (err, friend) {
+
+            if (err) {
+                return res.send("nofriend");
+            }
+
+            if (!user.friends.includes(friend._id)) {
+                return res.send("alreadyexists");
+            } else {
+                user.friends = user.friends.remove(friend._id);
+                user.save(function(err, result) {
+                    if (err){
+                        console.log(err);
+                    }
+                });
+                return res.status(200).send("success");
+            }
         });
         
     });
@@ -446,7 +467,7 @@ app.post('/api/addfriend', (req, res, next) => {
         //find another user with that email
         User.findOne({ email: req.body.email}, function (err, friend) {
 
-            if (err) {
+            if (err || !friend) {
                 return res.send("nofriend");
             }
 
