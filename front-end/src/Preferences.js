@@ -9,9 +9,9 @@ import axios from 'axios';
 import "./Preferences.css";
 
 function Preferences() {
-    const [budget, setBudget] = useState(0);
+    const [budget, setBudget] = useState("");
     const [time, setTime] = useState('Morning');
-    const [length, setLength] = useState(0);
+    const [length, setLength] = useState("");
     const [type, setType] = useState('Hotel');
     const [rating, setRating] = useState(0);
     const [transport, setTransport] = useState('Flight');
