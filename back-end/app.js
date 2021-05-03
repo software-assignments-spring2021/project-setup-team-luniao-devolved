@@ -404,8 +404,36 @@ app.get('/api/friends', (req, res) => {
     //     })
     //     .catch(err => next(err))
 
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        if (err) {
+            console.log(err);
+        }
+        
+        //find another user with that email
+        User.find({ email: req.body.email}, function (err, friend) {
 
 
+            if (err) {
+                console.log(err);
+            }
+
+            User.find({'_id': { $in: user.friends}}, function(err, docs){
+                if (err) {
+                    console.log(err);
+                }
+
+                return res.json(docs);
+
+            });
+          
+        });
+        
+    });
 });
 
 app.post('/api/addfriend', (req, res, next) => {
