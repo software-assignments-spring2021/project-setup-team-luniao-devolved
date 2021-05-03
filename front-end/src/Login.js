@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Form, Button, Container, Row, Col} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./Login.css";
-import { Link, Redirect,Router, Route, Switch, BrowserRouter} from 'react-router-dom';
+import { Link, Redirect,Router, Route, Switch, BrowserRouter, useHistory} from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import axios from "axios";
 
@@ -13,8 +13,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const history = useHistory();
 
-  
+  if (localStorage.getItem('JWT')) {
+    history.push({
+      pathname:  "/dashboard",
+    }); 
+  } 
+
   function checkTyped() {
     return email.length > 0 && password.length > 0;
   }
