@@ -27,11 +27,15 @@ function SignUp() {
       }).then((res) => {
         console.log(res);
         if (res.data === "incorrectpw") {
-          alert ("Password does not match!");
+          alert ("Passwords do not match! Please try again.");
+        } else if (res.data === "incorrectem") {
+          alert ("Invalid email! Please try again.");
+        } else if (res.data === "incorrectname") {
+          alert ("Invalid full name! Please try again.");
         }
         else {
           if (res.data === "alreadyuser") {
-            alert("User already exists!");
+            alert("User with this email already exists! Please try again.");
           }
           else if (res.data === "success") {
             console.log("successful sign up");
@@ -65,12 +69,12 @@ function SignUp() {
 
             <Form.Group className="form" controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
+              <Form.Control value={password} type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Enter password"/>
             </Form.Group>
 
             <Form.Group className="form" controlId="repassword">
               <Form.Label>Confirm password</Form.Label>
-              <Form.Control value={repassword} onChange={(e) => setRepassword(e.target.value)} placeholder="Re-enter password"/>
+              <Form.Control value={repassword} type="password" onChange={(e) => setRepassword(e.target.value)} placeholder="Re-enter password"/>
             </Form.Group>
             
             <Button block size="lg" disabled={!checkTyped()} onClick={handleSubmit}>Sign Up</Button>
