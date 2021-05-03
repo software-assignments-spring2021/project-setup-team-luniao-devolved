@@ -26,7 +26,7 @@ function CreatePost(props) {
       method: "post",
       url: "http://localhost:4000/api/createpost",
       data: formString,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`},
     })
       .then(function (response) {
         //handle success
