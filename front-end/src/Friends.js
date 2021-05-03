@@ -27,16 +27,11 @@ function Friends() {
     }, []);
   return (
     <div className="Friends">
-      <h1>Friends</h1>
+      <h3>Friends</h3>
       <section className="main-content">
         <div class='flex-container'>
           <div>
           <img src="logo192.png" alt=""></img>
-          </div>
-
-          <div>
-            <h3> Joe Smith</h3>
-            <h5> September 25, 1998</h5>
           </div>
 
           <div>
