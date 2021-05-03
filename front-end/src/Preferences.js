@@ -68,7 +68,7 @@ function Preferences() {
         if (a !== null) {
             return (
                 <div>
-                    <p className="preference">This is your current preferences:</p>
+                    <p className="preference">These are your current preferences:</p>
                     <ul className="preference">
                         <li>Trip Budget: ${a.budget}</li>
                         <li>Departure Time: {a.time}</li>
