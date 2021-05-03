@@ -25,7 +25,9 @@ function ProfilePage(){
     })
     */
 
-    const [user, setData] = useState([]);
+    const [posts, setData] = useState([]);
+    const [user, setUserData] = useState({});
+
 
     useEffect(() => {
     /* This block of code was for using Mockaroo
@@ -47,17 +49,32 @@ function ProfilePage(){
       // the blank array below causes this callback to be executed only once on component load
       */
       //New route 
-    axios({
-      method: "GET",
-      url: "http://localhost:4000/api/ProfilePage",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(user => {
-      setData(user.data);
-    });
+        axios({
+        method: "GET",
+        url: "http://localhost:4000/api/ProfilePage",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem('JWT')}`
+        }
+        }).then(user => {
+        console.log(user.data);
+        setData(user.data);
+        });
+
+        axios({
+            method: "GET",
+            url: "http://localhost:4000/api/userinfo",
+            headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem('JWT')}`
+            }
+        }).then(user => {
+            console.log(user.data);
+            setUserData(user.data);
+        });
 
     }, []);
+
 
     return(
         <div classname = "ProfilePage">
@@ -67,7 +84,12 @@ function ProfilePage(){
                     Profile
                 </h1>
                 <img class="img-responsive" src="https://my.api.mockaroo.com/users.json?key=4e1c2150" class="img-circle"></img>
-                <div class="container">
+                
+                {/* replace with fullname when we get that working */}
+                <h2>
+                    {user['email']} 
+                </h2>
+                {/* <div class="container">
                     <div class="row">
                         {user["first_name"]} {user["last_name"]}
                     </div>
@@ -82,8 +104,16 @@ function ProfilePage(){
                         {user["posts"]}
                     </div>
                 </div>
-                </div>
+                </div> */}
             </header>
+
+            {posts.map((post, index) => (
+                <div>
+                    <h3>{post.title}</h3>
+                    <p>{post.post}</p>
+                </div>
+            ))}
+                
         </div>
     );
 }

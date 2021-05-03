@@ -3,8 +3,13 @@ const express = require("express") // CommonJS import style!
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
 const axios = require("axios")
 const cors = require('cors');
+const jwtSecret = require('./config/jwtConfig');
+const jwt = require('jsonwebtoken');
+
 const mongoose = require('mongoose');
 const connection = mongoose.connection;
+
+
 
 // database set up
 require('./db');
@@ -12,6 +17,8 @@ require('./db');
 const Poll = mongoose.model('Poll');
 const Pref = mongoose.model('Pref');
 const Itin = mongoose.model('Itin');
+const Post = mongoose.model('Post');
+
 
 const bodyParser = require('body-parser');
 const passport = require('passport')
@@ -123,6 +130,21 @@ User.find({}, function (err, posts) {
     console.log(posts);
 });
 
+/* Get User info */
+app.get('/api/userinfo', (req, res) => {
+    // now we have the data
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser}, function (err, user) {
+        res.json(user);
+    });
+    
+});
+
+
+
 /* Past Trips Page Routes */
 // An api endpoint that returns list of past trips
 app.get('/api/pasttrips', (req, res) => {
@@ -195,11 +217,39 @@ app.post("/api/createpost", (req, res) => {
 
     // now we have the data
     recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-    // now, we would use mongoose to save the post data in a database. But to prove the back-end
-    // is working, I output the post data to the console of the server.
-    console.log(recForm);
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+        //validation for the post
+
+
+
+        //save in the database
+        new Post({
+            title: recForm.title,
+            post: recForm.post,
+            author: user._id
+        }).save(function(err,result){
+            if (err){
+                console.log(err);
+            }
+            else{
+                console.log(result)
+            }
+        })
+
+        console.log(recForm);
+        console.log(decodedUser);
+        console.log(user._id);
+    });
+    
     res.end();
+
+
+
+    
 
 });
 
@@ -289,15 +339,33 @@ app.get("/api/Dashboard", (req, res) => {
 //View Profile routes
 app.get("/api/ProfilePage", (req, res) => {
     //Without a database this is just linking to mockaroo
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
-        .then(user => {
-            //Map the response onto the User data
-            res.json(user.data);
-            console.log('Retrieved User data');
-        })
-        .catch(err => next(err))
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    //     .then(user => {
+    //         //Map the response onto the User data
+    //         res.json(user.data);
+    //         console.log('Retrieved User data');
+    //     })
+    //     .catch(err => next(err))
 
+    //Getting posts from the database
+
+    // now we have the data
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+        if(err) {console.log(err);}
+
+        //validation for the post
+        Post.find({ author: user._id}, function(err, posts) {
+            if(err) {console.log(err);}
+            res.json(posts);
+        });
+        
+    });
 });
 
 app.get('/api/currentTrip', (req, res) => {
