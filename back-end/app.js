@@ -217,7 +217,19 @@ pollRoute.route('/').post(function (req, res) {
 });
 
 /* Preferences Page */
-mongoose.set('useFindAndModify', false);
+app.get('/api/preferences', (req, res) => {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        console.log(user);
+        Pref.findOne({user: user._id}, function(err, pref) {
+            console.log(pref);
+            res.json(pref);
+        });
+    });
+});
 
 app.post("/api/preferences", (req, res) => {
     const userHash = req.header('Authorization').slice(4);
@@ -246,10 +258,18 @@ app.post("/api/preferences", (req, res) => {
             // update if preference already exists
             else {
                 const userId = {user: user._id};
-                Pref.update(userId, {$set: pref}, {upsert: true}, function(err, updated) {
+                Pref.update(userId, {$set: pref}, function(err, updated) {
                     if (err) console.log(err);
                 });
             }
+
+            // link to User Schema
+            Pref.findOne({user: user._id}, function(err, pref) {
+                User.findByIdAndUpdate(user._id, {preference: pref._id}, function(err, result) {
+                    if (err) console.log(err);
+                    else console.log("success!");
+                });
+            });
         });
     });
     res.end();
