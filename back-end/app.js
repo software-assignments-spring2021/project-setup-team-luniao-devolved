@@ -396,13 +396,52 @@ app.post('/api/newTrip', (req, res, next) => {
 
 app.get('/api/friends', (req, res) => {
     // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
-        .then(friends => {
-            res.json(friends.data);
-            console.log('Retrieved friends list');
-        })
-        .catch(err => next(err))
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    //     .then(friends => {
+    //         res.json(friends.data);
+    //         console.log('Retrieved friends list');
+    //     })
+    //     .catch(err => next(err))
+
+
+
+});
+
+app.post('/api/addfriend', (req, res, next) => {
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+        //find another user with that email
+        User.findOne({ email: req.body.email}, function (err, friend) {
+
+            if (err) {
+                return res.send("nofriend");
+            }
+
+            if (user.friends.includes(friend._id)) {
+                return res.send("alreadyexists");
+            }
+
+            console.log(friend._id);
+            console.log(user._id);
+            if (friend._id.equals(user._id)) {
+                return res.send("youarefriend");
+            }
+
+            user.friends.push(friend._id);
+            user.save(function(err, result) {
+                if (err){
+                    console.log(err);
+                }
+            });
+            return res.status(200).send("success");
+        });
+        
+    });
 });
 
 app.get('/logout', (req, res) => {
