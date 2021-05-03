@@ -130,6 +130,21 @@ User.find({}, function (err, posts) {
     console.log(posts);
 });
 
+/* Get User info */
+app.get('/api/userinfo', (req, res) => {
+    // now we have the data
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser}, function (err, user) {
+        res.json(user);
+    });
+    
+});
+
+
+
 /* Past Trips Page Routes */
 // An api endpoint that returns list of past trips
 app.get('/api/pasttrips', (req, res) => {
@@ -324,15 +339,33 @@ app.get("/api/Dashboard", (req, res) => {
 //View Profile routes
 app.get("/api/ProfilePage", (req, res) => {
     //Without a database this is just linking to mockaroo
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
-        .then(user => {
-            //Map the response onto the User data
-            res.json(user.data);
-            console.log('Retrieved User data');
-        })
-        .catch(err => next(err))
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    //     .then(user => {
+    //         //Map the response onto the User data
+    //         res.json(user.data);
+    //         console.log('Retrieved User data');
+    //     })
+    //     .catch(err => next(err))
 
+    //Getting posts from the database
+
+    // now we have the data
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+        if(err) {console.log(err);}
+
+        //validation for the post
+        Post.find({ author: user._id}, function(err, posts) {
+            if(err) {console.log(err);}
+            res.json(posts);
+        });
+        
+    });
 });
 
 app.get('/api/currentTrip', (req, res) => {
