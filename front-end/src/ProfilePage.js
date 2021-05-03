@@ -79,10 +79,9 @@ function ProfilePage(){
     return(
         <div classname = "ProfilePage">
             <header classname = "Profile-header">
-                <br />
-                <h1> 
-                    Profile
-                </h1>
+                
+                <h3> {user["fullname"]}'s Profile</h3>
+
                 <img class="img-responsive" src="https://my.api.mockaroo.com/users.json?key=4e1c2150" class="img-circle"></img>
                 
                 {/* replace with fullname when we get that working */}
