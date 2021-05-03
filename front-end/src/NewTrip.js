@@ -1,15 +1,17 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
 
 function NewTrip() {
 
   const [user, setData] = useState([]);
+
+  const [tripname, setTripname] = useState("");
 
   // useEffect(() => {
   //   axios({
@@ -72,12 +74,9 @@ function NewTrip() {
 
           <div className="new-trip-inputname">
             <InputGroup className="mb-3">
-              <FormControl
-                placeholder="Trip Name"
-                aria-label="Trip Name"
-                aria-describedby="basic-addon2"
-              //value={newTripTitle} onChange={this.onChangeTripTitle}
-              />
+                <Form.Group controlId="tripName">
+                    <Form.Control size="sm" type="text" placeholder="Trip Name" value={tripname} onChange={e => { setTripname(e.target.value) }} />
+                </Form.Group>
             </InputGroup>
           </div>
 
@@ -94,9 +93,9 @@ function NewTrip() {
           </div>
 
           <div className="new-trip-backbtn">
-            <Button href="/currenttrip" className="buttons">Add</Button>
-            <Button href="pasttrips" className="buttons">Archive</Button>
-            <Button href="/dashboard" className="buttons">Back</Button>
+            <Button type="submit" variant="outline-primary" className="buttons">Add</Button>
+            <Button href="pasttrips" variant="outline-success" className="buttons">Archive</Button>
+            <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
           </div>
         </div>
 
