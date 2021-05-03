@@ -48,6 +48,15 @@ const Itin = new mongoose.Schema({
 
 mongoose.model('Itin', Itin);
 
+const Post = new mongoose.Schema({
+    title: String,
+    post: String,
+    createdDate : { type : Date, default: Date.now },
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+});
+
+mongoose.model('Post', Post);
+
 mongoose.connect(url)
     .then(() => {
         console.log('Connected to database!')

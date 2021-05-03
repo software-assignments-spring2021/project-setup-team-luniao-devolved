@@ -3,8 +3,13 @@ const express = require("express") // CommonJS import style!
 const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
 const axios = require("axios")
 const cors = require('cors');
+const jwtSecret = require('./config/jwtConfig');
+const jwt = require('jsonwebtoken');
+
 const mongoose = require('mongoose');
 const connection = mongoose.connection;
+
+
 
 // database set up
 require('./db');
@@ -12,6 +17,8 @@ require('./db');
 const Poll = mongoose.model('Poll');
 const Pref = mongoose.model('Pref');
 const Itin = mongoose.model('Itin');
+const Post = mongoose.model('Post');
+
 
 const bodyParser = require('body-parser');
 const passport = require('passport')
@@ -195,11 +202,39 @@ app.post("/api/createpost", (req, res) => {
 
     // now we have the data
     recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-    // now, we would use mongoose to save the post data in a database. But to prove the back-end
-    // is working, I output the post data to the console of the server.
-    console.log(recForm);
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+        //validation for the post
+
+
+
+        //save in the database
+        new Post({
+            title: recForm.title,
+            post: recForm.post,
+            author: user._id
+        }).save(function(err,result){
+            if (err){
+                console.log(err);
+            }
+            else{
+                console.log(result)
+            }
+        })
+
+        console.log(recForm);
+        console.log(decodedUser);
+        console.log(user._id);
+    });
+    
     res.end();
+
+
+
+    
 
 });
 
