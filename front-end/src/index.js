@@ -21,7 +21,6 @@ import CreatePost from './CreatePost';
 import Recommendations from './Recommendations';
 import AddFriends from './AddFriends';
 
-
 // function AuthRoutes() {
 
 //   axios({
@@ -51,6 +50,7 @@ import AddFriends from './AddFriends';
 //     console.log(err);
 //   });
 
+
 let isLoggedIn = localStorage.getItem('JWT');
 if (isLoggedIn) {
   ReactDOM.render(
@@ -63,7 +63,7 @@ if (isLoggedIn) {
             </Route>
   
             <Route exact path="/signup" component={SignUp}/>
-  
+
             <Route exact path="/dashboard"> 
               <NavBar/>
               <Dashboard/>
@@ -163,9 +163,14 @@ if (isLoggedIn) {
               </Route>                      
     
               <Route exact path="/signup" component={SignUp}/>
-    
+              {/*     
               <Route exact path="/dashboard"> 
                 <Redirect to='/'/>
+              </Route> */}
+
+              <Route exact path="/dashboard"> 
+                <NavBar/>
+                <Dashboard/>
               </Route>
     
               {/* <PrivateRoute exact path="/dashboard"> 
@@ -235,9 +240,6 @@ if (isLoggedIn) {
   }
 
 
-
-
-
 // ReactDOM.render(
 //   <Router>
 //        <Switch>
@@ -250,8 +252,10 @@ if (isLoggedIn) {
 //           <Route exact path="/signup" component={SignUp}/>
 
 //           <Route exact path="/dashboard"> 
-//             <NavBar/>
-//             <Dashboard/>
+//           <NavBar/>
+//             <WithEnsureAuthentication>
+//               <Dashboard/>
+//             </WithEnsureAuthentication>
 //           </Route>
 
 //           {/* <PrivateRoute exact path="/dashboard"> 
