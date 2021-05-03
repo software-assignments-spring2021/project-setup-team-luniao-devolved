@@ -5,7 +5,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/ListGroup';
 import axios from 'axios'
 import { useEffect } from 'react';
-import {Button, Modal, Form, Alert} from 'react-bootstrap';
+import {Button, Modal, Form, Alert, CardColumns, Card} from 'react-bootstrap';
+
+const reload=()=>window.location.reload();
 
 function AddFriendsModal(props) {
 
@@ -67,6 +69,7 @@ function AddFriendsModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      onExit={reload}
     >
       {showFunc}
       <Modal.Header closeButton style={{
@@ -104,7 +107,7 @@ function AddFriendsModal(props) {
 function Friends() {
 
 
-  const [user, setData] = useState([]);
+  const [friends, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [modalShow, setModalShow] = useState(false);
 
@@ -113,10 +116,12 @@ function Friends() {
       method: "GET",
       url: "http://localhost:4000/api/friends",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
       }
-    }).then(user => {
-      setData(user.data);
+    }).then(friends => {
+      console.log(friends);
+      setData(friends.data);
     });
 
     axios({
@@ -163,28 +168,19 @@ function Friends() {
             <h5> September 25, 1998</h5>
           </div> */}
 
-          <div>
-            <ListGroup>
-              <ListGroup.Item>
-                <img src="logo192.png" alt=""></img>
-                Pranav Guntunur
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                <img src="logo192.png" alt=""></img>
-                Karik Jain
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                <img src="logo192.png" alt=""></img>
-                Kaylee Park
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                <img src="logo192.png" alt=""></img>
-                Brian Steinberg
-              </ListGroup.Item>
-            </ListGroup>
+          <div class="friendscard">
+            <CardColumns>
+              {friends.map(e => (
+                  <Card border="primary">
+                    <Card.Body>
+                      <Card.Title>{e["fullname"]}</Card.Title>
+                      <Card.Text>
+                        {e["email"]}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))}
+            </CardColumns>
           </div>
 
           <div>
