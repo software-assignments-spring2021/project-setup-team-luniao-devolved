@@ -14,18 +14,19 @@ function AddFriendsModal(props) {
   const [addEmail, setAddEmail] = useState("");
   const [show, setShow] = useState(0);
 
+
   const handleSubmit= (e) => {
     console.log("Friend submitted");
     e.preventDefault();
 
-    let formData = new Object();
-    formData.email = addEmail;
-    let formString = JSON.stringify(formData);    
+    let formData1 = new Object();
+    formData1.email = addEmail;
+    let formString1 = JSON.stringify(formData1);    
 
     axios({
       method: "post",
       url: "http://localhost:4000/api/addfriend",
-      data: formString,
+      data: formString1,
       headers: { "Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`},
     })
       .then(function (res) {
@@ -110,6 +111,32 @@ function Friends() {
   const [friends, setData] = useState([]);
   const [userData, setUserData] = useState({});
   const [modalShow, setModalShow] = useState(false);
+  const [delFriend, setDel] = useState("");
+
+  if (delFriend !== "") {
+
+    console.log(delFriend);
+
+    let formData = new Object();
+    formData.email = delFriend;
+    let formString = JSON.stringify(formData);    
+
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/delfriend",
+      data: formString,
+      headers: { "Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`},
+    })
+      .then(function () {
+       reload();
+      })
+      .catch(function (res) {
+        //handle error
+        console.log(res);
+      });
+
+  }
+
 
   useEffect(() => {
     axios({
@@ -175,6 +202,7 @@ function Friends() {
                       <Card.Text>
                         {e["email"]}
                       </Card.Text>
+                      <Card.Link href="/friends" onClick={() => {setDel(e["email"]);}}>Delete Friend</Card.Link>
                     </Card.Body>
                   </Card>
                 ))}
