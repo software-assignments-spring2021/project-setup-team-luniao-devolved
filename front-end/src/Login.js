@@ -62,7 +62,7 @@ const Login = () => {
   if (redirect === false) {
     return (
       <Container>
-      <Row>cc
+      <Row>
         <Col><img src="logo2.png" alt="logo"></img></Col>
         <Col>
           <div className="signin"><h3>Sign In</h3></div>
