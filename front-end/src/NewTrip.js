@@ -1,15 +1,17 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
 
 function NewTrip() {
 
   const [user, setData] = useState([]);
+
+  const [tripname, setTripname] = useState("");
 
   // useEffect(() => {
   //   axios({
@@ -69,25 +71,19 @@ function NewTrip() {
       <section className="main-content">
         <h1>New Trip</h1>
         <div class='flex-container'>
-          <div>
-
-          </div>
 
           <div className="new-trip-inputname">
             <InputGroup className="mb-3">
-              <FormControl
-                placeholder="Trip Name"
-                aria-label="Trip Name"
-                aria-describedby="basic-addon2"
-              //value={newTripTitle} onChange={this.onChangeTripTitle}
-              />
+                <Form.Group controlId="tripName">
+                    <Form.Control size="sm" type="text" placeholder="Trip Name" value={tripname} onChange={e => { setTripname(e.target.value) }} />
+                </Form.Group>
             </InputGroup>
           </div>
 
           <div className="new-trip-buttons">
-            <Button href="/addfriends">Add Friends</Button>
-            <Button href="/createpoll">Create Poll</Button>
-            <Button href="/recommendations">Ask for Rec</Button>
+            <Button href="/addfriends" className="buttons">Add Friends</Button>
+            <Button href="/createpoll" className="buttons">Create Poll</Button>
+            <Button href="/recommendations" className="buttons">Ask for Rec</Button>
 
           </div>
 
@@ -97,10 +93,10 @@ function NewTrip() {
           </div>
 
           <div className="new-trip-backbtn">
-            <Button href="#">Back</Button>
-            <Button href="#">Add</Button>
+            <Button type="submit" variant="outline-primary" className="buttons">Add</Button>
+            <Button href="pasttrips" variant="outline-success" className="buttons">Archive</Button>
+            <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
           </div>
-
         </div>
 
       </section>
