@@ -291,16 +291,65 @@ app.post("/api/preferences", (req, res) => {
 //Dashboard Routes
 //Here we send a get request to display the recent posts from the users' friends
 app.get("/api/Dashboard", (req, res) => {
-    console.log(req.user);
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
-        .then(post => {
+    // console.log(req.user);
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
+    //     .then(post => {
 
-            res.json(post.data);
-            console.log('Posts received')
-        })
-        .catch(err => next(err))
+    //         res.json(post.data);
+    //         console.log('Posts received')
+    //     })
+    //     .catch(err => next(err))
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        if (err) {
+            console.log(err);
+        }
+
+        let newDocs = Post.find({'author': { $in: user.friends}}, function(err, docs){
+            if (err) {
+                console.log(err);
+            }
+
+            console.log(docs);
+
+            return res.json(docs);
+        }).populate('author');
+
+
+    });
+
 });
+
+
+//getuserbyid
+app.post("/api/getuser", (req, res) => {
+    // console.log(req.user);
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
+    //     .then(post => {
+
+    //         res.json(post.data);
+    //         console.log('Posts received')
+    //     })
+    //     .catch(err => next(err))
+
+    User.findById(req.body.id, function (err, user) {
+
+        if (err) {
+            console.log(err);
+        }
+
+        return res.json(user);
+    });
+
+});
+
+
 
 //View Profile routes
 app.get("/api/ProfilePage", (req, res) => {
@@ -362,13 +411,101 @@ app.post('/api/newTrip', (req, res, next) => {
 
 app.get('/api/friends', (req, res) => {
     // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
-        .then(friends => {
-            res.json(friends.data);
-            console.log('Retrieved friends list');
-        })
-        .catch(err => next(err))
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    //     .then(friends => {
+    //         res.json(friends.data);
+    //         console.log('Retrieved friends list');
+    //     })
+    //     .catch(err => next(err))
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        if (err) {
+            console.log(err);
+        }
+
+        User.find({'_id': { $in: user.friends}
+        }, function(err, docs){
+            if (err) {
+                console.log(err);
+            }
+            return res.json(docs);
+        });
+    });
+});
+
+
+app.post('/api/delfriend', (req, res, next) => {
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    console.log(req.body);
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        //find another user with that email
+        User.findOne({ email: req.body.email}, function (err, friend) {
+
+            if (err) {
+                return res.send("nofriend");
+            }
+
+            if (!user.friends.includes(friend._id)) {
+                return res.send("alreadyexists");
+            } else {
+                user.friends = user.friends.remove(friend._id);
+                user.save(function(err, result) {
+                    if (err){
+                        console.log(err);
+                    }
+                });
+                return res.status(200).send("success");
+            }
+        });
+        
+    });
+});
+
+app.post('/api/addfriend', (req, res, next) => {
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    //get user mongoose object id
+    User.findOne({ email: decodedUser}, function (err, user) {
+        //find another user with that email
+        User.findOne({ email: req.body.email}, function (err, friend) {
+
+            if (err || !friend) {
+                return res.send("nofriend");
+            }
+
+            if (user.friends.includes(friend._id)) {
+                return res.send("alreadyexists");
+            }
+
+            console.log(friend._id);
+            console.log(user._id);
+            if (friend._id.equals(user._id)) {
+                return res.send("youarefriend");
+            }
+
+            user.friends.push(friend._id);
+            user.save(function(err, result) {
+                if (err){
+                    console.log(err);
+                }
+            });
+            return res.status(200).send("success");
+        });
+        
+    });
 });
 
 app.get('/logout', (req, res) => {
