@@ -557,6 +557,76 @@ app.post('/api/delfriend', (req, res, next) => {
     });
 });
 
+app.get('/api/viewfriendscurrenttrip', (req, res) => {
+    // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    //     .then(friends => {
+    //         res.json(friends.data);
+    //         console.log('Retrieved friends list');
+    //     })
+    //     .catch(err => next(err))
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            if (err) {
+                console.log(err);
+            }
+
+            return res.json(trip.friend);
+            
+        }).populate("friend");
+    });
+});
+
+app.post('/api/addfriendscurrenttrip', (req, res, next) => {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+
+            let allEmails = recForm.map(a => a.value);
+            console.log(allEmails);
+
+
+            //find another user with that email
+            User.find({'email': { $in: allEmails}}, function (err, friend) {
+
+                if (err || !friend) {
+                    return res.send("nofriend");
+                }
+
+                let allIDs = friend.map(a => a._id);
+
+                console.log(trip);
+
+                if (trip.friend) {
+                    if (trip.friend.some(r=> allIDs.indexOf(r) >= 0)) {
+                        return res.send("alreadyexists");
+                    }
+                }
+
+                trip.friend = trip.friend.concat(allIDs);
+                trip.save(function(err, result) {
+                    if (err){
+                        console.log(err);
+                    }
+                });
+                return res.status(200).send("success");
+
+            });
+        });
+    });
+
+
+})
+
 app.post('/api/addfriend', (req, res, next) => {
 
     userHash = req.header('Authorization').slice(4);
