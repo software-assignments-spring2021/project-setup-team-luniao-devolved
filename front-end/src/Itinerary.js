@@ -16,8 +16,6 @@ function AddItem(props) {
     const [location, setLocation] = useState('');
     const [time, setTime] = useState('');
 
-    const [show, setShow] = useState(false);
-
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -38,17 +36,13 @@ function AddItem(props) {
             }
           }).then(function(res) {
             console.log("Itinerary saved!");
+            if (res.data === "itinerary") {
+                alert("Itinerary saved!");
+            }
           })
           .catch(function(res) {
             console.log(res);
           });
-      
-          setShow(true);
-    }
-
-    let showSaved = null;
-    if (show === true) {
-        showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Itinerary saved!</Alert>;
     }
 
     return (
@@ -119,6 +113,7 @@ function Itinerary(props) {
                     <h1>Itinerary</h1>
                     <p>View and add to your trip itinerary!</p>
                 </Jumbotron>
+           
                 <>
                     {/* Button to open the modal and add an itinerary item*/}
                     <Button variant="outline-primary" onClick={() => setModalShow(true)}>

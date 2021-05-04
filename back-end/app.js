@@ -636,7 +636,10 @@ app.post('/api/itinerary', function (req, res) {
                     else {
                         Trip.update({user: user._id, past: false}, {$push: {itin: result}}, function(err, updated) {
                             if (err) console.log(err);
-                            else console.log("itinerary added to trip!");
+                            else {
+                                console.log("itinerary added to trip!");
+                                res.send("itinerary");
+                            }
                         })
                     }
                 });
