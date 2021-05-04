@@ -5,15 +5,18 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import {Card, CardColumns} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
+import {Button, CardColumns, Card} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
 
 function Dashboard(){
 
     const [user, setData] = useState([]);
     const [userData, setUserData] = useState({});
+    const [nameFunc, setNameFunc] = useState("");
 
     const history = useHistory();
+
+
 
     // const [hasJWT, sethasJWT] = useState(localStorage.getItem('JWT'));
     // const hasJWT = localStorage.getItem('JWT');
@@ -48,10 +51,19 @@ function Dashboard(){
         method: "GET",
         url: "http://localhost:4000/api/Dashboard",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem('JWT')}`
         }
       }).then(post => {
-            setData(post.data);
+          console.log(post.data);
+          let newDataPost = post.data;
+          newDataPost.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.createdDate) - new Date(a.createdDate);
+          });
+
+          setData(newDataPost);
       });
 
       axios({
@@ -81,22 +93,33 @@ function Dashboard(){
             </div>
 
             <h2><strong>Here's what your friends have been up to:</strong></h2>
-            <CardColumns>
-            <Card border = "dark">
-              <Card.Body>
-                <Card.Title></Card.Title>
-                <Card.Subtitle>{user["first_name"]} {user["last_name"]} </Card.Subtitle>
-                <Card.Text>
-                  {user["posts"]}
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            
+            <div class="friendscard">
+            <CardColumns class="card-columns addborderfriends">
+              {user.map(e => (
+                  <Card border="primary">
+                    <Card.Body>
+                      <Card.Title>{e["title"]}</Card.Title>
+                      <Card.Text>
+                        {e["post"]}
+                      </Card.Text>
+                      <Card.Footer>
+                        <small className="text-muted"> <b> {(e["author"]["fullname"])} </b> at </small><br/>
+                        <small className="text-muted">{new Date(e["createdDate"]).toLocaleString("en-US")}</small>
+                      </Card.Footer>
+                    </Card.Body>
+                  </Card>
+                ))}
             </CardColumns>
+          </div>
+
+
         </div>
     )
 }
 
 export default Dashboard;
+
 
 //Alt dashboard posts code
 /* <div class="container">
@@ -111,6 +134,8 @@ export default Dashboard;
             </div>
             </div>
 */
+
+
 
 //Alt navbar code
 /* <nav class="navbar navbar-expand-lg navbar-light bg-light">
