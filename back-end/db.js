@@ -65,3 +65,9 @@ mongoose.connect(url)
         console.error(`Error connecting to the database. \n${err}`);
     });
 
+const connectDb = () => {
+    if (process.env.NODE_ENV === 'PRODUCTION') {
+        return mongoose.connect(process.env.PROD_DATABASE_URL, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true});
+    }
+    return mongoose.connect(process.env.DEV_DATABASE_URL, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true});
+};
