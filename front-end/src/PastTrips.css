@@ -55,11 +55,20 @@
 }
 
 .rec-card {
-  width: 60%;
+  width: 80%;
 }
 
 .rec-row {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.pasttripdetails {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.itinelement {
+  margin: 0;
 }
