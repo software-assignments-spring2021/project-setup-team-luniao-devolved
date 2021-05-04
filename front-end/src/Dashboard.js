@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import {Card, CardColumns} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
@@ -80,7 +81,25 @@ function Dashboard(){
             </div>
 
             <h2><strong>Here's what your friends have been up to:</strong></h2>
-            <div class="container">
+            <CardColumns>
+            <Card border = "dark">
+              <Card.Body>
+                <Card.Title></Card.Title>
+                <Card.Subtitle>{user["first_name"]} {user["last_name"]} </Card.Subtitle>
+                <Card.Text>
+                  {user["posts"]}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+            </CardColumns>
+        </div>
+    )
+}
+
+export default Dashboard;
+
+//Alt dashboard posts code
+/* <div class="container">
             <div>
                 <strong>{user["first_name"]} {user["last_name"]}</strong>
             </div>
@@ -91,11 +110,7 @@ function Dashboard(){
                 {user["date"]}
             </div>
             </div>
-        </div>
-    )
-}
-
-export default Dashboard;
+*/
 
 //Alt navbar code
 /* <nav class="navbar navbar-expand-lg navbar-light bg-light">
