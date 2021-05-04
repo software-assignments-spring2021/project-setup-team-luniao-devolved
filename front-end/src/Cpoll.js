@@ -45,7 +45,7 @@ function Cpoll(props) {
         <Container className="PollHeader">
             {/* Large box for page title and description*/}
             <Jumbotron>
-                <h1>Create Poll</h1>
+                <h3>Create Poll</h3>
                 <p>
                     Create a poll for your friends!
         </p>

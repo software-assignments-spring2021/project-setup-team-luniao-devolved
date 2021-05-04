@@ -91,10 +91,16 @@ function Preferences() {
         // Container with padding
         <Container className="p-3">
             <Jumbotron>
+                <h3>Trip Preferences</h3>
+                <p>
+                    Customize preferences for your upcoming trip!
+        </p>
+
                 <h1>Trip Preferences</h1>
                 <br />
 
                 {showPref(pref)}
+
 
             </Jumbotron>
 

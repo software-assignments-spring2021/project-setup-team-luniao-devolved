@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import {Card, CardColumns} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, CardColumns, Card} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
@@ -118,6 +119,23 @@ function Dashboard(){
 }
 
 export default Dashboard;
+
+
+//Alt dashboard posts code
+/* <div class="container">
+            <div>
+                <strong>{user["first_name"]} {user["last_name"]}</strong>
+            </div>
+            <div>
+                {user["posts"]}
+            </div>
+            <div>
+                {user["date"]}
+            </div>
+            </div>
+*/
+
+
 
 //Alt navbar code
 /* <nav class="navbar navbar-expand-lg navbar-light bg-light">
