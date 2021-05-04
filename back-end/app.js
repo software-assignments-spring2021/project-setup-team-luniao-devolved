@@ -599,17 +599,21 @@ app.get('/logout', (req, res) => {
 
 
 /* Itinerary Page */
-itinRoute.route('/').get(function (req, res) {
-    Itin.find({}, function (err, items) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(items);
-        }
+app.get('/api/itinerary', function (req, res) {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            Itin.find({user: user._id, trip: trip._id}, function(err, itin) {
+                console.log('itinerary sent!');
+                res.json(itin);
+            });
+        })
     });
 });
 
-//POST route for itinerary
 app.post('/api/itinerary', function (req, res) {
     const userHash = req.header('Authorization').slice(4);
     const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;

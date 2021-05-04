@@ -82,35 +82,33 @@ function AddItem(props) {
                         <Form.Label>Time</Form.Label>
                         <Form.Control as="textarea" value={time} onChange={e => { setTime(e.target.value) }} rows={1} />
                     </Form.Group>
-                    <Button onClick={props.onHide}>Close</Button>
                     <Button type="submit" onClick={props.onHide}>Save</Button>
+                    <Button onClick={props.onHide}>Close</Button>
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                {/* Buttons hide the modal on click*/}
-
-            </Modal.Footer>
         </Modal>
     );
 }
 
 function Itinerary(props) {
     const [modalShow, setModalShow] = React.useState(false);
-
     const [itin, setItin] = useState([]);
 
-
     useEffect(() => {
-        axios.get('http://localhost:4000/itinerary/')
-            .then(response => {
-                setItin(response.data);
-                console.log("This is itin: ", itin);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
-        , [])
+        axios({
+            method: "GET",
+            url: "http://localhost:4000/api/itinerary",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `JWT ${localStorage.getItem('JWT')}`
+            }
+        }).then(user => {
+            console.log(user.data);
+            setItin(user.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }, []);
 
     return (
         // Container for page
@@ -119,21 +117,15 @@ function Itinerary(props) {
                 {/* Large box for title and description*/}
                 <Jumbotron>
                     <h1>Itinerary</h1>
-                    <p>
-                        View and add to your trip itinerary!
-        </p>
+                    <p>View and add to your trip itinerary!</p>
                 </Jumbotron>
                 <>
                     {/* Button to open the modal and add an itinerary item*/}
                     <Button variant="outline-primary" onClick={() => setModalShow(true)}>
                         Add Itinerary item!
-      </Button>
+                    </Button>
 
-                    <AddItem
-                        show={modalShow}
-                        onHide={() => setModalShow(false)}
-                    />
-
+                    <AddItem show={modalShow} onHide={() => setModalShow(false)}/>
                 </>
 
                 <body className="ItineraryBody">
@@ -155,17 +147,11 @@ function Itinerary(props) {
                             </Card>
                         ))}
                     </CardColumns>
-
                 </body>
-
-
             </div >
         </Container>
     );
 }
-
-
-
 
 
 export default Itinerary;
