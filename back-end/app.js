@@ -419,15 +419,15 @@ app.post("/api/currenttrip", (req, res) => {
             }
         }
 
-        Trip.findOne({user: user._id} , function(err, trip) {
+        Trip.findOne({user: user._id, past: false} , function(err, trip) {
             const userId = {user: user._id};
 
-            Trip.update(userId, {$set: newtrip}, function(err, updated) {
+            Trip.update({user: user._id, past: false}, {$set: newtrip}, function(err, updated) {
                 if (err) console.log(err);
                 else {
                     // link to User Schema
                     console.log(updated);
-                    Trip.findOne({user: user._id}, function(err, trip) {
+                    Trip.findOne({user: user._id, past: false}, function(err, trip) {
                         User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
                             if (err) console.log(err);
                             else {
@@ -442,7 +442,7 @@ app.post("/api/currenttrip", (req, res) => {
                                         if (err) console.log(err);
                                         else {
                                             console.log("saved to past trip!");
-                                            Trip.update(userId, {$set: {past: true}}, function(err, trip) {
+                                            Trip.update({user: user._id, past: false}, {$set: {past: true}}, function(err, trip) {
                                                 if (err) console.log(err);
                                                 else {
                                                     console.log("current trip archived!");
