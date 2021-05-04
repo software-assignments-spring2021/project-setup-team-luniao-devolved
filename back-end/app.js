@@ -18,6 +18,7 @@ const Poll = mongoose.model('Poll');
 const Pref = mongoose.model('Pref');
 const Itin = mongoose.model('Itin');
 const Post = mongoose.model('Post');
+const Trip = mongoose.model('Trip');
 
 
 const bodyParser = require('body-parser');
@@ -346,17 +347,35 @@ app.get('/api/currentTrip', (req, res) => {
         .catch(err => next(err))
 });
 
+/* New Trip Page */
+app.post('/api/newtrip', (req, res) => {
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-app.post('/api/newTrip', (req, res, next) => {
-    //Without a database this is just linking to mockaroo
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
-        .then(user => {
-            //Map the response onto the User data
-            res.json(user.data);
-            console.log('New trip');
-        })
-        .catch(err => next(err))
+    User.findOne({email: decodedUser}, function(err, user) {
+
+        const newtrip = {
+            name: req.body.name,
+            todo: req.body.todo,
+            user: user._id
+        }
+
+        Trip.findOne({user: user._id}, function(err, trip) {
+            // if new trip doesn't exist
+            if (trip === null) {
+                new Trip(newtrip).save(function(err, result) {
+                    if (err) console.log(err);
+                    else {
+                        console.log("New trip saved!");
+                    }
+                });
+            }
+            // if new trip is already created
+            else {
+                console.log("hey")
+            }
+        });
+    });
 });
 
 
