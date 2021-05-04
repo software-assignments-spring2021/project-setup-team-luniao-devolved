@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Navbar, Nav, NavDropdown, Alert, Modal} from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./GuestDashboard.css";
 
 function GuestDashboard() {
@@ -20,8 +20,8 @@ function GuestDashboard() {
             </Alert>
         </div>
         <div className="NavBar">
-            <Navbar bg="primary" variant="dark" expand="lg">
-            <Navbar.Brand href="/guestdashboard">Travel Wise</Navbar.Brand>
+            <Navbar>
+            <Navbar.Brand href="/dashboard"><img src="testlogo.png" id="navbarlogo"></img></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

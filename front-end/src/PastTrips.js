@@ -4,12 +4,12 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './PastTrips.css';
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import {Card, CardColumns} from 'react-bootstrap';
+import { Card, CardColumns } from 'react-bootstrap';
 
 function PastTrips(props) {
 
   const [pasttrip, setPasttrip] = useState([]);
-  
+
   useEffect(() => {
     axios({
       method: "GET",
@@ -24,25 +24,21 @@ function PastTrips(props) {
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {<h3 className="App-title">Past Trips</h3>}
-      </header>
+    <div>
+      <h3>Past Trips</h3>
 
-      <body className="App-body">
       <CardColumns>
         {pasttrip.map(e => (
-            <Card border="primary">
-              <Card.Body>
-                <Card.Title>{e.trip.name}</Card.Title>
-                {/*<Card.Text>
+          <Card border="primary">
+            <Card.Body>
+              <Card.Title>{e.trip.name}</Card.Title>
+              {/*<Card.Text>
                   {e["date"]}
                 </Card.Text>*/}
-              </Card.Body>
-            </Card>
-          ))}
-        </CardColumns>
-      </body>
+            </Card.Body>
+          </Card>
+        ))}
+      </CardColumns>
     </div>
   );
 }

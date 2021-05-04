@@ -24,7 +24,6 @@
 }
 
 .App-title {
-  background-color: white;
   margin-top: 5vmin;
   margin-bottom: 5vmin;
   display: flex;
@@ -36,7 +35,6 @@
 }
 
 .App-body {
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
