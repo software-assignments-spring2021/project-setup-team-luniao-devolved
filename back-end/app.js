@@ -325,16 +325,65 @@ app.post("/api/preferences", (req, res) => {
 //Dashboard Routes
 //Here we send a get request to display the recent posts from the users' friends
 app.get("/api/Dashboard", (req, res) => {
-    console.log(req.user);
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
-        .then(post => {
+    // console.log(req.user);
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
+    //     .then(post => {
 
-            res.json(post.data);
-            console.log('Posts received')
-        })
-        .catch(err => next(err))
+    //         res.json(post.data);
+    //         console.log('Posts received')
+    //     })
+    //     .catch(err => next(err))
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser}, function (err, user) {
+
+        if (err) {
+            console.log(err);
+        }
+
+        let newDocs = Post.find({'author': { $in: user.friends}}, function(err, docs){
+            if (err) {
+                console.log(err);
+            }
+
+            console.log(docs);
+
+            return res.json(docs);
+        }).populate('author');
+
+
+    });
+
 });
+
+
+//getuserbyid
+app.post("/api/getuser", (req, res) => {
+    // console.log(req.user);
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150") //Getting some mock data for the posts until the DB is set up
+    //     .then(post => {
+
+    //         res.json(post.data);
+    //         console.log('Posts received')
+    //     })
+    //     .catch(err => next(err))
+
+    User.findById(req.body.id, function (err, user) {
+
+        if (err) {
+            console.log(err);
+        }
+
+        return res.json(user);
+    });
+
+});
+
+
 
 //View Profile routes
 app.get("/api/ProfilePage", (req, res) => {
