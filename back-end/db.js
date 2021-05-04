@@ -13,7 +13,7 @@ const Trip = new mongoose.Schema({
     friend: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     itin: {type: mongoose.Schema.Types.ObjectId, ref: 'Itin'},
-    todo: [String]
+    todo: [Object]
 });
 
 mongoose.model('Trip', Trip);

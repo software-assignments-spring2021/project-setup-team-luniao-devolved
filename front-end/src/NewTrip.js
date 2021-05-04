@@ -10,10 +10,8 @@ import Form from 'react-bootstrap/Form';
 function NewTrip() {
 
   const [tripname, setTripname] = useState("");
-  const [todo, setTodo] = React.useState([
-  ]);
+  const [todo, setTodo] = React.useState([{done: false}]);
   const [show, setShow] = useState(false);
-  const [finished, setFinished] = useState(false);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -69,14 +67,11 @@ function NewTrip() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const todoList = [];
-    todo.map((a) => {
-      todoList.push(a.text);
-    });
+    console.log(todo);
 
     let tripData = new Object();
     tripData.name = tripname;
-    tripData.todo = todoList;
+    tripData.todo = todo;
     let tripString = JSON.stringify(tripData);
 
     axios({
@@ -122,6 +117,7 @@ function NewTrip() {
           </div>
           <br />
           <h3>To-do List:</h3>
+
         <div className="container">
           <FormTodo addTodo={addTodo} />
           <div>
@@ -139,6 +135,7 @@ function NewTrip() {
             ))}
           </div>
       </div>
+
           <div className="new-trip-backbtn">
             <Button type="submit" variant="outline-primary" className="buttons">Create</Button>
             {/*<Button href="pasttrips" variant="outline-success" className="buttons">Archive</Button>*/}

@@ -384,16 +384,53 @@ app.get("/api/ProfilePage", (req, res) => {
     });
 });
 
-app.get('/api/currentTrip', (req, res) => {
-    // same as for the mockaroo data for friends...
-    // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
-    axios
-        .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
-        .then(currentTrip => {
-            res.json(currentTrip.data);
-            console.log('Retrieved current trip!');
-        })
-        .catch(err => next(err))
+/* Current Trip Page */
+app.get('/api/currenttrip', (req, res) => {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        console.log(user);
+        Trip.findOne({user: user._id}, function(err, pref) {
+            console.log(pref);
+            res.json(pref);
+        });
+    });
+});
+
+app.post("/api/currenttrip", (req, res) => {
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({email: decodedUser}, function(err, user) {
+
+        const newtrip = {
+            name: req.body.name,
+            todo: req.body.todo,
+            user: user._id
+        }
+
+        Trip.findOne({user: user._id} , function(err, trip) {
+            const userId = {user: user._id};
+
+            console.log("TRIP", trip)
+
+            Trip.update(userId, {$set: newtrip}, function(err, updated) {
+                if (err) console.log(err);
+                else {
+                    // link to User Schema
+                    console.log(updated);
+                    Trip.findOne({user: user._id}, function(err, trip) {
+                        User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
+                            if (err) console.log(err);
+                            else console.log("success!");
+                        });
+                    });
+                }
+            });
+        });
+    });
 });
 
 /* New Trip Page */
@@ -421,7 +458,7 @@ app.post('/api/newtrip', (req, res) => {
             }
             // if new trip is already created
             else {
-                console.log("hey")
+                console.log("You need to save your trip before creating a new one!")
             }
         });
     });
