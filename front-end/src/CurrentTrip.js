@@ -13,6 +13,7 @@ const CurrentTrip = (props) => {
   const [show, setShow] = useState(false);
   const [tripname, setTripname] = useState("");
   const [newtripname, setNewtripname] = useState("");
+  const [userdata, setUserdata] = useState(false);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -110,9 +111,9 @@ const CurrentTrip = (props) => {
         Authorization: `JWT ${localStorage.getItem('JWT')}`
       }
     }).then(user => {
-        if (user !== null) {
+        if (user.data !== null) {
           setTodo(user.data.todo);
-          console.log(user.data.name)
+          setUserdata(true);
           setTripname(user.data.name);
         }
     });
@@ -157,66 +158,77 @@ const CurrentTrip = (props) => {
     setShow(true);
     setTrip(true);
   }
+  
+  if (userdata) {
+    return (
+      <div className="CurrentTrip">
+        <h3>Current Trip</h3>
+        <section className="main-content">
+        {showSaved}
+        <Form onSubmit={e => {handleSubmit(e)}}>
+          <div class='flex-container'>
+            <div>
+              <h4>Trip Title: {tripname}</h4>
+  
+              <Form.Group controlId="tripName">
+                  <Form.Control size="sm" type="text" placeholder="Edit Trip Name" value={newtripname} onChange={e => setNewtripname(e.target.value)} />
+              </Form.Group>
+            </div>
+  
+            <div className="friends">
+              <p>Friends</p>
+              <br />
+              <p>No friends yet!</p>
+            </div>
+  
+            <div className="links">
+              <Button href="/itinerary" className="buttons">Full Itinerary</Button>
+              <Button href="/addfriends" className="buttons">Add Friends</Button>
+              <Button href="/createpoll" className="buttons">Polls</Button>
+              <Button href="/recommendations" className="buttons">Recommendations</Button>
+            </div>
+            <div className="todo"> 
+              <h3>To-do List</h3>
+              <div className="container">
+            <FormTodo addTodo={addTodo} />
+            <div>
+              {todo.map((a, index) => (
+                <Card>
+                  <Card.Body>
+                    <Todo
+                    index={index}
+                    todo={a}
+                    markTodo={markTodo}
+                    removeTodo={removeTodo}
+                    />
+                  </Card.Body>
+                </Card>
+              ))}
+            </div>
+        </div>
+  
+            </div>
+            <br />
+            <div>
+              <Button type="submit" variant="outline-primary" className="buttons">Update</Button>
+              <Button onClick={otherAction} variant="outline-success" className="buttons">Archive</Button>
+              <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
+            </div>
+          </div>
+          </Form>
+        </section>
+      </div>
+    )
+  }
 
   return (
-    <div className="CurrentTrip">
-      <h3>Current Trip</h3>
-      <section className="main-content">
-      {showSaved}
-      <Form onSubmit={e => {handleSubmit(e)}}>
-        <div class='flex-container'>
-          <div>
-            <h4>Trip Title: {tripname}</h4>
-
-            <Form.Group controlId="tripName">
-                <Form.Control size="sm" type="text" placeholder="Edit Trip Name" value={newtripname} onChange={e => setNewtripname(e.target.value)} />
-            </Form.Group>
-          </div>
-
-          <div className="friends">
-            <p>Friends</p>
-            <br />
-            <p>No friends yet!</p>
-          </div>
-
-          <div className="links">
-            <Button href="/itinerary" className="buttons">Full Itinerary</Button>
-            <Button href="/addfriends" className="buttons">Add Friends</Button>
-            <Button href="/createpoll" className="buttons">Polls</Button>
-            <Button href="/recommendations" className="buttons">Recommendations</Button>
-          </div>
-          <div className="todo"> 
-            <h3>To-do List</h3>
-            <div className="container">
-          <FormTodo addTodo={addTodo} />
-          <div>
-            {todo.map((a, index) => (
-              <Card>
-                <Card.Body>
-                  <Todo
-                  index={index}
-                  todo={a}
-                  markTodo={markTodo}
-                  removeTodo={removeTodo}
-                  />
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
-      </div>
-
-          </div>
-          <br />
-          <div>
-            <Button type="submit" variant="outline-primary" className="buttons">Update</Button>
-            <Button onClick={otherAction} variant="outline-success" className="buttons">Archive</Button>
-            <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
-          </div>
-        </div>
-        </Form>
-      </section>
+    <div>
+    <br />
+    <br />
+    <h4>You currently don't have a saved trip.</h4>
+    <h4>Go to New Trip page.</h4>
     </div>
-  )
+  );
 }
 
 export default CurrentTrip
