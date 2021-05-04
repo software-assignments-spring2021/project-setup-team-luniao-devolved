@@ -108,8 +108,8 @@ function NewTrip() {
     <div className="NewTrip">
 
       <section className="main-content">
+        <h1>New Trip</h1>
 
-        <h3>New Trip</h3>
         {showSaved}
         <Form onSubmit={e => {handleSubmit(e)}}>
         <div class='flex-container'>
