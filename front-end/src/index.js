@@ -8,6 +8,7 @@ import GuestDashboard from './GuestDashboard';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import NavBar from './components/NavBar';
+import Layout from './components/Layout';
 import NewTrip from './NewTrip';
 import CurrentTrip from './CurrentTrip';
 import Cpoll from './Cpoll';
@@ -55,6 +56,7 @@ import AddFriends from './AddFriends';
 let isLoggedIn = localStorage.getItem('JWT');
 if (isLoggedIn) {
   ReactDOM.render(
+    <Layout>
     <Router>
          <Switch>
             <Route exact path="/" component={Login}/>
@@ -66,7 +68,7 @@ if (isLoggedIn) {
             <Route exact path="/signup" component={SignUp}/>
 
             <Route exact path="/dashboard"> 
-              <NavBar/>
+              {/* <NavBar/> */}
               <Dashboard/>
             </Route>
   
@@ -76,22 +78,22 @@ if (isLoggedIn) {
             </PrivateRoute> */}
   
             <Route exact path="/addfriends"> 
-              <NavBar/>
+              {/* <NavBar/> */}
               <AddFriends/>
             </Route>
   
             <Route exact path="/pasttrips">
-              <NavBar/>
+              {/* <NavBar/> */}
               <PastTrips/>
             </Route>
   
             <Route exact path="/newtrip">
-              <NavBar/>
+              {/* <NavBar/> */}
               <NewTrip/>
             </Route>
   
             <Route exact path="/currenttrip">
-              <NavBar/>
+              {/* <NavBar/> */}
               <CurrentTrip/>
             </Route>
   
@@ -103,12 +105,12 @@ if (isLoggedIn) {
             */}
   
             <Route exact path="/createpost">
-              <NavBar/>
+              {/* <NavBar/> */}
               <CreatePost/>
             </Route>
   
             <Route exact path="/friends">
-              <NavBar/>
+              {/* <NavBar/> */}
               <Friends/>
             </Route>
   
@@ -117,12 +119,12 @@ if (isLoggedIn) {
             </Route>
   
             <Route exact path="/preferences">
-              <NavBar/>
+              {/* <NavBar/> */}
               <Preferences/>
             </Route>
   
             <Route exact path="/createpoll">
-              <NavBar/>
+              {/* <NavBar/> */}
               <Cpoll/>
             </Route>
             {/* 
@@ -132,17 +134,17 @@ if (isLoggedIn) {
             </Route> */}
   
             <Route exact path="/profile">
-              <NavBar/>
+              {/* <NavBar/> */}
               <ProfilePage/>
             </Route>
   
             <Route exact path="/itinerary">
-              <NavBar/>
+              {/* <NavBar/> */}
               <Itinerary/>
             </Route>
   
             <Route exact path="/recommendations">
-              <NavBar/>
+              {/* <NavBar/> */}
               <Recommendations/>
             </Route>
 
@@ -152,7 +154,8 @@ if (isLoggedIn) {
 
 
         </Switch>
-    </Router>,
+    </Router>
+    </Layout>,
     document.getElementById('root')
   );
   } else {
