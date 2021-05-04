@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './CurrentTrip.css'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { Alert, Card } from 'react-bootstrap';
+import { Alert, Card, CardColumns } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 
@@ -14,6 +14,7 @@ const CurrentTrip = (props) => {
   const [tripname, setTripname] = useState("");
   const [newtripname, setNewtripname] = useState("");
   const [userdata, setUserdata] = useState(false);
+  const [frdata, setfrdata] = useState([]);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -123,6 +124,18 @@ const CurrentTrip = (props) => {
           setTripname(user.data.name);
         }
     });
+
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/viewfriendscurrenttrip",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(friends => {
+        setfrdata(friends.data);
+      });
+
   },[]);
 
   let showSaved = null;
@@ -185,6 +198,22 @@ const CurrentTrip = (props) => {
               <p>Friends</p>
               <br />
               <p>No friends yet!</p>
+
+              <div class="friendscardct">
+                <CardColumns class="card-columns addborderfriends">
+                  {frdata.map(e => (
+                      <Card border="primary">
+                        <Card.Body>
+                          <Card.Title>{e["fullname"]}</Card.Title>
+                          <Card.Text>
+                            {e["email"]}
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    ))}
+                </CardColumns>
+              </div>
+
             </div>
   
             <div className="links">

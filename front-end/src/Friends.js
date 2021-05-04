@@ -105,6 +105,9 @@ function AddFriendsModal(props) {
 }
 
 
+/*************************/
+
+
 function Friends() {
 
 
