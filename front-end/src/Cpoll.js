@@ -1,10 +1,8 @@
 import React from "react";
 import Container from 'react-bootstrap/Container';
-//import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import { useState } from "react";
 import { Link } from "react-router-dom";

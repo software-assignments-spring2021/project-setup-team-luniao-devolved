@@ -6,7 +6,7 @@ import { useState } from 'react';
 import axios from "axios";
 
 
-import { Alert, Form, Button, Card, Modal, Container, Row, Col} from 'react-bootstrap';
+import { Alert, Form, Button, Card, Modal, Container, Row} from 'react-bootstrap';
 
 
 

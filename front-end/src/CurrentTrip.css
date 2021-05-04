@@ -16,12 +16,23 @@ h4 {
   padding-bottom:5vh;
 }
 
-.links {
-  padding-bottom:5vh;
+.ct-links {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form-check-input {
+  display:inline-block; 
+  position:absolute;
+  right: .5rem; 
+}
+
+.todo .list-group-item {
+  text-align: left;
+  padding: .75rem 1.75rem;
 }
 
 .buttons {
-  display: flex;
   margin: 5px;
-  display: inline-block;
 }
+

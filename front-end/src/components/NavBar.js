@@ -1,12 +1,13 @@
 import React from 'react';
 import {Navbar, Nav, NavDropdown} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/Layout.css';
 
 const NavBar = (props) => {
     return (
         <div className="NavBar">
-            <Navbar bg="primary" variant="dark" expand="lg">
-            <Navbar.Brand href="/dashboard">Travel Wise</Navbar.Brand>
+            <Navbar expand="lg">
+            <Navbar.Brand href="/dashboard">Logo</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

@@ -25,9 +25,9 @@ function PastTrips(props) {
 
   return (
     <div className="App">
-      <header className="App-header">
-        {<h3 className="App-title">Past Trips</h3>}
-      </header>
+
+      <h3> Past Trips</h3>
+
 
       <body className="App-body">
       <CardColumns>
