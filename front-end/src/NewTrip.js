@@ -12,6 +12,7 @@ function NewTrip() {
   const [tripname, setTripname] = useState("");
   const [todo, setTodo] = React.useState([]);
   const [show, setShow] = useState(false);
+  const [userexist, setUserexist] = useState(false);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -81,7 +82,12 @@ function NewTrip() {
       headers: {"Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`}
     })
     .then(function(res) {
-      console.log("data saved!");
+      console.log("data passed!");
+      let showSaved = null;
+
+      if (res.data === "alreadyexists") {
+        setUserexist(true);
+      }
     })
     .catch(function(res) {
       console.log(res);
@@ -91,8 +97,11 @@ function NewTrip() {
   }
 
   let showSaved = null;
-  if (show === true) {
+  if (show === true && !userexist) {
       showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Trip saved!</Alert>;
+  }
+  else if (show === true && userexist) {
+    showSaved = <Alert variant="danger" onClose={() => setShow(false)} dismissible>Trip already exists! Go to Current Trip Page.</Alert>;
   }
 
   return (

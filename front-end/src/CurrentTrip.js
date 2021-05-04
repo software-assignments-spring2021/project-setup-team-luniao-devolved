@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 
 const CurrentTrip = (props) => {
 
-  const [trip, setTrip] = useState({});
+  const [trip, setTrip] = useState(false);
   const [todo, setTodo] = React.useState([]);
   const [show, setShow] = useState(false);
   const [tripname, setTripname] = useState("");
@@ -68,8 +68,74 @@ const CurrentTrip = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log(newtripname.length)
+    console.log(typeof(newtripname))
+
     let tripData = new Object();
-    tripData.name = newtripname;
+
+    if (newtripname.length !== 0) {
+      tripData.name = newtripname;
+    }
+
+    //tripData.name = newtripname;
+    tripData.todo = todo;
+    let tripString = JSON.stringify(tripData);
+
+    console.log(tripData);
+
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/currenttrip",
+      data: tripString,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(function(res) {
+      console.log("Current trip data updated!");
+    })
+    .catch(function(res) {
+      console.log(res);
+    });
+
+    setShow(true);
+  }
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/currenttrip",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(user => {
+        if (user !== null) {
+          setTodo(user.data.todo);
+          console.log(user.data.name)
+          setTripname(user.data.name);
+        }
+    });
+  },[]);
+
+  let showSaved = null;
+  if (show === true && !trip) {
+    showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Trip saved!</Alert>;
+  }
+  else if (show === true && trip) {
+    showSaved = <Alert variant="danger" onClose={() => setShow(false)} dismissible>Trip archived.</Alert>;
+  }
+  
+  function otherAction(e) {
+    e.preventDefault();
+
+    let tripData = new Object();
+    tripData.past = true;
+    
+    if (newtripname.length !== 0) {
+      tripData.name = newtripname;
+    }
+
     tripData.todo = todo;
     let tripString = JSON.stringify(tripData);
 
@@ -89,28 +155,9 @@ const CurrentTrip = (props) => {
     });
 
     setShow(true);
-
+    setTrip(true);
   }
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: "http://localhost:4000/api/currenttrip",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${localStorage.getItem('JWT')}`
-      }
-    }).then(user => {
-        setTodo(user.data.todo);
-        setTripname(user.data.name);
-    });
-  },[]);
-
-  let showSaved = null;
-  if (show === true) {
-      showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Trip saved!</Alert>;
-  }
-  
   return (
     <div className="CurrentTrip">
       <h3>Current Trip</h3>
@@ -122,7 +169,7 @@ const CurrentTrip = (props) => {
             <h4>Trip Title: {tripname}</h4>
 
             <Form.Group controlId="tripName">
-                <Form.Control size="sm" type="text" placeholder="Edit Trip Name" value={newtripname} onChange={e => { setNewtripname(e.target.value) }} />
+                <Form.Control size="sm" type="text" placeholder="Edit Trip Name" value={newtripname} onChange={e => setNewtripname(e.target.value)} />
             </Form.Group>
           </div>
 
@@ -162,7 +209,7 @@ const CurrentTrip = (props) => {
           <br />
           <div>
             <Button type="submit" variant="outline-primary" className="buttons">Update</Button>
-            <Button href="/pasttrips" variant="outline-success" className="buttons">Archive</Button>
+            <Button onClick={otherAction} variant="outline-success" className="buttons">Archive</Button>
             <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
           </div>
         </div>
