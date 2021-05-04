@@ -4,7 +4,10 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { Alert, Card, CardColumns } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Link } from "react-router-dom";
 
 const CurrentTrip = (props) => {
 
@@ -15,7 +18,7 @@ const CurrentTrip = (props) => {
   const [newtripname, setNewtripname] = useState("");
   const [userdata, setUserdata] = useState(false);
   const [frdata, setfrdata] = useState([]);
-
+  const [poll, setPoll] = useState([]);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -125,7 +128,20 @@ const CurrentTrip = (props) => {
           }
           setTodo(user.data.todo);
           setTripname(user.data.name);
-        } 
+        }
+
+        axios({
+          method: "GET",
+          url: "http://localhost:4000/api/createpoll",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem('JWT')}`
+          }
+        }).then(user => {
+            if (user.data !== null) {
+              setPoll(user.data);
+            }
+        });
     });
 
     axios({
@@ -205,12 +221,16 @@ const CurrentTrip = (props) => {
   }
 
   
+  console.log(poll)
+
   if (userdata) {
     return (
       <div className="CurrentTrip">
         <h3>Current Trip</h3>
-        <section className="main-content">
+
         {showSaved}
+
+        <section className="main-content">
         <Form onSubmit={e => {handleSubmit(e)}}>
           <div class='flex-container'>
             <div>
@@ -234,6 +254,37 @@ const CurrentTrip = (props) => {
               <Button href="/createpoll" className="buttons">Polls</Button>
               <Button href="/recommendations" className="buttons">Recommendations</Button>
             </div>
+            
+            {poll.map(a => (
+          <Container className="PollHeader">
+          <h3>Vote for these polls!</h3>
+          <Form className="poll form">
+              <Form.Group as={Row} controlId="pollName">
+                <Form.Label column sm="5">Poll Name</Form.Label>
+                <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.name}></Form.Control></Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="date">
+                <Form.Label column sm="5">End Date</Form.Label>
+                <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.date}></Form.Control></Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="pollMessage">
+                <Form.Label column sm="5">Poll Message</Form.Label>
+                <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.message}></Form.Control></Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="option">
+                <Form.Label column sm="5">Options</Form.Label>
+                <Button type="button" variant="primary">{a.data[0].option}</Button>
+                <Button type="button" variant="primary">{a.data[1].option}</Button>
+            <Button type="button" variant="primary">{a.data[2].option}</Button>
+              </Form.Group>
+            </Form>
+            </Container>
+            ))}
+
+
             <div className="todo"> 
               <h3>To-do List</h3>
               <div className="container">
