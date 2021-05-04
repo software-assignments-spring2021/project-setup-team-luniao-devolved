@@ -19,6 +19,7 @@ const Pref = mongoose.model('Pref');
 const Itin = mongoose.model('Itin');
 const Post = mongoose.model('Post');
 const Trip = mongoose.model('Trip');
+const PastTrip = mongoose.model('PastTrip');
 
 
 const bodyParser = require('body-parser');
@@ -75,23 +76,19 @@ app.get('/api/userinfo', (req, res) => {
 });
 
 
-
 /* Past Trips Page Routes */
-// An api endpoint that returns list of past trips
 app.get('/api/pasttrips', (req, res) => {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-    /*
-    Once mongoose is setup, we would retrieve the data of past trips stored by unique user id. However, as we don't
-    mongo set up, I just retrieve mock data from mockaroo.
-    */
-    axios
-        .get("https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0")
-        .then(pastTrips => {
-
-            res.json(pastTrips.data);
-            console.log('Retrieved past trips');
-        }) // pass data along directly to client
-        .catch(err => next(err)) // pass any errors to express
+    User.findOne({ email: decodedUser }, function (err, user) {
+        console.log(user);
+        PastTrip.find({user: user._id}, function(err, trip) {
+            console.log(trip);
+            res.json(trip);
+        });
+    });
 });
 
 /* Recommendations Page Routes */
@@ -392,9 +389,9 @@ app.get('/api/currenttrip', (req, res) => {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         console.log(user);
-        Trip.findOne({user: user._id}, function(err, pref) {
-            console.log(pref);
-            res.json(pref);
+        Trip.findOne({user: user._id}, function(err, trip) {
+            console.log(trip);
+            res.json(trip);
         });
     });
 });
@@ -405,16 +402,25 @@ app.post("/api/currenttrip", (req, res) => {
 
     User.findOne({email: decodedUser}, function(err, user) {
 
-        const newtrip = {
-            name: req.body.name,
-            todo: req.body.todo,
-            user: user._id
+        let newtrip = {}
+        console.log(req.body.name);
+        if (req.body.name !== undefined) {
+            newtrip = {
+                name: req.body.name,
+                todo: req.body.todo,
+                user: user._id
+            }
+        }
+
+        else {
+            newtrip = {
+                todo: req.body.todo,
+                user: user._id
+            }
         }
 
         Trip.findOne({user: user._id} , function(err, trip) {
             const userId = {user: user._id};
-
-            console.log("TRIP", trip)
 
             Trip.update(userId, {$set: newtrip}, function(err, updated) {
                 if (err) console.log(err);
@@ -424,7 +430,29 @@ app.post("/api/currenttrip", (req, res) => {
                     Trip.findOne({user: user._id}, function(err, trip) {
                         User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
                             if (err) console.log(err);
-                            else console.log("success!");
+                            else {
+                                console.log("success!");
+                                if (req.body.past) {
+                                    const pasttrip = {
+                                        trip: trip,
+                                        user: user._id
+                                    }
+
+                                    new PastTrip(pasttrip).save(function(err, result) {
+                                        if (err) console.log(err);
+                                        else {
+                                            console.log("saved to past trip!");
+                                            Trip.deleteOne(userId, function(err, trip) {
+                                                if (err) console.log(err);
+                                                else {
+                                                    console.log("current trip deleted");
+                                                    res.send('pasttrip');
+                                                }
+                                            })
+                                        }
+                                    });
+                                }
+                            }
                         });
                     });
                 }
