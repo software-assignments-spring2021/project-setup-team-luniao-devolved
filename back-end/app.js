@@ -171,47 +171,36 @@ app.post("/api/createpost", (req, res) => {
     res.end();
 });
 
-/* Preferences Page Routes */
-const pollRoute = express.Router();
-const prefRoute = express.Router();
+app.post('/api/createpoll', function (req, res) {
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+    
+    User.findOne({email: decodedUser}, function(err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
+            if (err) console.log(err);
+            else {
+                const poll = {
+                    name: req.body.name,
+                    date: req.body.date,
+                    message: req.body.message,
+                    data: req.body.data,
+                    trip: currtrip._id
+                }
 
-// let Poll = require('./poll.model.js');
-// let Pref = require('./preference.model.js')
-//app.use('/Cpoll, pollRoute');
-
-pollRoute.route('/').post(function (req, res) {
-    //console.log(p);
-
-    const npoll = new Poll({
-        name: req.body.name,
-        date: req.body.date,
-        message: req.body.message,
-        opa: req.body.opa,
-        opb: req.body.opb,
-        opc: req.body.opc
-    }).save(function(err) {
-        if (err) {
-            res.status(400).send('failed to create poll');
-        }
-        else {
-            res.status(200).json({ 'poll': 'saved successfully' });
-        }
+                new Poll(poll).save(function(err, result) {
+                    if (err) console.log(err);
+                    else {
+                        Trip.update({user: user._id, past: false}, {$push: {poll: result._id}}, function(err, poll) {
+                            if (err) console.log(err);
+                            else {
+                                console.log("poll saved to trip!");
+                            }
+                        })
+                    }
+                })
+            }
+        });
     });
-        /*.then(npoll => {
-            res.status(200).json({ 'poll': 'saved successfully' });
-        })
-        .catch(err => {
-            res.status(400).send('failed to create poll');
-        })*/
-    //console.log(req.body);
-    //res.send("heY!")
-    // poll.save()
-    //     .then(poll => {
-    //         res.status(200).json({'poll': 'poll created'});
-    //     })
-    // .catch(err => {
-    //     res.status(400).send('failed to create poll')
-    // })
 });
 
 /* Preferences Page */
@@ -647,10 +636,6 @@ app.post('/api/itinerary', function (req, res) {
         });
     });
 });
-
-//Router configuration
-app.use('/createpoll', pollRoute);
-app.use('/preferences', prefRoute);
 
 // Edit Profile Routes 
 //This will send a get request for the EditProfile page and lay the groundwork for updating the user's data

@@ -41,9 +41,7 @@ const Poll = new mongoose.Schema({
     name: String,
     date: String,
     message: String,
-    opa: {votes: Number, name: String},
-    opb: {votes: Number, name: String},
-    opc: {votes: Number, name: String},
+    data: [Object],
     trip: {type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}
 });
 
