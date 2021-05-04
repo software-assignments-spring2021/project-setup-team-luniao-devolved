@@ -131,7 +131,11 @@ const CurrentTrip = (props) => {
 
     let tripData = new Object();
     tripData.past = true;
-    tripData.name = newtripname;
+    
+    if (newtripname.length !== 0) {
+      tripData.name = newtripname;
+    }
+
     tripData.todo = todo;
     let tripString = JSON.stringify(tripData);
 
