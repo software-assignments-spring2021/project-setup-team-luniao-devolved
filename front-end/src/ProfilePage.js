@@ -2,6 +2,7 @@ import './ProfilePage.css'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import {CardColumns, Card} from 'react-bootstrap';
 
 function ProfilePage(){
     /*const [data, setData] = useState([]);
@@ -106,12 +107,27 @@ function ProfilePage(){
                 </div> */}
             </header>
 
-            {posts.map((post, index) => (
+            <CardColumns>
+            {posts.map((post, index) => 
+                <Card border="primary">
+                    <Card.Body>
+                        <Card.Title>
+                            {post.title}
+                        </Card.Title>
+                        <Card.Text>
+                            {post.post}
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            )}
+            </CardColumns>
+
+            {/* {posts.map((post, index) => (
                 <div>
                     <h3>{post.title}</h3>
                     <p>{post.post}</p>
                 </div>
-            ))}
+            ))} */}
                 
         </div>
     );

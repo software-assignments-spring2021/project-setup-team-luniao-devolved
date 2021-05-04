@@ -4,48 +4,24 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './PastTrips.css';
 import { useState, useEffect } from 'react';
 import axios from "axios";
-
-
 import {Card, CardColumns} from 'react-bootstrap';
-
 
 function PastTrips(props) {
 
-  const [pastTrips, setPastTrips] = useState([]);
+  const [pasttrip, setPasttrip] = useState([]);
   
   useEffect(() => {
-    //when this page's component loads, it first saves the past trips into our state variable - could just be object ids (mongodb), depends on how we store this data and do the express
-    //using Mockaroo to get MongoDB ids, city names and dates for past trips from mock API
-    //setPastTrips([["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"], ["507f1f77bcf86cd799439011"]])
-
-  //   async function fetchData() {
-  //     // axios is a 3rd-party module for fetching data from servers
-
-      
-  //     // const result = await axios(
-  //     //   // retrieving some mock data about animals for sale
-  //     //   "https://my.api.mockaroo.com/past-trips.json?key=8f9d78c0"
-  //     // );
-  //     // // set the state variable
-  //     // // this will cause a re-render of this component
-  //     // //setData(result.data);
-  //     // setPastTrips(result.data);
-  //   }
-  //   fetchData();
-
     axios({
       method: "GET",
       url: "http://localhost:4000/api/pasttrips",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
       }
-    }).then(apiTrips => {
-      console.log(apiTrips.data)
-      setPastTrips(apiTrips.data);
+    }).then(user => {
+      setPasttrip(user.data);
     });
-
   }, [])
-
 
   return (
     <div className="App">
@@ -53,25 +29,20 @@ function PastTrips(props) {
         {<h3 className="App-title">Past Trips</h3>}
       </header>
 
-
       <body className="App-body">
       <CardColumns>
-        {pastTrips.map(e => (
+        {pasttrip.map(e => (
             <Card border="primary">
               <Card.Body>
-                <Card.Title>{e["location"]}</Card.Title>
-                <Card.Text>
+                <Card.Title>{e.trip.name}</Card.Title>
+                {/*<Card.Text>
                   {e["date"]}
-                </Card.Text>
+                </Card.Text>*/}
               </Card.Body>
-              <Card.Link href="www.example.org" className="stretched-link"></Card.Link>
             </Card>
           ))}
         </CardColumns>
-
       </body>
-
-
     </div>
   );
 }
