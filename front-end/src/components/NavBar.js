@@ -16,7 +16,7 @@ const NavBar = (props) => {
                 </Nav>
                 <Nav>
                     <NavDropdown alignRight title="Profile">
-                        <NavDropdown.Item href="/profile">See Profile</NavDropdown.Item>
+                        <NavDropdown.Item href="/profile">View Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/friends">Friends</NavDropdown.Item>
                         <NavDropdown.Item href="/editprofile">Edit Profile</NavDropdown.Item>
                         <NavDropdown.Item href="preferences">Preferences</NavDropdown.Item>
