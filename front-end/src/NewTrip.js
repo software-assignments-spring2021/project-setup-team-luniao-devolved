@@ -69,7 +69,7 @@ function NewTrip() {
     <div className="NewTrip">
 
       <section className="main-content">
-        <h1>New Trip</h1>
+        <h3>New Trip</h3>
         <div class='flex-container'>
 
           <div className="new-trip-inputname">
