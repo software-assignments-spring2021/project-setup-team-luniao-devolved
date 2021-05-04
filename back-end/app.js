@@ -194,7 +194,7 @@ pollRoute.route('/').post(function (req, res) {
         opc: req.body.opc
     }).save(function(err) {
         if (err) {
-            res.status(400).send('failed to craete poll');
+            res.status(400).send('failed to create poll');
         }
         else {
             res.status(200).json({ 'poll': 'saved successfully' });
@@ -459,6 +459,7 @@ app.post('/api/newtrip', (req, res) => {
             // if new trip is already created
             else {
                 console.log("You need to save your trip before creating a new one!")
+                res.send("alreadyexists");
             }
         });
     });
