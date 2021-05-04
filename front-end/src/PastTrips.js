@@ -7,7 +7,6 @@ import axios from "axios";
 import {Card, CardColumns} from 'react-bootstrap';
 
 function PastTrips(props) {
-
   const [pasttrip, setPasttrip] = useState([]);
   
   useEffect(() => {
@@ -23,6 +22,8 @@ function PastTrips(props) {
     });
   }, [])
 
+  console.log(pasttrip);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -35,9 +36,15 @@ function PastTrips(props) {
             <Card border="primary">
               <Card.Body>
                 <Card.Title>{e.trip.name}</Card.Title>
-                {/*<Card.Text>
-                  {e["date"]}
-                </Card.Text>*/}
+                  {e.trip.itin.map( a => (
+                    <div className="pasttripdetails">
+                    <hr></hr>
+                    <Card.Text className="itinelement">{a.type}</Card.Text>
+                    <Card.Text className="itinelement">{a.name}</Card.Text>
+                    <Card.Text className="itinelement">{a.location}</Card.Text>
+                    <Card.Text className="itinelement">{a.time}</Card.Text>
+                    </div>
+                  ))}
               </Card.Body>
             </Card>
           ))}
