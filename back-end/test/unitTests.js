@@ -30,7 +30,7 @@ describe("GET PAST TRIPS", () => {
 /* unit test for /api/login */
 describe("GET LOGIN INFO", () => {
   it("should send an object with status 200", (done) => {
-    const obj = {email: 'aa@aa.com', password:'test'};
+    const obj = {email: 'cody@gmail.com', password:'1234'}; //has to be an actual user account
     chai.request(app)
     .post('/api/login')
     .send(obj)
@@ -41,14 +41,16 @@ describe("GET LOGIN INFO", () => {
     });
   });
 
-  it("should send an email and password", (done) => {
-    const obj = {email: 'aa@aa.com', password:'test'};
+  //it should send back an authorization token
+  it("should send back an authorization token", (done) => {
+    const obj = {email: 'cody@gmail.com', password:'1234'}; //has to be an actual user account
     chai.request(app)
     .post('/api/login')
     .send(obj)
     .end((err,res) => {
-      res.body.should.have.property('email');
-      res.body.should.have.property('password');
+      // res.body.should.have.property('email');
+      // res.body.should.have.property('password');
+      res.body.should.have.property('token');
       done();
     });
   });
@@ -64,19 +66,6 @@ describe("GET SIGN UP INFO", () => {
     .end((err,res) => {
       res.should.have.status(200);
       res.body.should.be.an('object');
-      done();
-    });
-  });
-
-  it("should send full name, email and password", (done) => {
-    const obj = {fullname: 'Kaylee Park', email: 'aa@aa.com', password:'test'};
-    chai.request(app)
-    .post('/api/signup')
-    .send(obj)
-    .end((err,res) => {
-      res.body.should.have.property('fullname');
-      res.body.should.have.property('email');
-      res.body.should.have.property('password');
       done();
     });
   });
@@ -126,7 +115,7 @@ describe("POST preferences", () => {
           pref_transport: { transport: 'Bus' }
       }
       chai.request(app)
-          .post('/preferences')
+          .post('/api/preferences')
           .send(pref)
           .end((err, res) => {
               res.should.have.status(200);
