@@ -6,15 +6,24 @@ const url = `mongodb+srv://yushin420:Dbtlsld9317@travelwise.dwvrv.mongodb.net/us
 const client = new MongoClient(url);
 
 client.connect();
-/*
-const User = new mongoose.Schema({
-    fullname: String,
-    email: String,
-    password: String,
-    picture: String
+
+const Trip = new mongoose.Schema({
+    name: String,
+    poll: [{type: mongoose.Schema.Types.ObjectId, ref: 'Poll'}],
+    friend: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    itin: {type: mongoose.Schema.Types.ObjectId, ref: 'Itin'},
+    todo: String
 });
-*/
-//mongoose.model('User', User);
+
+mongoose.model('Trip', Trip);
+
+const PastTrip = new mongoose.Schema({
+    trip: [{type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}],
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+});
+
+mongoose.model('PastTrip', PastTrip);
 
 const Poll = new mongoose.Schema({
     name: String,
@@ -34,7 +43,7 @@ const Pref = new mongoose.Schema({
     type: String,
     rating: Number,
     transport: String,
-    user: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 mongoose.model('Pref', Pref);
