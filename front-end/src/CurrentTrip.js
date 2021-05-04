@@ -111,9 +111,15 @@ const CurrentTrip = (props) => {
         Authorization: `JWT ${localStorage.getItem('JWT')}`
       }
     }).then(user => {
+        console.log(user.data)
         if (user.data !== null) {
+          if (user.data.past) {
+            setUserdata(false);
+          }
+          else {
+            setUserdata(true);
+          }
           setTodo(user.data.todo);
-          setUserdata(true);
           setTripname(user.data.name);
         }
     });

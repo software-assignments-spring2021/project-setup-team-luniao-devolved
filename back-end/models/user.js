@@ -7,7 +7,7 @@ const User = new mongoose.Schema({
     preference: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pref'}],
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     trip: {type: mongoose.Schema.Types.ObjectId, ref: 'Trip'},
-    pasttrip: {type: mongoose.Schema.Types.ObjectId, ref: 'PastTrip'}
+    pasttrip: [{type: mongoose.Schema.Types.ObjectId, ref: 'PastTrip'}]
 });
 
 module.exports = mongoose.model('User', User);

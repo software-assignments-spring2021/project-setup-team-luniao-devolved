@@ -389,7 +389,7 @@ app.get('/api/currenttrip', (req, res) => {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         console.log(user);
-        Trip.findOne({user: user._id}, function(err, trip) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
             console.log(trip);
             res.json(trip);
         });
@@ -419,15 +419,15 @@ app.post("/api/currenttrip", (req, res) => {
             }
         }
 
-        Trip.findOne({user: user._id} , function(err, trip) {
+        Trip.findOne({user: user._id, past: false} , function(err, trip) {
             const userId = {user: user._id};
 
-            Trip.update(userId, {$set: newtrip}, function(err, updated) {
+            Trip.update({user: user._id, past: false}, {$set: newtrip}, function(err, updated) {
                 if (err) console.log(err);
                 else {
                     // link to User Schema
                     console.log(updated);
-                    Trip.findOne({user: user._id}, function(err, trip) {
+                    Trip.findOne({user: user._id, past: false}, function(err, trip) {
                         User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
                             if (err) console.log(err);
                             else {
@@ -442,7 +442,7 @@ app.post("/api/currenttrip", (req, res) => {
                                         if (err) console.log(err);
                                         else {
                                             console.log("saved to past trip!");
-                                            Trip.update(userId, {$set: {past: true}}, function(err, trip) {
+                                            Trip.update({user: user._id, past: false}, {$set: {past: true}}, function(err, trip) {
                                                 if (err) console.log(err);
                                                 else {
                                                     console.log("current trip archived!");
@@ -474,7 +474,7 @@ app.post('/api/newtrip', (req, res) => {
             past: false
         }
 
-        Trip.findOne({user: user._id}, function(err, trip) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
             // if new trip doesn't exist
             if (trip === null) {
                 new Trip(newtrip).save(function(err, result) {
@@ -598,43 +598,59 @@ app.get('/logout', (req, res) => {
 });
 
 
-//GET route for itinerary
-itinRoute.route('/').get(function (req, res) {
-    // axios//currently obtaining items from Mockaroo in place of database
-    //     .get("https://my.api.mockaroo.com/itinerary_items.json?key=f3836780")
-    //     .then(itin => {
-    //         res.json(itin.data);
-    //         console.log('Retrieved itinerary items');
-    //     })
-    Itin.find({}, function (err, items) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(items);
-        }
+/* Itinerary Page */
+app.get('/api/itinerary', function (req, res) {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            Itin.find({user: user._id, trip: trip._id}, function(err, itin) {
+                console.log('itinerary sent!');
+                res.json(itin);
+            });
+        })
     });
 });
 
-//POST route for itinerary
-itinRoute.route('/').post(function (req, res) {
-    const itin = new Itin({
-        type: req.body.type,
-        name: req.body.name,
-        location: req.body.location,
-        time: req.body.time
-    }).save()
-        .then(npoll => {
-            res.status(200).json({ 'Itinerary item': 'saved successfully' });
-        })
-        .catch(err => {
-            res.status(400).send('failed to create item');
+app.post('/api/itinerary', function (req, res) {
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({email: decodedUser}, function(err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
+            if (err) console.log(err);
+            else {
+                const itin = {
+                    type: req.body.type,
+                    name: req.body.name,
+                    location: req.body.location,
+                    time: req.body.time,
+                    user: user._id,
+                    trip: currtrip._id
+                }
+
+                new Itin(itin).save(function(err, result) {
+                    if (err) console.log(err);
+                    else {
+                        Trip.update({user: user._id, past: false}, {$push: {itin: result}}, function(err, updated) {
+                            if (err) console.log(err);
+                            else {
+                                console.log("itinerary added to trip!");
+                                res.send("itinerary");
+                            }
+                        })
+                    }
+                });
+            }
         });
+    });
 });
 
 //Router configuration
 app.use('/createpoll', pollRoute);
 app.use('/preferences', prefRoute);
-app.use('/itinerary', itinRoute);
 
 // Edit Profile Routes 
 //This will send a get request for the EditProfile page and lay the groundwork for updating the user's data
