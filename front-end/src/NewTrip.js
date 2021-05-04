@@ -2,9 +2,9 @@ import React from 'react';
 import './NewTrip.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import axios from 'axios'
-import { useEffect, useState } from 'react';
+// import FormControl from 'react-bootstrap/FormControl';
+// import axios from 'axios'
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
 function NewTrip() {
@@ -68,8 +68,9 @@ function NewTrip() {
   return (
     <div className="NewTrip">
 
+      <h3>New Trip</h3>
       <section className="main-content">
-        <h1>New Trip</h1>
+        
         <div class='flex-container'>
 
           <div className="new-trip-inputname">
@@ -94,7 +95,7 @@ function NewTrip() {
 
           <div className="new-trip-backbtn">
             <Button type="submit" variant="outline-primary" className="buttons">Add</Button>
-            <Button href="pasttrips" variant="outline-success" className="buttons">Archive</Button>
+            <Button href="pasttrips" variant="outline-success" className="buttons">Past Trips</Button>
             <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
           </div>
         </div>

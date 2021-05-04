@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const CurrentTrip = (props) => {
 
-  const [user, setData] = useState([]);
+  const [setData] = useState([]);
 
   useEffect(() => {
     axios({
@@ -71,7 +71,7 @@ const CurrentTrip = (props) => {
             </ListGroup>
           </div>
 
-          <div className="links">
+          <div className="ct-links">
             <Button href="/itinerary">Full Itinerary</Button>
             <Button href="/addfriends">Add Friends</Button>
             <Button href="/createpoll">Polls</Button>

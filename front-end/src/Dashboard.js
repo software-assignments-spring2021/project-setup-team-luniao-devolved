@@ -1,17 +1,15 @@
 import './Dashboard.css'
-import ReactDOM from 'react-dom';
-
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, CardColumns, Card} from 'react-bootstrap';
-import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
+import {BrowserRouter as useHistory} from 'react-router-dom';
 
 function Dashboard(){
 
     const [user, setData] = useState([]);
     const [userData, setUserData] = useState({});
-    const [nameFunc, setNameFunc] = useState("");
+    // const [nameFunc, setNameFunc] = useState("");
 
     const history = useHistory();
 
