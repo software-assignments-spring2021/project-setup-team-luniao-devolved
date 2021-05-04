@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form';
 function NewTrip() {
 
   const [tripname, setTripname] = useState("");
-  const [todo, setTodo] = React.useState([{done: false}]);
+  const [todo, setTodo] = React.useState([]);
   const [show, setShow] = useState(false);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
