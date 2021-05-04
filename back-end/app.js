@@ -442,11 +442,10 @@ app.post("/api/currenttrip", (req, res) => {
                                         if (err) console.log(err);
                                         else {
                                             console.log("saved to past trip!");
-                                            Trip.deleteOne(userId, function(err, trip) {
+                                            Trip.update(userId, {$set: {past: true}}, function(err, trip) {
                                                 if (err) console.log(err);
                                                 else {
-                                                    console.log("current trip deleted");
-                                                    res.send('pasttrip');
+                                                    console.log("current trip archived!");
                                                 }
                                             })
                                         }
@@ -471,7 +470,8 @@ app.post('/api/newtrip', (req, res) => {
         const newtrip = {
             name: req.body.name,
             todo: req.body.todo,
-            user: user._id
+            user: user._id,
+            past: false
         }
 
         Trip.findOne({user: user._id}, function(err, trip) {

@@ -12,7 +12,8 @@ const Trip = new mongoose.Schema({
     poll: [{type: mongoose.Schema.Types.ObjectId, ref: 'Poll'}],
     friend: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    itin: {type: mongoose.Schema.Types.ObjectId, ref: 'Itin'},
+    itin: [Itin],
+    past: Boolean,
     todo: [Object]
 });
 
