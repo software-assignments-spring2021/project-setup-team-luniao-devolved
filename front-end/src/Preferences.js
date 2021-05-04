@@ -1,4 +1,5 @@
 import React from 'react';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -88,7 +89,7 @@ function Preferences() {
 
     return (
         // Container with padding
-        <Container>
+        <Container className="p-3">
                 <h3>Trip Preferences</h3>
                 <br />
 

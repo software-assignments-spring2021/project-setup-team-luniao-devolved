@@ -1,5 +1,5 @@
 import './ProfilePage.css'
-// import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import {CardColumns, Card} from 'react-bootstrap';
@@ -83,7 +83,7 @@ function ProfilePage(){
                 
                 <h3> {user["fullname"]}'s Profile</h3>
 
-                <img class="img-responsive" src="https://my.api.mockaroo.com/users.json?key=4e1c2150" alt="" class="img-circle"></img>
+                <img class="img-responsive" src="https://my.api.mockaroo.com/users.json?key=4e1c2150" class="img-circle"></img>
                 
                 {/* replace with fullname when we get that working */}
                 <h2>

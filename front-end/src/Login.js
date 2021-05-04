@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import {Form, Button, Container, Row, Col} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./Login.css";
-import { Link, Redirect, useHistory} from 'react-router-dom';
+import { Link, Redirect,Router, Route, Switch, BrowserRouter, useHistory} from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import axios from "axios";
 
-// import Dashboard from './Dashboard';
-// import NavBar from './components/NavBar';
+import Dashboard from './Dashboard';
+import NavBar from './components/NavBar';
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -107,7 +107,6 @@ function NewTrip() {
   return (
     <div className="NewTrip">
 
-      <h3>New Trip</h3>
       <section className="main-content">
 
         <h3>New Trip</h3>
@@ -149,7 +148,6 @@ function NewTrip() {
           <div className="new-trip-backbtn">
             <Button type="submit" variant="outline-primary" className="buttons">Create</Button>
             {/*<Button href="pasttrips" variant="outline-success" className="buttons">Archive</Button>*/}
-
             <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
           </div>
         </div>
