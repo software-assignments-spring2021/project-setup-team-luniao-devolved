@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './CurrentTrip.css'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { Alert, Card } from 'react-bootstrap';
+import { Alert, Card, CardColumns } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,11 +12,12 @@ import { Link } from "react-router-dom";
 const CurrentTrip = (props) => {
 
   const [trip, setTrip] = useState(false);
-  const [todo, setTodo] = React.useState([]);
+  const [todo, setTodo] = useState([]);
   const [show, setShow] = useState(false);
   const [tripname, setTripname] = useState("");
   const [newtripname, setNewtripname] = useState("");
   const [userdata, setUserdata] = useState(false);
+  const [frdata, setfrdata] = useState([]);
   const [poll, setPoll] = useState([]);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
@@ -115,7 +116,9 @@ const CurrentTrip = (props) => {
         Authorization: `JWT ${localStorage.getItem('JWT')}`
       }
     }).then(user => {
-        console.log(user.data)
+
+        console.log(user.data);
+        
         if (user.data !== null) {
           if (user.data.past) {
             setUserdata(false);
@@ -140,6 +143,18 @@ const CurrentTrip = (props) => {
             }
         });
     });
+
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/viewfriendscurrenttrip",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(friends => {
+        setfrdata(friends.data);
+      });
+
   },[]);
 
   let showSaved = null;
@@ -148,6 +163,29 @@ const CurrentTrip = (props) => {
   }
   else if (show === true && trip) {
     showSaved = <Alert variant="danger" onClose={() => setShow(false)} dismissible>Trip archived.</Alert>;
+  }
+
+  let showFriends = (
+  <div> 
+    <p>Friends</p>
+      <br />
+      <p>No friends yet!</p>
+      </div>);
+  if (frdata) {
+    showFriends = ( <div class="friendscardct">
+    <CardColumns class="card-columns addborderfriends">
+      {frdata.map(e => (
+          <Card border="primary">
+            <Card.Body>
+              <Card.Title>{e["fullname"]}</Card.Title>
+              <Card.Text>
+                {e["email"]}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+    </CardColumns>
+  </div>);
   }
   
   function otherAction(e) {
@@ -181,6 +219,7 @@ const CurrentTrip = (props) => {
     setShow(true);
     setTrip(true);
   }
+
   
   console.log(poll)
 
@@ -203,9 +242,10 @@ const CurrentTrip = (props) => {
             </div>
   
             <div className="friends">
-              <p>Friends</p>
-              <br />
-              <p>No friends yet!</p>
+              
+              {showFriends}
+             
+
             </div>
   
             <div className="links">
