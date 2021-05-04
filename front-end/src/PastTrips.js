@@ -50,7 +50,7 @@ function PastTrips(props) {
   return (
     <div className="App">
       <header className="App-header">
-        {<h2 className="App-title">Past Trips</h2>}
+        {<h3 className="App-title">Past Trips</h3>}
       </header>
 
 

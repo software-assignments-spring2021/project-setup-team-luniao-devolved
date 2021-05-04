@@ -204,9 +204,9 @@ const [newPFP, setSelectedFile] = useState(null);
 
     return(
         <div className="editprofile">
-        <h1 class="text-center">
+        <h3 class="text-center">
             Edit Profile
-        </h1>
+        </h3>
         <form>
         <div className="formgroup">
             <label for="exampleInputEmail1"></label>
