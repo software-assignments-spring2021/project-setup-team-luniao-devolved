@@ -350,6 +350,40 @@ app.get('/api/currenttrip', (req, res) => {
     });
 });
 
+app.post("/api/currenttrip", (req, res) => {
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({email: decodedUser}, function(err, user) {
+
+        const newtrip = {
+            name: req.body.name,
+            todo: req.body.todo,
+            user: user._id
+        }
+
+        Trip.findOne({user: user._id} , function(err, trip) {
+            const userId = {user: user._id};
+
+            console.log("TRIP", trip)
+
+            Trip.update(userId, {$set: newtrip}, function(err, updated) {
+                if (err) console.log(err);
+                else {
+                    // link to User Schema
+                    console.log(updated);
+                    Trip.findOne({user: user._id}, function(err, trip) {
+                        User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
+                            if (err) console.log(err);
+                            else console.log("success!");
+                        });
+                    });
+                }
+            });
+        });
+    });
+});
+
 /* New Trip Page */
 app.post('/api/newtrip', (req, res) => {
     const userHash = req.header('Authorization').slice(4);

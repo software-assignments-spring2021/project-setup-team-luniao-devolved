@@ -11,6 +11,8 @@ const CurrentTrip = (props) => {
   const [trip, setTrip] = useState({});
   const [todo, setTodo] = React.useState([]);
   const [show, setShow] = useState(false);
+  const [tripname, setTripname] = useState("");
+  const [newtripname, setNewtripname] = useState("");
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -66,6 +68,27 @@ const CurrentTrip = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let tripData = new Object();
+    tripData.name = newtripname;
+    tripData.todo = todo;
+    let tripString = JSON.stringify(tripData);
+
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/currenttrip",
+      data: tripString,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(function(res) {
+      console.log("Current trip data updated!");
+    })
+    .catch(function(res) {
+      console.log(res);
+    });
+
+    setShow(true);
 
   }
 
@@ -79,6 +102,7 @@ const CurrentTrip = (props) => {
       }
     }).then(user => {
         setTodo(user.data.todo);
+        setTripname(user.data.name);
     });
   },[]);
 
@@ -91,9 +115,15 @@ const CurrentTrip = (props) => {
     <div className="CurrentTrip">
       <h3>Current Trip</h3>
       <section className="main-content">
+      {showSaved}
+      <Form onSubmit={e => {handleSubmit(e)}}>
         <div class='flex-container'>
           <div>
-            <h4>Trip Title:</h4>
+            <h4>Trip Title: {tripname}</h4>
+
+            <Form.Group controlId="tripName">
+                <Form.Control size="sm" type="text" placeholder="Edit Trip Name" value={newtripname} onChange={e => { setNewtripname(e.target.value) }} />
+            </Form.Group>
           </div>
 
           <div className="friends">
@@ -108,10 +138,8 @@ const CurrentTrip = (props) => {
             <Button href="/createpoll" className="buttons">Polls</Button>
             <Button href="/recommendations" className="buttons">Recommendations</Button>
           </div>
-
           <div className="todo"> 
             <h3>To-do List</h3>
-
             <div className="container">
           <FormTodo addTodo={addTodo} />
           <div>
@@ -133,12 +161,12 @@ const CurrentTrip = (props) => {
           </div>
           <br />
           <div>
-            <Button type="submit" variant="outline-primary" className="buttons">Create</Button>
+            <Button type="submit" variant="outline-primary" className="buttons">Update</Button>
             <Button href="/pasttrips" variant="outline-success" className="buttons">Archive</Button>
             <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
           </div>
-
         </div>
+        </Form>
       </section>
     </div>
   )
