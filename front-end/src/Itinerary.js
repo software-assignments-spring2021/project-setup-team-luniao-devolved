@@ -7,6 +7,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from 'react';
+import { Alert } from 'react-bootstrap';
 import axios from "axios";
 
 function AddItem(props) {
@@ -15,20 +16,41 @@ function AddItem(props) {
     const [location, setLocation] = useState('');
     const [time, setTime] = useState('');
 
-    const onSubmit = (e) => {
-        console.log("data saved");
-        e.preventDefault();
-        const itinItem = {
-            name, time, type, location
-            /*item_name: { name },
-            item_time: { time },
-            item_type: { type },
-            item_location: { location }*/
-        };
-        axios.post('http://localhost:4000/itinerary', itinItem)
-            .then(res => console.log(res.data));
+    const [show, setShow] = useState(false);
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        let itinItem = new Object();
+        itinItem.name = name;
+        itinItem.time = time;
+        itinItem.type = type;
+        itinItem.location = location;
+        let itinString = JSON.stringify(itinItem);
+
+        axios({
+            method: "post",
+            url: "http://localhost:4000/api/itinerary",
+            data: itinString,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `JWT ${localStorage.getItem('JWT')}`
+            }
+          }).then(function(res) {
+            console.log("Itinerary saved!");
+          })
+          .catch(function(res) {
+            console.log(res);
+          });
+      
+          setShow(true);
     }
+
+    let showSaved = null;
+    if (show === true) {
+        showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Itinerary saved!</Alert>;
+    }
+
     return (
         // Modal that contains the form for adding an itinerary item
         <Modal
