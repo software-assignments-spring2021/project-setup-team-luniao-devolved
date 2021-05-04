@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 import axios from 'axios'
 import { useEffect, useState } from 'react';
-import {Card, CardColumns} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, CardColumns, Card} from 'react-bootstrap';
 import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
