@@ -27,6 +27,7 @@ function Cpoll(props) {
         polldata.name = name;
         polldata.message = message;
         polldata.data = data;
+        polldata.date = date;
         let pollstring = JSON.stringify(polldata);
 
         axios({

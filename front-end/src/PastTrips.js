@@ -35,11 +35,11 @@ function PastTrips(props) {
         {pasttrip.map(e => (
             <Card border="primary">
               <Card.Body>
-                <Card.Title>{e.trip.name}</Card.Title>
+                <Card.Title style={{fontWeight: 'bold'}}>{e.trip.name}</Card.Title>
                   {e.trip.itin.map( a => (
                     <div className="pasttripdetails">
                     <hr></hr>
-                    <Card.Text className="itinelement">{a.type}</Card.Text>
+                    <Card.Text style={{fontWeight: 'bold'}} className="itinelement">{a.type}</Card.Text>
                     <Card.Text className="itinelement">{a.name}</Card.Text>
                     <Card.Text className="itinelement">{a.location}</Card.Text>
                     <Card.Text className="itinelement">{a.time}</Card.Text>

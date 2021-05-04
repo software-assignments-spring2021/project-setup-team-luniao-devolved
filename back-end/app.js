@@ -136,9 +136,6 @@ app.post("/api/recommendations", (req, res) => {
 });
 
 
-//for logging incoming requests
-//app.use('/Cpoll, pollRoute');
-
 /* Create Post Page Routes */
 app.post("/api/createpost", (req, res) => {
     // now we have the data
@@ -171,6 +168,21 @@ app.post("/api/createpost", (req, res) => {
     res.end();
 });
 
+/* Create Poll Page */
+app.get('/api/createpoll', function(req, res) {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            if (trip !== null) {
+                res.json(trip.poll);
+            }
+        });
+    });
+});
+
 app.post('/api/createpoll', function (req, res) {
     const userHash = req.header('Authorization').slice(4);
     const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
@@ -190,7 +202,7 @@ app.post('/api/createpoll', function (req, res) {
                 new Poll(poll).save(function(err, result) {
                     if (err) console.log(err);
                     else {
-                        Trip.update({user: user._id, past: false}, {$push: {poll: result._id}}, function(err, poll) {
+                        Trip.update({user: user._id, past: false}, {$push: {poll: result}}, function(err, poll) {
                             if (err) console.log(err);
                             else {
                                 console.log("poll saved to trip!");

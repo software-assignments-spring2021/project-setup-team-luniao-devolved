@@ -7,6 +7,16 @@ const client = new MongoClient(url);
 
 client.connect();
 
+const Poll = new mongoose.Schema({
+    name: String,
+    date: String,
+    message: String,
+    data: [Object],
+    trip: {type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}
+});
+
+mongoose.model('Poll', Poll);
+
 const Itin = new mongoose.Schema({
     type: String,
     name: String,
@@ -20,7 +30,7 @@ mongoose.model('Itin', Itin);
 
 const Trip = new mongoose.Schema({
     name: String,
-    poll: [{type: mongoose.Schema.Types.ObjectId, ref: 'Poll'}],
+    poll: [Poll],
     friend: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     itin: [Itin],
@@ -36,16 +46,6 @@ const PastTrip = new mongoose.Schema({
 });
 
 mongoose.model('PastTrip', PastTrip);
-
-const Poll = new mongoose.Schema({
-    name: String,
-    date: String,
-    message: String,
-    data: [Object],
-    trip: {type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}
-});
-
-mongoose.model('Poll', Poll);
 
 const Pref = new mongoose.Schema({
     budget: Number,
