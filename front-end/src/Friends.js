@@ -1,6 +1,8 @@
 import {React, useState} from 'react';
 // import logo from './logo.svg';
 import './Friends.css';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Image from 'react-bootstrap/ListGroup';
 import axios from 'axios'
 import { useEffect } from 'react';
 import {Button, Modal, Form, Alert, CardColumns, Card} from 'react-bootstrap';

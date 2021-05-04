@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
-import { Link} from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./SignUp.css";
