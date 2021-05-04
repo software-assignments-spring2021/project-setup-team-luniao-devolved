@@ -43,13 +43,9 @@ function Cpoll(props) {
     return (
         // Container for Poll form
         <Container className="PollHeader">
-            {/* Large box for page title and description*/}
-            <Jumbotron>
+
                 <h3>Create Poll</h3>
-                <p>
-                    Create a poll for your friends!
-        </p>
-            </Jumbotron>
+                
             {/* Form */}
             <Form className="poll form" onSubmit={e => { onSubmit(e) }}>
                 <Row>
