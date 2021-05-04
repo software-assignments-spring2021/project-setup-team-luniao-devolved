@@ -167,6 +167,7 @@ function Friends() {
   return (
     <div className="Friends">
       <h3>{userData["fullname"]}'s Friends</h3>
+
       <section className="main-content">
 
         <div class='flex-container'>
