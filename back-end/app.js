@@ -194,6 +194,11 @@ app.post('/api/createpoll', function (req, res) {
     
     User.findOne({email: decodedUser}, function(err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
+
+            if (!currtrip) {
+                return res.send("notrip");
+            }
+            
             if (err) console.log(err);
             else {
                 const poll = {
@@ -733,6 +738,10 @@ app.get('/api/itinerary', function (req, res) {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
+
+            if (!trip) {
+                return res.json([]);
+            }
             Itin.find({user: user._id, trip: trip._id}, function(err, itin) {
                 console.log('itinerary sent!');
                 res.json(itin);
@@ -747,6 +756,11 @@ app.post('/api/itinerary', function (req, res) {
 
     User.findOne({email: decodedUser}, function(err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
+
+            if (!currtrip) {
+                return res.send("notrip");
+            }
+
             if (err) console.log(err);
             else {
                 const itin = {

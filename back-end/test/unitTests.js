@@ -19,6 +19,7 @@ describe("GET PAST TRIPS", () => {
     it("should get past trips", (done) => {
          chai.request(app)
              .get('/api/pasttrips')
+             .set('Authorization', 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG5AZ21haWwuY29tIiwiaWF0IjoxNjIwMTgyODY3fQ.e4iZ0thaZpLQYxpkPF4hY2KqNbYrwcFxKvDshi9wLFk') //example authorization header of existing user
              .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.an('array');
@@ -74,7 +75,8 @@ describe("GET SIGN UP INFO", () => {
 describe("GET ITINERARY", () => {
   it("should get itinerary items", (done) => {
       chai.request(app)
-          .get('/itinerary')
+          .get('/api/itinerary')
+          .set('Authorization', 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG5AZ21haWwuY29tIiwiaWF0IjoxNjIwMTgyODY3fQ.e4iZ0thaZpLQYxpkPF4hY2KqNbYrwcFxKvDshi9wLFk') //example authorization header of existing user
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.an('array');
@@ -94,7 +96,8 @@ describe("POST poll", () => {
           poll_opc: { opc: 'American' }
       }
       chai.request(app)
-          .post('/createpoll')
+          .post('/api/createpoll')
+          .set('Authorization', 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG5AZ21haWwuY29tIiwiaWF0IjoxNjIwMTgyODY3fQ.e4iZ0thaZpLQYxpkPF4hY2KqNbYrwcFxKvDshi9wLFk') //example authorization header of existing user
           .send(poll)
           .end((err, res) => {
               res.should.have.status(200);
@@ -116,6 +119,7 @@ describe("POST preferences", () => {
       }
       chai.request(app)
           .post('/api/preferences')
+          .set('Authorization', 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG5AZ21haWwuY29tIiwiaWF0IjoxNjIwMTgyODY3fQ.e4iZ0thaZpLQYxpkPF4hY2KqNbYrwcFxKvDshi9wLFk') //example authorization header of existing user
           .send(pref)
           .end((err, res) => {
               res.should.have.status(200);
@@ -134,7 +138,8 @@ describe("POST itinerary item", () => {
           item_location: { location: 'Goa' }
       }
       chai.request(app)
-          .post('/itinerary')
+          .post('/api/itinerary')
+          .set('Authorization', 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImpvaG5AZ21haWwuY29tIiwiaWF0IjoxNjIwMTgyODY3fQ.e4iZ0thaZpLQYxpkPF4hY2KqNbYrwcFxKvDshi9wLFk') //example authorization header of existing user
           .send(item)
           .end((err, res) => {
               res.should.have.status(200);
