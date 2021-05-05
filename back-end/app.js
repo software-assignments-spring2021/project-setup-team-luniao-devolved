@@ -210,6 +210,11 @@ app.post('/api/createpoll', function (req, res) {
 
             if (!currtrip) {
                 Trip.findOne({friend: user._id, past: false}, function(err, trip) {
+
+                    if (!trip) {
+                        return res.end();
+                    }
+
                     const poll = {
                         name: req.body.name,
                         date: req.body.date,
@@ -784,6 +789,11 @@ app.get('/api/itinerary', function (req, res) {
             console.log(trip);
             if (!trip) {
                 Trip.findOne({friend: user._id, past: false}, function(err, trip) {
+
+                    if (!trip) {
+                        return res.json([]);
+                    }
+
                     Itin.find({user: trip.user, trip: trip._id}, function(err, itin) {
                         res.json(itin);
                     });
