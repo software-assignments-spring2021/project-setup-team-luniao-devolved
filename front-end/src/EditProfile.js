@@ -63,26 +63,29 @@ const handleSubmit = (e) => {
     axios({
         method: "POST",
         url: "http://localhost:4000/api/EditProfile",
-        data: newEmail, password,
+        data: newData,
         headers: {"Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`}
     })
     .then(function(res){
-        console.log("data saved!");
+        if (res.data === "success") {
+            console.log("success");
+            // setRedirect(true);
+            setShow(true);
+        }
     })
     .catch(function(res) {
         console.log(res);
     });
-
-    setShow(true);
 }
 
 let showFunc = null;
 if (show === true){
-    showFunc = <Alert variant="success" onClose={() => setShow(false)} dismissible>Profile Updated Successfully!</Alert>;
+    showFunc = <Alert variant="success" onClose={() => setShow(false)} dismissible>Profile Updated Successfully! Click <Alert.Link href="/logout">here</Alert.Link> to login again.</Alert>;
 }
 
     return(
         <Container className="p-3">
+            {showFunc}
             <h3>Edit Profile</h3>
             <Form onSubmit={e => {handleSubmit(e) }}>
                 <div className="editprofile">
