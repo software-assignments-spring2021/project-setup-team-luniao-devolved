@@ -187,7 +187,9 @@ app.get('/api/createpoll', function(req, res) {
             }
             else {
                 Trip.findOne({friend: user._id, past: false}, function(err, friendtrip) {
-                    res.json(friendtrip.poll);
+                    if (friendtrip !== null) {
+                        res.json(friendtrip.poll);
+                    }
                 });
             }
         });
@@ -536,6 +538,7 @@ app.post('/api/newtrip', (req, res) => {
             name: req.body.name,
             todo: req.body.todo,
             user: user._id,
+            friend: [user._id],
             past: false
         }
 
@@ -634,22 +637,20 @@ app.get('/api/viewfriendscurrenttrip', (req, res) => {
 
     userHash = req.header('Authorization').slice(4);
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
-
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
             if (err) {
                 console.log(err);
             }
             if (trip) {
-                console.log("FIRST", trip.friend);
                 return res.json(trip.friend)}
-
             else {
                 Trip.findOne({friend: user._id, past: false}, function(err, newtrip) {
-                    Trip.findOne({user: newtrip.user, past: false}, function(err, owner) {
-                        console.log("HELLOOO", owner.friend);
-                        return res.json(owner.friend);
-                    }).populate("friend");
+                    if (newtrip) {
+                        Trip.findOne({user: newtrip.user, past: false}, function(err, owner) {
+                            return res.json(owner.friend);
+                        }).populate("friend");
+                    }
                 });
             }     
         }).populate("friend");
