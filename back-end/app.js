@@ -109,7 +109,7 @@ app.post("/api/recommendations", (req, res) => {
 
         var options = {
             method: 'GET',
-            url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/JFK-sky/LHR-sky/' + recForm['date'],
+            url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/' + recForm['from'] + '-sky/' + recForm['to'] + '-sky/' + recForm['date'],
             headers: {
                 'x-rapidapi-key': '48b6700027mshf2353e12af2853bp1e9d9fjsn189a7bf51c0b',
                 'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
@@ -124,12 +124,15 @@ app.post("/api/recommendations", (req, res) => {
             for (const item in resultsJSON['Quotes']) {
                 let newResult = new Object();
                 newResult.date = resultsJSON['Quotes'][item]["OutboundLeg"].DepartureDate.slice(0, 10);
-                newResult.from_country = resultsJSON['Places'][0].IataCode;
-                newResult.to_country = resultsJSON['Places'][1].IataCode;
+                newResult.from_country = resultsJSON['Places'][1].IataCode;
+                newResult.to_country = resultsJSON['Places'][0].IataCode;
                 newResult.cost = resultsJSON['Quotes'][item].MinPrice;
                 newResult.url = "http://example.org";
 
-                results.push(newResult);
+                if (newResult.cost <= recForm["budget"]) {
+                    results.push(newResult);
+                }
+
             }
 
             console.log(results);
