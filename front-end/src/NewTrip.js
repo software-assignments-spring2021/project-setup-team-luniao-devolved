@@ -42,7 +42,7 @@ function NewTrip() {
       <Form.Group>
         <Form.Control type="text" className="input" value={value} onChange={e => setValue(e.target.value)} placeholder="Add a new to-do" />
       </Form.Group>
-      <Button variant="primary mb-3" className="buttons" onClick={handleTodo}>Submit</Button>
+      <Button variant="primary mb-3" className="buttons" onClick={handleTodo}>Add To-do</Button>
       </Form>
     );
   }

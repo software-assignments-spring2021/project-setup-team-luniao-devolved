@@ -57,3 +57,33 @@
 .addborderfriends{
   border: black
 }
+
+.poll-form {
+  display: flex;
+  justify-content: space-evenly;
+  border: 2px solid #02182B;
+  padding : 10px;
+  margin-bottom: 20px;
+
+}
+
+.poll-btn {
+  height: 5px;
+}
+
+.input-ct {
+  width : 100%;
+  display : flex;
+}
+
+.ct-todo-list {
+  width : 100%
+}
+.test1{
+  margin : 2px
+}
+
+.todo-ct {
+  width : 100%
+}
+

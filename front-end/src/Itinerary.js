@@ -109,15 +109,14 @@ function Itinerary(props) {
         <Container className="p-3">
             <div className="Itinerary">
                 {/* Large box for title and description*/}
-                <Jumbotron>
-                    <h1>Itinerary</h1>
-                    <p>View and add to your trip itinerary!</p>
-                </Jumbotron>
+
+                    <h3>Itinerary</h3>
+
            
                 <>
                     {/* Button to open the modal and add an itinerary item*/}
-                    <Button variant="outline-primary" onClick={() => setModalShow(true)}>
-                        Add Itinerary item!
+                    <Button  onClick={() => setModalShow(true)}>
+                        Add Itinerary item
                     </Button>
 
                     <AddItem show={modalShow} onHide={() => setModalShow(false)}/>

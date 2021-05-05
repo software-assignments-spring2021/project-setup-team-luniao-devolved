@@ -24,3 +24,7 @@
   font-size: 18px;
   justify-content: space-between;
 }
+
+.new-trip-inputname {
+  width:100%;
+}
