@@ -5,3 +5,14 @@
 .addfriendsml{
     width: 40%;
   }
+
+  .add-friend-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.add-friend-backbtn {
+    display: flex;
+    justify-content: space-evenly;
+}
+

@@ -64,9 +64,9 @@ const Login = (props) => {
 
   if (redirect === false) {
     return (
-      <Container>
+      <Container id="logincont">
       <Row>
-        <Col><img src="logo2.png" alt="logo"></img></Col>
+        <Col><img src="testlogo.png" alt="logo" id="loginlogo"></img></Col>
         <Col>
           <div className="signin"><h3>Sign In</h3></div>
           <Form>

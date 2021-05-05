@@ -19,7 +19,7 @@ h3 {
 }
 
 div #basic-navbar-nav .nav-link:hover {
-    color: #fff;
+    color: #ED9b40;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -29,5 +29,10 @@ div #basic-navbar-nav .nav-link:hover {
 } 
 
 #navbarlogo {
+    width: 300px;
+}
+
+#back-cpoll {
+    padding-left: 73%;
     padding-top: 0;
 }

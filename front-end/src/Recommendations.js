@@ -6,7 +6,7 @@ import { useState } from 'react';
 import axios from "axios";
 
 
-import { Alert, Form, Button, Card, Modal, Container, Row, Col} from 'react-bootstrap';
+import { Alert, Form, Button, Card, Modal, Container, Row} from 'react-bootstrap';
 
 
 
@@ -165,14 +165,14 @@ function Recommendations(props) {
   // }
 
   return (
-    <div className="App">
-      <header className="App-header" id="recsHeader">
-        {<h3 className="App-title">Recommendations</h3>}
-      </header>
+    <div class="main-content">
+
+        <h3>Recommendations</h3>
+
 
       {showFunc} 
 
-      <body className="App-body">
+      <body class="rec-form">
           <Form className="App-form" onSubmit={e => { handleSubmit(e) }}>
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Topic</Form.Label>

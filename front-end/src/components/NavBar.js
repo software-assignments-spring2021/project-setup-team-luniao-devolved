@@ -7,7 +7,7 @@ const NavBar = (props) => {
     return (
         <div className="NavBar">
             <Navbar expand="lg">
-            <Navbar.Brand href="/dashboard" id="navbarlogo"><img src="testlogo.png" alt="logo"/></Navbar.Brand>
+            <Navbar.Brand href="/dashboard"><img src="testlogo.png" id="navbarlogo" alt="logo"/></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

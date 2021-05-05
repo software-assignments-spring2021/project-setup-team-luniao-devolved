@@ -78,8 +78,8 @@ function ProfilePage(){
 
 
     return(
-        <div classname = "ProfilePage">
-            <header classname = "Profile-header">
+        <div >
+            <header >
                 
                 <h3> {user["fullname"]}'s Profile</h3>
 
@@ -107,9 +107,9 @@ function ProfilePage(){
                 </div> */}
             </header>
 
-            <CardColumns>
+            <CardColumns class="profilecards">
             {posts.map((post, index) => 
-                <Card border="primary">
+                <Card class="indiv-card">
                     <Card.Body>
                         <Card.Title>
                             {post.title}

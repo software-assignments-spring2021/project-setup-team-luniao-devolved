@@ -59,12 +59,12 @@ function SignUp() {
     if (redirect === false) {
       return (
 
-        <Container>
+        <Container id="signupcont">
         {showFunc}
           <Row>
-          <Col><img src="logo2.png" alt="logo"></img></Col>
+          <Col><img src="testlogo.png" alt="logo" id="signuplogo"></img></Col>
           <Col>
-            <h3>Sign Up</h3>
+            <h3 id="signup-header">Sign Up</h3>
             <Form>
             <Form.Group className="form" controlId="fullname">
               <Form.Label>Full Name</Form.Label>

@@ -94,10 +94,10 @@ function Dashboard(){
             <h2><strong>Here's what your friends have been up to:</strong></h2>
             
             <div class="friendscard">
-            <CardColumns class="card-columns addborderfriends">
+            <CardColumns class="dash-cards">
               {user.map(e => (
-                  <Card border="primary">
-                    <Card.Body>
+                  <Card>
+                    <Card.Body class="friend-post-card">
                       <Card.Title>{e["title"]}</Card.Title>
                       <Card.Text>
                         {e["post"]}

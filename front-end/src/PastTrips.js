@@ -28,7 +28,7 @@ function PastTrips(props) {
     <div>
       <h3>Past Trips</h3>
 
-      <CardColumns>
+      <CardColumns id="pastripcards">
         {pasttrip.map(e => (
 
 
@@ -42,8 +42,8 @@ function PastTrips(props) {
       //     </Card>
       //   ))}
       // </CardColumns>
-            <Card border="primary">
-              <Card.Body>
+            <Card>
+              <Card.Body >
                 <Card.Title style={{fontWeight: 'bold'}}>{e.trip.name}</Card.Title>
                   {e.trip.itin.map( a => (
                     <div className="pasttripdetails">
