@@ -111,7 +111,7 @@ if (show === true){
                 </div>
                 <div className="formgroup">
                         {/* <label for="exampleInputFile" onChange={(e) => setSelectedFile(e.target.files[0])} >Upload Profile Picture</label> */}
-                        <input type="file" id="exampleInputFile"></input>
+                        {/* <input type="file" id="exampleInputFile"></input> */}
                 </div>
                 <div class="container">
                     <div class="col-sm-12 text-center">
