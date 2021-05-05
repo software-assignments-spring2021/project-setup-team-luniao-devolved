@@ -832,27 +832,60 @@ app.post('/api/itinerary', function (req, res) {
     });
 });
 
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 // Edit Profile Routes 
 //This will send a get request for the EditProfile page and lay the groundwork for updating the user's data
 app.post('/api/EditProfile', (req, res, next) => {
 
-    res = {
-        
-        /*
-        Without a database setup it is hard to actually change the User's data,
-        but this will happen here in a fashion similar to this
-        await db.collection('User').updateOne{ 
-            {
-                $set: {'email': req.body.newEmail},
-                $set: {'password' :req.body.newPW}
-            }
-        }
-        */
-    }
-    console.log('User profile updated')
-        .catch(err => next(err))
+    let formData = req.body;
 
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({email: decodedUser}, function(err, user) {
+
+
+        if (!user) {
+            return res.send("fail");
+        } else {
+            if (validateEmail(formData.email)) {
+                user.email = formData.email;
+                console.log(user.email)
+
+                user.save(function(err, result) {
+                    if (err) console.log(err);
+                    console.log('User profile updated');
+                    return res.status(200).send("success");
+                });
+            } else {
+                return res.send("fail");
+            }
+        } 
+    });
 });
+
+
+    // res = {
+        
+    //     /*
+    //     Without a database setup it is hard to actually change the User's data,
+    //     but this will happen here in a fashion similar to this
+    //     await db.collection('User').updateOne{ 
+    //         {
+    //             $set: {'email': req.body.newEmail},
+    //             $set: {'password' :req.body.newPW}
+    //         }
+    //     }
+    //     */
+    // }
+//     console.log('User profile updated')
+//         .catch(err => next(err))
+
+// });
 
 
 /*
