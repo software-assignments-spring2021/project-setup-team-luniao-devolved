@@ -29,16 +29,34 @@ function PastTrips(props) {
 
       <CardColumns>
         {pasttrip.map(e => (
-          <Card border="primary">
-            <Card.Body>
-              <Card.Title>{e.trip.name}</Card.Title>
-              {/*<Card.Text>
-                  {e["date"]}
-                </Card.Text>*/}
-            </Card.Body>
-          </Card>
-        ))}
-      </CardColumns>
+
+
+      //     <Card border="primary">
+      //       <Card.Body>
+      //         <Card.Title>{e.trip.name}</Card.Title>
+      //         {/*<Card.Text>
+      //             {e["date"]}
+      //           </Card.Text>*/}
+      //       </Card.Body>
+      //     </Card>
+      //   ))}
+      // </CardColumns>
+            <Card border="primary">
+              <Card.Body>
+                <Card.Title style={{fontWeight: 'bold'}}>{e.trip.name}</Card.Title>
+                  {e.trip.itin.map( a => (
+                    <div className="pasttripdetails">
+                    <hr></hr>
+                    <Card.Text style={{fontWeight: 'bold'}} className="itinelement">{a.type}</Card.Text>
+                    <Card.Text className="itinelement">{a.name}</Card.Text>
+                    <Card.Text className="itinelement">{a.location}</Card.Text>
+                    <Card.Text className="itinelement">{a.time}</Card.Text>
+                    </div>
+                  ))}
+              </Card.Body>
+            </Card>
+          ))}
+        </CardColumns>
     </div>
   );
 }
