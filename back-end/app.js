@@ -206,11 +206,32 @@ app.post('/api/createpoll', function (req, res) {
     User.findOne({email: decodedUser}, function(err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
 
+            if (err) console.log(err);
+
             if (!currtrip) {
-                return res.send("notrip");
+                Trip.findOne({friend: user._id, past: false}, function(err, trip) {
+                    const poll = {
+                        name: req.body.name,
+                        date: req.body.date,
+                        message: req.body.message,
+                        data: req.body.data,
+                        trip: trip._id
+                    }
+    
+                    new Poll(poll).save(function(err, result) {
+                        if (err) console.log(err);
+                        else {
+                            Trip.update({user: trip.user, past: false}, {$push: {poll: result}}, function(err, poll) {
+                                if (err) console.log(err);
+                                else {
+                                    console.log("poll saved to trip!");
+                                }
+                            });
+                        }
+                    });
+                });
             }
             
-            if (err) console.log(err);
             else {
                 const poll = {
                     name: req.body.name,
