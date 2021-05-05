@@ -781,14 +781,20 @@ app.get('/api/itinerary', function (req, res) {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
-
+            console.log(trip);
             if (!trip) {
-                return res.json([]);
+                Trip.findOne({friend: user._id, past: false}, function(err, trip) {
+                    Itin.find({user: trip.user, trip: trip._id}, function(err, itin) {
+                        res.json(itin);
+                    });
+                });
             }
-            Itin.find({user: user._id, trip: trip._id}, function(err, itin) {
+            else {
+                Itin.find({user: user._id, trip: trip._id}, function(err, itin) {
                 console.log('itinerary sent!');
                 res.json(itin);
-            });
+                });
+            }
         })
     });
 });
