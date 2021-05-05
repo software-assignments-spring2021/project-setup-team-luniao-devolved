@@ -96,7 +96,7 @@ function Cpoll(props) {
                     <Form.Control as="textarea" value={opc} onChange={e => { setOpc(e.target.value) }} rows={1} />
                 </Form.Group>
                 <Button type="submit" variant="primary">Create Poll</Button>
-                <Link to='/currenttrip'><Button type="button" variant="danger">Back to Current Trip</Button></Link>
+                <Link to='/currenttrip' id="back-cpoll"><Button type="button">Back to Current Trip</Button></Link>
                 <br />
             </Form>
                 <br />

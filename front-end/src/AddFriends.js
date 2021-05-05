@@ -72,7 +72,7 @@ function AddFriend(props) {
 
     return (
         <section className="main-content">
-            <div className="flex-container">
+            
                 
                 <div><h3>Add Friends to Current Trip</h3></div>
 
@@ -83,7 +83,7 @@ function AddFriend(props) {
                 Select your friends:
 
 
-                <div class="addfriendsml"> 
+                <div class="addfriendsml" > 
                     <Select closeMenuOnSelect={false} components={animatedComponents} options={friends} onChange={handleMultiChange} isMulti />
                 </div>
                     
@@ -93,12 +93,15 @@ function AddFriend(props) {
                     </Button>
                 </div>
 
-                <div>
+                <div class="add-friend-backbtn">
                 <br />
                     <Button href="/currenttrip">Back</Button>
+
+                    {/* <Button href="/currenttrip">Add</Button> */}
+
                 </div>
                 
-            </div>
+            
             
         </section>
     );

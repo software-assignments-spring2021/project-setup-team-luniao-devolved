@@ -2,32 +2,17 @@ h3 {
     margin-top: 20px;
 }
 
-/* .main-content {
-    margin-left: 10%;
-    margin-right: 10%;
-    background-color: #A5D8FF;
-    margin-bottom: 20px;
+#NavBarGuest {
+    margin-left: 0%;
+    margin-right: 0%;
     padding-bottom: 20px;
-
-} */
-
-/* .NavBar {
-    background-color: #02182B;
-}
-.navbar-light .navbar-nav .nav-link {
-    color:white;
 }
 
-div #basic-navbar-nav .nav-link:hover {
-    color: #fff;
+.GuestAlert {
+    padding: 20px;
+
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #ED9b40 !important;
-    border: crimson;
-    
-}  */
-
-/* #navbarlogo {
-    padding-top: 0;
-} */
+#guestdash-prompt {
+    text-align: center;
+}

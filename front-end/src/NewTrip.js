@@ -108,7 +108,7 @@ function NewTrip() {
     <div className="NewTrip">
 
       <section className="main-content">
-        <h1>New Trip</h1>
+        <h3>New Trip</h3>
 
         {showSaved}
         <Form onSubmit={e => {handleSubmit(e)}}>
@@ -120,7 +120,6 @@ function NewTrip() {
           </div>
 
           <div className="new-trip-buttons">
-            <Button href="/addfriends" className="buttons">Add Friends</Button>
             <Button href="/createpoll" className="buttons">Create Poll</Button>
             <Button href="/recommendations" className="buttons">Ask for Rec</Button>
           </div>
@@ -146,9 +145,9 @@ function NewTrip() {
       </div>
 
           <div className="new-trip-backbtn">
-            <Button type="submit" variant="outline-primary" className="buttons">Create</Button>
+            <Button type="submit" className="buttons">Create</Button>
             {/*<Button href="pasttrips" variant="outline-success" className="buttons">Archive</Button>*/}
-            <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
+            <Button href="/dashboard" className="buttons">Back</Button>
           </div>
         </div>
       </Form>

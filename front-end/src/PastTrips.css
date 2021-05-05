@@ -69,3 +69,8 @@
 .itinelement {
   margin: 0;
 }
+
+#pastripcards {
+  margin-left: 20px;
+  margin-right: 20px;
+}

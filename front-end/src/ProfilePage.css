@@ -8,6 +8,15 @@
     color: black;
 }
 
-h1 {
+.responsive{
     text-align: center;
+}
+
+.profilecards {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.indiv-card {
+    padding-bottom : 10px;
 }

@@ -206,7 +206,7 @@ function Friends() {
                       <Card.Text>
                         {e["email"]}
                       </Card.Text>
-                      <Card.Link href="/friends" onClick={() => {setDel(e["email"]);}}>Delete Friend</Card.Link>
+                      <Card.Link id="deletefriendbtn" href="/friends" onClick={() => {setDel(e["email"]);}}>Delete Friend</Card.Link>
                     </Card.Body>
                   </Card>
                 ))}

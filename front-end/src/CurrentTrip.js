@@ -287,8 +287,8 @@ const CurrentTrip = (props) => {
 
 
             <div className="todo"> 
-              <h3>To-do List</h3>
               <div className="container">
+                
             <FormTodo addTodo={addTodo} />
             <div>
               {todo.map((a, index) => (
@@ -309,9 +309,9 @@ const CurrentTrip = (props) => {
             </div>
             <br />
             <div>
-              <Button type="submit" variant="outline-primary" className="buttons">Update</Button>
-              <Button onClick={otherAction} variant="outline-success" className="buttons">Archive</Button>
-              <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
+              <Button type="submit" className="buttons">Update</Button>
+              <Button onClick={otherAction} className="buttons">Archive</Button>
+              <Button href="/dashboard" className="buttons">Back</Button>
             </div>
           </div>
           </Form>
@@ -321,11 +321,9 @@ const CurrentTrip = (props) => {
   }
 
   return (
-    <div>
-    <br />
-    <br />
-    <h4>You currently don't have a saved trip.</h4>
-    <h4>Go to New Trip page.</h4>
+    <div className="CurrentTrip">
+    <h3>You currently don't have a saved trip!</h3>
+    <h5>Go to New Trip page.</h5>
     </div>
   );
 }
