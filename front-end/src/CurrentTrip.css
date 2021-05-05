@@ -35,3 +35,19 @@ h4 {
   margin: 5px;
   display: inline-block;
 }
+
+.ct-links {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.form-check-input {
+  display:inline-block; 
+  position:absolute;
+  right: .5rem; 
+}
+
+.todo .list-group-item {
+  text-align: left;
+  padding: .75rem 1.75rem;
+}

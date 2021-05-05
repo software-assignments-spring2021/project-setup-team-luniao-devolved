@@ -89,7 +89,7 @@ function Preferences() {
 
     return (
         // Container with padding
-        <Container className="p-3">
+        <Container>
                 <h3>Trip Preferences</h3>
                 <br />
 

@@ -9,7 +9,7 @@ import axios from "axios";
 import Dashboard from './Dashboard';
 import NavBar from './components/NavBar';
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
@@ -49,7 +49,10 @@ const Login = () => {
       else if (res.data.message === "success") {
         console.log("successful login");
         localStorage.setItem('JWT', res.data.token);
-        setRedirect(true);
+        // setRedirect(true);
+        history.push({
+          pathname:  "/dashboard",
+        }); 
       }
     })
     .catch(err => {
