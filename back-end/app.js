@@ -62,6 +62,11 @@ User.find({}, function (err, posts) {
     console.log(posts);
 });
 
+Trip.find({}, function (err, posts) { 
+    if (err) return console.error(err);
+    console.log(posts);
+});
+
 /* Get User info */
 app.get('/api/userinfo', (req, res) => {
     // now we have the data
@@ -104,7 +109,7 @@ app.post("/api/recommendations", (req, res) => {
 
         var options = {
             method: 'GET',
-            url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/JFK-sky/LHR-sky/' + recForm['date'],
+            url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/US/USD/en-US/' + recForm['from'] + '-sky/' + recForm['to'] + '-sky/' + recForm['date'],
             headers: {
                 'x-rapidapi-key': '48b6700027mshf2353e12af2853bp1e9d9fjsn189a7bf51c0b',
                 'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
@@ -119,12 +124,15 @@ app.post("/api/recommendations", (req, res) => {
             for (const item in resultsJSON['Quotes']) {
                 let newResult = new Object();
                 newResult.date = resultsJSON['Quotes'][item]["OutboundLeg"].DepartureDate.slice(0, 10);
-                newResult.from_country = resultsJSON['Places'][0].IataCode;
-                newResult.to_country = resultsJSON['Places'][1].IataCode;
+                newResult.from_country = resultsJSON['Places'][1].IataCode;
+                newResult.to_country = resultsJSON['Places'][0].IataCode;
                 newResult.cost = resultsJSON['Quotes'][item].MinPrice;
-                newResult.url = "http://example.org";
+                newResult.url = 'https://www.skyscanner.com/transport/flights/' + recForm['from'] + '/' + recForm['to'] + '/' + recForm['date'] + '/';
 
-                results.push(newResult);
+                if (newResult.cost <= recForm["budget"]) {
+                    results.push(newResult);
+                }
+
             }
 
             console.log(results);
@@ -135,9 +143,6 @@ app.post("/api/recommendations", (req, res) => {
     }
 });
 
-
-//for logging incoming requests
-//app.use('/Cpoll, pollRoute');
 
 /* Create Post Page Routes */
 app.post("/api/createpost", (req, res) => {
@@ -171,47 +176,85 @@ app.post("/api/createpost", (req, res) => {
     res.end();
 });
 
-/* Preferences Page Routes */
-const pollRoute = express.Router();
-const prefRoute = express.Router();
+/* Create Poll Page */
+app.get('/api/createpoll', function(req, res) {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-// let Poll = require('./poll.model.js');
-// let Pref = require('./preference.model.js')
-//app.use('/Cpoll, pollRoute');
-
-pollRoute.route('/').post(function (req, res) {
-    //console.log(p);
-
-    const npoll = new Poll({
-        name: req.body.name,
-        date: req.body.date,
-        message: req.body.message,
-        opa: req.body.opa,
-        opb: req.body.opb,
-        opc: req.body.opc
-    }).save(function(err) {
-        if (err) {
-            res.status(400).send('failed to create poll');
-        }
-        else {
-            res.status(200).json({ 'poll': 'saved successfully' });
-        }
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            console.log(trip)
+            if (trip !== null) {
+                res.json(trip.poll);
+            }
+            else {
+                Trip.findOne({friend: user._id, past: false}, function(err, friendtrip) {
+                    if (friendtrip !== null) {
+                        res.json(friendtrip.poll);
+                    }
+                });
+            }
+        });
     });
-        /*.then(npoll => {
-            res.status(200).json({ 'poll': 'saved successfully' });
-        })
-        .catch(err => {
-            res.status(400).send('failed to create poll');
-        })*/
-    //console.log(req.body);
-    //res.send("heY!")
-    // poll.save()
-    //     .then(poll => {
-    //         res.status(200).json({'poll': 'poll created'});
-    //     })
-    // .catch(err => {
-    //     res.status(400).send('failed to create poll')
-    // })
+});
+
+app.post('/api/createpoll', function (req, res) {
+    const userHash = req.header('Authorization').slice(4);
+    const decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+    
+    User.findOne({email: decodedUser}, function(err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
+
+            if (err) console.log(err);
+
+            if (!currtrip) {
+                Trip.findOne({friend: user._id, past: false}, function(err, trip) {
+                    const poll = {
+                        name: req.body.name,
+                        date: req.body.date,
+                        message: req.body.message,
+                        data: req.body.data,
+                        trip: trip._id
+                    }
+    
+                    new Poll(poll).save(function(err, result) {
+                        if (err) console.log(err);
+                        else {
+                            Trip.update({user: trip.user, past: false}, {$push: {poll: result}}, function(err, poll) {
+                                if (err) console.log(err);
+                                else {
+                                    console.log("poll saved to trip!");
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+            
+            else {
+                const poll = {
+                    name: req.body.name,
+                    date: req.body.date,
+                    message: req.body.message,
+                    data: req.body.data,
+                    trip: currtrip._id
+                }
+
+                new Poll(poll).save(function(err, result) {
+                    if (err) console.log(err);
+                    else {
+                        Trip.update({user: user._id, past: false}, {$push: {poll: result}}, function(err, poll) {
+                            if (err) console.log(err);
+                            else {
+                                console.log("poll saved to trip!");
+                            }
+                        })
+                    }
+                })
+            }
+        });
+    });
 });
 
 /* Preferences Page */
@@ -388,10 +431,27 @@ app.get('/api/currenttrip', (req, res) => {
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
     User.findOne({ email: decodedUser }, function (err, user) {
-        console.log(user);
-        Trip.findOne({user: user._id, past: false}, function(err, trip) {
-            console.log(trip);
-            res.json(trip);
+
+        Trip.findOne({user: user._id, past: false}, function(err, trip1) {
+
+            if (!trip1) { 
+                Trip.findOne({'friend': user._id, past: false}, function(err, trip2) {
+
+                    if (trip2) {
+                        user.trip = trip2._id;
+                        user.save(function(err, result) {
+                            if (err){
+                                console.log(err);
+                            }
+                        });
+                    }
+                    
+                    res.json(trip2);
+                });
+            }
+            else {
+                res.json(trip1);
+            }
         });
     });
 });
@@ -402,57 +462,93 @@ app.post("/api/currenttrip", (req, res) => {
 
     User.findOne({email: decodedUser}, function(err, user) {
 
-        let newtrip = {}
-        console.log(req.body.name);
-        if (req.body.name !== undefined) {
-            newtrip = {
-                name: req.body.name,
-                todo: req.body.todo,
-                user: user._id
-            }
-        }
-
-        else {
-            newtrip = {
-                todo: req.body.todo,
-                user: user._id
-            }
-        }
-
         Trip.findOne({user: user._id, past: false} , function(err, trip) {
-            const userId = {user: user._id};
+            let userId = {};
+            let newtrip = {}
+            console.log(req.body.name);
+            if (req.body.name !== undefined) {
+                newtrip = {
+                    name: req.body.name,
+                    todo: req.body.todo
+                }
+            }
 
-            Trip.update({user: user._id, past: false}, {$set: newtrip}, function(err, updated) {
+            else {
+                newtrip = {
+                    todo: req.body.todo
+                }
+            }
+            if (trip !== null) {
+                userId = {user: user._id, past: false};
+            }
+
+            else {
+                userId = {friend: user._id, past: false}
+            }
+
+            Trip.update(userId, {$set: newtrip}, function(err, updated) {
                 if (err) console.log(err);
                 else {
                     // link to User Schema
                     console.log(updated);
                     Trip.findOne({user: user._id, past: false}, function(err, trip) {
-                        User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
-                            if (err) console.log(err);
-                            else {
-                                console.log("success!");
-                                if (req.body.past) {
-                                    const pasttrip = {
-                                        trip: trip,
-                                        user: user._id
-                                    }
 
-                                    new PastTrip(pasttrip).save(function(err, result) {
-                                        if (err) console.log(err);
-                                        else {
-                                            console.log("saved to past trip!");
-                                            Trip.update({user: user._id, past: false}, {$set: {past: true}}, function(err, trip) {
-                                                if (err) console.log(err);
-                                                else {
-                                                    console.log("current trip archived!");
-                                                }
-                                            })
+                        if (trip) {
+                            User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
+                                if (err) console.log(err);
+                                else {
+                                    console.log("success!");
+                                    if (req.body.past) {
+                                        const pasttrip = {
+                                            trip: trip,
+                                            user: user._id
                                         }
-                                    });
+
+                                        new PastTrip(pasttrip).save(function(err, result) {
+                                            if (err) console.log(err);
+                                            else {
+                                                console.log("saved to past trip!");
+                                                Trip.update({user: user._id, past: false}, {$set: {past: true}}, function(err, trip) {
+                                                    if (err) console.log(err);
+                                                    else {
+                                                        console.log("current trip archived!");
+                                                    }
+                                                })
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        } else {
+                            trip = user.trip;
+
+                            User.findByIdAndUpdate(user._id, {trip: trip._id}, function(err, result) {
+                                if (err) console.log(err);
+                                else {
+                                    console.log("success!");
+                                    if (req.body.past) {
+                                        const pasttrip = {
+                                            trip: trip,
+                                            user: user._id
+                                        }
+
+                                        new PastTrip(pasttrip).save(function(err, result) {
+                                            if (err) console.log(err);
+                                            else {
+                                                console.log("saved to past trip!");
+                                                Trip.update({user: user._id, past: false}, {$set: {past: true}}, function(err, trip) {
+                                                    if (err) console.log(err);
+                                                    else {
+                                                        console.log("current trip archived!");
+                                                    }
+                                                })
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                        }
                     });
                 }
             });
@@ -471,6 +567,7 @@ app.post('/api/newtrip', (req, res) => {
             name: req.body.name,
             todo: req.body.todo,
             user: user._id,
+            friend: [user._id],
             past: false
         }
 
@@ -557,6 +654,84 @@ app.post('/api/delfriend', (req, res, next) => {
     });
 });
 
+app.get('/api/viewfriendscurrenttrip', (req, res) => {
+    // used another mockaroo link for now, im not sure how to create sample data if anyone could help with that!
+    // axios
+    //     .get("https://my.api.mockaroo.com/users.json?key=4e1c2150")
+    //     .then(friends => {
+    //         res.json(friends.data);
+    //         console.log('Retrieved friends list');
+    //     })
+    //     .catch(err => next(err))
+
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            if (err) {
+                console.log(err);
+            }
+            if (trip) {
+                return res.json(trip.friend)}
+            else {
+                Trip.findOne({friend: user._id, past: false}, function(err, newtrip) {
+                    if (newtrip) {
+                        Trip.findOne({user: newtrip.user, past: false}, function(err, owner) {
+                            return res.json(owner.friend);
+                        }).populate("friend");
+                    }
+                });
+            }     
+        }).populate("friend");
+    });
+});
+
+app.post('/api/adduserscurrenttrip', (req, res, next) => {
+    recForm = req.body;
+    userHash = req.header('Authorization').slice(4);
+    decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
+
+    User.findOne({ email: decodedUser }, function (err, user) {
+        Trip.findOne({user: user._id, past: false}, function(err, trip) {
+
+            console.log("recForm", recForm)
+
+            let allEmails = recForm.map(a => a.value);
+            console.log(allEmails);
+
+
+            //find another user with that email
+            User.find({'email': { $in: allEmails}}, function (err, friend) {
+
+                if (err || !friend) {
+                    return res.send("nofriend");
+                }
+
+                let allIDs = friend.map(a => a._id);
+
+                console.log(trip);
+
+                if (trip.friend) {
+                    if (trip.friend.some(r=> allIDs.indexOf(r) >= 0)) {
+                        return res.send("alreadyexists");
+                    }
+                }
+
+                trip.friend = trip.friend.concat(allIDs);
+                trip.save(function(err, result) {
+                    if (err){
+                        console.log(err);
+                    }
+                });
+                return res.status(200).send("success");
+
+            });
+        });
+    });
+
+
+})
+
 app.post('/api/addfriend', (req, res, next) => {
 
     userHash = req.header('Authorization').slice(4);
@@ -606,6 +781,10 @@ app.get('/api/itinerary', function (req, res) {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
+
+            if (!trip) {
+                return res.json([]);
+            }
             Itin.find({user: user._id, trip: trip._id}, function(err, itin) {
                 console.log('itinerary sent!');
                 res.json(itin);
@@ -620,6 +799,11 @@ app.post('/api/itinerary', function (req, res) {
 
     User.findOne({email: decodedUser}, function(err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
+
+            if (!currtrip) {
+                return res.send("notrip");
+            }
+
             if (err) console.log(err);
             else {
                 const itin = {
@@ -647,10 +831,6 @@ app.post('/api/itinerary', function (req, res) {
         });
     });
 });
-
-//Router configuration
-app.use('/createpoll', pollRoute);
-app.use('/preferences', prefRoute);
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

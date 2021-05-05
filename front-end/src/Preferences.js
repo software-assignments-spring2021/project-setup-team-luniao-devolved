@@ -89,7 +89,7 @@ function Preferences() {
 
     return (
         // Container with padding
-        <Container className="p-3">
+        <Container>
                 <h3>Trip Preferences</h3>
                 <br />
 
@@ -145,8 +145,8 @@ function Preferences() {
                     </Form.Control>
                 </Form.Group>
                 <div class="col-sm-12 text-center">
-                    <Button type="submit" variant="outline-success" className="buttons">Confirm</Button>
-                    <Button variant="outline-danger" href='/profile' className="buttons">Back to Profile</Button>
+                    <Button type="submit" className="buttons">Confirm</Button>
+                    <Button  href='/profile' className="buttons">Back to Profile</Button>
                 </div>
             </Form >
         </Container >

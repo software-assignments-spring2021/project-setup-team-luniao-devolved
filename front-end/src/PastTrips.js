@@ -4,12 +4,11 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './PastTrips.css';
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import {Card, CardColumns} from 'react-bootstrap';
+import { Card, CardColumns } from 'react-bootstrap';
 
 function PastTrips(props) {
-
   const [pasttrip, setPasttrip] = useState([]);
-  
+
   useEffect(() => {
     axios({
       method: "GET",
@@ -23,26 +22,42 @@ function PastTrips(props) {
     });
   }, [])
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        {<h3 className="App-title">Past Trips</h3>}
-      </header>
+  console.log(pasttrip);
 
-      <body className="App-body">
-      <CardColumns>
+  return (
+    <div>
+      <h3>Past Trips</h3>
+
+      <CardColumns id="pastripcards">
         {pasttrip.map(e => (
-            <Card border="primary">
-              <Card.Body>
-                <Card.Title>{e.trip.name}</Card.Title>
-                {/*<Card.Text>
-                  {e["date"]}
-                </Card.Text>*/}
+
+
+      //     <Card border="primary">
+      //       <Card.Body>
+      //         <Card.Title>{e.trip.name}</Card.Title>
+      //         {/*<Card.Text>
+      //             {e["date"]}
+      //           </Card.Text>*/}
+      //       </Card.Body>
+      //     </Card>
+      //   ))}
+      // </CardColumns>
+            <Card>
+              <Card.Body >
+                <Card.Title style={{fontWeight: 'bold'}}>{e.trip.name}</Card.Title>
+                  {e.trip.itin.map( a => (
+                    <div className="pasttripdetails">
+                    <hr></hr>
+                    <Card.Text style={{fontWeight: 'bold'}} className="itinelement">{a.type}</Card.Text>
+                    <Card.Text className="itinelement">{a.name}</Card.Text>
+                    <Card.Text className="itinelement">{a.location}</Card.Text>
+                    <Card.Text className="itinelement">{a.time}</Card.Text>
+                    </div>
+                  ))}
               </Card.Body>
             </Card>
           ))}
         </CardColumns>
-      </body>
     </div>
   );
 }

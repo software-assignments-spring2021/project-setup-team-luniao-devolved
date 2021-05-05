@@ -9,6 +9,7 @@ import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import NavBar from './components/NavBar';
 import Layout from './components/Layout';
+import Routes from './components/Routes';
 import NewTrip from './NewTrip';
 import CurrentTrip from './CurrentTrip';
 import Cpoll from './Cpoll';
@@ -51,208 +52,13 @@ import AddFriends from './AddFriends';
 //   .catch(err => {
 //     console.log(err);
 //   });
-
-
 let isLoggedIn = localStorage.getItem('JWT');
-if (isLoggedIn) {
+
   ReactDOM.render(
     <Layout>
-    <Router>
-         <Switch>
-            <Route exact path="/" component={Login}/>
-  
-            <Route exact path="/guestdashboard">
-              <GuestDashboard/>
-            </Route>
-  
-            <Route exact path="/signup" component={SignUp}/>
-
-            <Route exact path="/dashboard"> 
-              {/* <NavBar/> */}
-              <Dashboard/>
-            </Route>
-  
-            {/* <PrivateRoute exact path="/dashboard"> 
-              <NavBar/>
-              <Dashboard/>
-            </PrivateRoute> */}
-  
-            <Route exact path="/addfriends"> 
-              {/* <NavBar/> */}
-              <AddFriends/>
-            </Route>
-  
-            <Route exact path="/pasttrips">
-              {/* <NavBar/> */}
-              <PastTrips/>
-            </Route>
-  
-            <Route exact path="/newtrip">
-              {/* <NavBar/> */}
-              <NewTrip/>
-            </Route>
-  
-            <Route exact path="/currenttrip">
-              {/* <NavBar/> */}
-              <CurrentTrip/>
-            </Route>
-  
-            
-            <Route exact path="/editprofile">
-              <EditProfile/>
-            </Route>
-            
-  
-            <Route exact path="/createpost">
-              {/* <NavBar/> */}
-              <CreatePost/>
-            </Route>
-  
-            <Route exact path="/friends">
-              {/* <NavBar/> */}
-              <Friends/>
-            </Route>
-  
-            <Route exact path="/guestnewtrip">
-              <GuestNewTrip/>
-            </Route>
-  
-            <Route exact path="/preferences">
-              {/* <NavBar/> */}
-              <Preferences/>
-            </Route>
-  
-            <Route exact path="/createpoll">
-              {/* <NavBar/> */}
-              <Cpoll/>
-            </Route>
-            {/* 
-            <Route exact path="/dashboard">
-              <NavBar/>
-              <Dashboard/>
-            </Route> */}
-  
-            <Route exact path="/profile">
-              {/* <NavBar/> */}
-              <ProfilePage/>
-            </Route>
-  
-            <Route exact path="/itinerary">
-              {/* <NavBar/> */}
-              <Itinerary/>
-            </Route>
-  
-            <Route exact path="/recommendations">
-              {/* <NavBar/> */}
-              <Recommendations/>
-            </Route>
-
-            <Route exact path="/logout">
-              <Logout />
-            </Route>
-
-
-        </Switch>
-    </Router>
+      <Routes isLoggedIn={isLoggedIn}/>
     </Layout>,
-    document.getElementById('root')
-  );
-  } else {
-    ReactDOM.render(
-      <Router>
-           <Switch>
-              <Route exact path="/" component={Login}/>
-    
-              <Route exact path="/guestdashboard">
-                <GuestDashboard/>
-              </Route>
-
-              <Route exact path="/guestdashboard">
-                <GuestDashboard/>
-              </Route>                      
-    
-              <Route exact path="/signup" component={SignUp}/>
-              {/*     
-              <Route exact path="/dashboard"> 
-                <Redirect to='/'/>
-              </Route> */}
-
-              <Route exact path="/dashboard"> 
-                <NavBar/>
-                <Dashboard/>
-              </Route>
-    
-              {/* <PrivateRoute exact path="/dashboard"> 
-                <NavBar/>
-                <Dashboard/>
-              </PrivateRoute> */}
-    
-              <Route exact path="/addfriends"> 
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/pasttrips">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/newtrip">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/currenttrip">
-                <Redirect to='/'/>
-              </Route>
-    
-              {/*
-              <Route exact path="/editprofile">
-                <NavBar/>
-                <EditProfile/>
-              </Route>
-              */}
-    
-              <Route exact path="/createpost">
-               <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/friends">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/guestnewtrip">
-                <GuestNewTrip/>
-              </Route>
-    
-              <Route exact path="/preferences">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/createpoll">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/profile">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/itinerary">
-                <Redirect to='/'/>
-              </Route>
-    
-              <Route exact path="/recommendations">
-                <NavBar/>
-                <Recommendations/>
-              </Route>
-
-              <Route exact path="/logout">
-                <Logout />
-              </Route>
-
-
-          </Switch>
-      </Router>,
-      document.getElementById('root')
-    );
-  }
+    document.getElementById('root'))
 
 
 // ReactDOM.render(

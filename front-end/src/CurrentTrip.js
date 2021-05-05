@@ -2,18 +2,23 @@ import React, { useState, useEffect } from 'react'
 import './CurrentTrip.css'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { Alert, Card } from 'react-bootstrap';
+import { Alert, Card, CardColumns } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Link } from "react-router-dom";
 
 const CurrentTrip = (props) => {
 
   const [trip, setTrip] = useState(false);
-  const [todo, setTodo] = React.useState([]);
+  const [todo, setTodo] = useState([]);
   const [show, setShow] = useState(false);
   const [tripname, setTripname] = useState("");
   const [newtripname, setNewtripname] = useState("");
   const [userdata, setUserdata] = useState(false);
+  const [frdata, setfrdata] = useState([]);
+  const [poll, setPoll] = useState([]);
 
   // for to-do list layout/skeleton, our team referred to this code: https://dev.to/shubham1710/build-a-todo-app-with-react-9la
   function Todo({ todo, index, markTodo, removeTodo }) {
@@ -111,7 +116,9 @@ const CurrentTrip = (props) => {
         Authorization: `JWT ${localStorage.getItem('JWT')}`
       }
     }).then(user => {
-        console.log(user.data)
+
+        console.log(user.data);
+        
         if (user.data !== null) {
           if (user.data.past) {
             setUserdata(false);
@@ -122,7 +129,32 @@ const CurrentTrip = (props) => {
           setTodo(user.data.todo);
           setTripname(user.data.name);
         }
+
+        axios({
+          method: "GET",
+          url: "http://localhost:4000/api/createpoll",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem('JWT')}`
+          }
+        }).then(user => {
+            if (user.data !== null) {
+              setPoll(user.data);
+            }
+        });
     });
+
+    axios({
+      method: "GET",
+      url: "http://localhost:4000/api/viewfriendscurrenttrip",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(friends => {
+        setfrdata(friends.data);
+      });
+
   },[]);
 
   let showSaved = null;
@@ -131,6 +163,30 @@ const CurrentTrip = (props) => {
   }
   else if (show === true && trip) {
     showSaved = <Alert variant="danger" onClose={() => setShow(false)} dismissible>Trip archived.</Alert>;
+  }
+
+  let showFriends = (
+  <div> 
+    <p>Friends</p>
+      <br />
+      <p>No friends yet!</p>
+      </div>);
+      
+  if (frdata) {
+    showFriends = ( <div class="friendscardct">
+    <CardColumns class="card-columns addborderfriends">
+      {frdata.map(e => (
+          <Card border="primary">
+            <Card.Body>
+              <Card.Title>{e["fullname"]}</Card.Title>
+              <Card.Text>
+                {e["email"]}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+    </CardColumns>
+  </div>);
   }
   
   function otherAction(e) {
@@ -164,13 +220,18 @@ const CurrentTrip = (props) => {
     setShow(true);
     setTrip(true);
   }
+
   
+  console.log(poll)
+
   if (userdata) {
     return (
       <div className="CurrentTrip">
         <h3>Current Trip</h3>
-        <section className="main-content">
+
         {showSaved}
+
+        <section className="main-content">
         <Form onSubmit={e => {handleSubmit(e)}}>
           <div class='flex-container'>
             <div>
@@ -182,9 +243,10 @@ const CurrentTrip = (props) => {
             </div>
   
             <div className="friends">
-              <p>Friends</p>
-              <br />
-              <p>No friends yet!</p>
+              
+              {showFriends}
+             
+
             </div>
   
             <div className="links">
@@ -193,9 +255,40 @@ const CurrentTrip = (props) => {
               <Button href="/createpoll" className="buttons">Polls</Button>
               <Button href="/recommendations" className="buttons">Recommendations</Button>
             </div>
+            
+            {poll.map(a => (
+          <Container className="PollHeader">
+          <h3>Vote for these polls!</h3>
+          <Form className="poll form">
+              <Form.Group as={Row} controlId="pollName">
+                <Form.Label column sm="5">Poll Name</Form.Label>
+                <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.name}></Form.Control></Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="date">
+                <Form.Label column sm="5">End Date</Form.Label>
+                <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.date}></Form.Control></Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="pollMessage">
+                <Form.Label column sm="5">Poll Message</Form.Label>
+                <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.message}></Form.Control></Col>
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="option">
+                <Form.Label column sm="5">Options</Form.Label>
+                <Button type="button" variant="primary">{a.data[0].option}</Button>
+                <Button type="button" variant="primary">{a.data[1].option}</Button>
+            <Button type="button" variant="primary">{a.data[2].option}</Button>
+              </Form.Group>
+            </Form>
+            </Container>
+            ))}
+
+
             <div className="todo"> 
-              <h3>To-do List</h3>
               <div className="container">
+                
             <FormTodo addTodo={addTodo} />
             <div>
               {todo.map((a, index) => (
@@ -216,9 +309,9 @@ const CurrentTrip = (props) => {
             </div>
             <br />
             <div>
-              <Button type="submit" variant="outline-primary" className="buttons">Update</Button>
-              <Button onClick={otherAction} variant="outline-success" className="buttons">Archive</Button>
-              <Button href="/dashboard" variant="outline-danger" className="buttons">Back</Button>
+              <Button type="submit" className="buttons">Update</Button>
+              <Button onClick={otherAction} className="buttons">Archive</Button>
+              <Button href="/dashboard" className="buttons">Back</Button>
             </div>
           </div>
           </Form>
@@ -228,11 +321,9 @@ const CurrentTrip = (props) => {
   }
 
   return (
-    <div>
-    <br />
-    <br />
-    <h4>You currently don't have a saved trip.</h4>
-    <h4>Go to New Trip page.</h4>
+    <div className="CurrentTrip">
+    <h3>You currently don't have a saved trip!</h3>
+    <h5>Go to New Trip page.</h5>
     </div>
   );
 }

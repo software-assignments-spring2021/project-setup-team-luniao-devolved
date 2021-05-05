@@ -1,5 +1,12 @@
 language: node_js
 node_js:
   - "12.18.4"
-before_script: 
-  - cd back-end
+jobs:
+  include:
+    - stage: test
+      name: "Backend Test"
+      install:
+        - cd back-end
+        - npm install
+      script:
+        - npm test

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Navbar, Nav, NavDropdown, Alert, Modal} from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 import "./GuestDashboard.css";
 
 function GuestDashboard() {
@@ -12,16 +12,11 @@ function GuestDashboard() {
     const openModal = () => setOpen(true);
 
     return (
+
     <div className="GuestDashboard">
-        <div className="GuestAlert">
-            <Alert variant="primary">
-            <Alert.Heading>Welcome to Travel Wise!</Alert.Heading>
-            <p className="info">As a guest, feel free to create a new trip and explore Travel Wise. Note that if you want to try other options, you must sign up. Enjoy!</p>
-            </Alert>
-        </div>
-        <div className="NavBar">
-            <Navbar bg="primary" variant="dark" expand="lg">
-            <Navbar.Brand href="/guestdashboard">Travel Wise</Navbar.Brand>
+        <div className="NavBar" id="NavBarGuest">
+            <Navbar>
+            <Navbar.Brand href="/dashboard"><img src="testlogo.png" id="navbarlogo"></img></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -42,6 +37,12 @@ function GuestDashboard() {
             </Navbar.Collapse>
             </Navbar>
         </div>
+        <div className="GuestAlert">
+            <Alert variant="primary">
+            <Alert.Heading>Welcome to Travel Wise!</Alert.Heading>
+            <p className="info">As a guest, feel free to create a new trip and explore Travel Wise. Note that if you want to try other options, you must sign up. Enjoy!</p>
+            </Alert>
+        </div>
         <div>
         <Modal show={open} onHide={closeModal}>
                     <Modal.Header closeButton onClick={closeModal}>
@@ -51,7 +52,7 @@ function GuestDashboard() {
         </Modal>
         </div>
         <div>
-            <h4>Seems awfully quiet without friends...</h4>
+            <h4 id="guestdash-prompt">Seems awfully quiet without friends...</h4>
         </div>
     </div>
     );

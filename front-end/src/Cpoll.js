@@ -1,13 +1,12 @@
 import React from "react";
 import Container from 'react-bootstrap/Container';
-//import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Alert } from 'react-bootstrap';
 import axios from 'axios';
 
 function Cpoll(props) {
@@ -18,35 +17,49 @@ function Cpoll(props) {
     const [opa, setOpa] = useState("");
     const [opb, setOpb] = useState("");
     const [opc, setOpc] = useState("");
+    const [show, setShow] = useState(false);
 
     //handling form data
     const onSubmit = (e) => {
-        console.log("data saved");
         e.preventDefault();
-        const nPoll = {
-            name, date, message, opa, opb, opc
-            /*poll_name: { name },
-            poll_date: { date },
-            poll_message: { message },
-            poll_opa: { opa },
-            poll_opb: { opb },
-            poll_opc: { opc }*/
 
-        };
-        // console.log(nPoll);
-        //posting form data
-        axios.post('http://localhost:4000/createpoll', nPoll)
-            .then(res => console.log(res.data));
+        const data = [{option: opa}, {option: opb}, {option: opc}];
+
+        let polldata = new Object();
+        polldata.name = name;
+        polldata.message = message;
+        polldata.data = data;
+        polldata.date = date;
+        let pollstring = JSON.stringify(polldata);
+
+        axios({
+            method: "post",
+            url: "http://localhost:4000/api/createpoll",
+            data: pollstring,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `JWT ${localStorage.getItem('JWT')}`
+            }
+          }).then(function(res) {
+            console.log("Poll data updated!");
+          })
+          .catch(function(res) {
+            console.log(res);
+          });
+        
+          setShow(true);
     }
 
+    let showSaved = null;
+    if (show === true) {
+        showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Poll saved!</Alert>;
+    }
 
     return (
         // Container for Poll form
         <Container className="PollHeader">
-
-                <h3>Create Poll</h3>
-                
-            {/* Form */}
+            <h3>Create Poll</h3>
+            {showSaved}
             <Form className="poll form" onSubmit={e => { onSubmit(e) }}>
                 <Row>
                     <Col>
@@ -83,26 +96,12 @@ function Cpoll(props) {
                     <Form.Control as="textarea" value={opc} onChange={e => { setOpc(e.target.value) }} rows={1} />
                 </Form.Group>
                 <Button type="submit" variant="primary">Create Poll</Button>
-                <Link to='/currenttrip'><Button type="button" variant="danger">Back to Current Trip</Button></Link>
-
+                <Link to='/currenttrip' id="back-cpoll"><Button type="button">Back to Current Trip</Button></Link>
                 <br />
             </Form>
-            <>
-
-
-            </>
-
-
-            <>
                 <br />
-            </>
-
-
         </Container>
-
     );
 }
-
-
 
 export default Cpoll;

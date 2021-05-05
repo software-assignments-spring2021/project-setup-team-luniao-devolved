@@ -1,4 +1,18 @@
-h4 {
+h3 {
+    margin-top: 20px;
+}
+
+#NavBarGuest {
+    margin-left: 0%;
+    margin-right: 0%;
+    padding-bottom: 20px;
+}
+
+.GuestAlert {
+    padding: 20px;
+
+}
+
+#guestdash-prompt {
     text-align: center;
-    padding-top: 200px;
 }

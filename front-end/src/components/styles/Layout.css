@@ -1,0 +1,38 @@
+h3 {
+    margin-top: 20px;
+}
+
+.main-content {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #A5D8FF;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+
+}
+
+.NavBar {
+    background-color: #02182B;
+}
+.navbar-light .navbar-nav .nav-link {
+    color:white;
+}
+
+div #basic-navbar-nav .nav-link:hover {
+    color: #ED9b40;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #ED9b40 !important;
+    border: crimson;
+    
+} 
+
+#navbarlogo {
+    width: 300px;
+}
+
+#back-cpoll {
+    padding-left: 73%;
+    padding-top: 0;
+}

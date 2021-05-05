@@ -6,7 +6,7 @@ import { useState } from 'react';
 import axios from "axios";
 
 
-import { Alert, Form, Button, Card, Modal, Container, Row, Col} from 'react-bootstrap';
+import { Alert, Form, Button, Card, Modal, Container, Row} from 'react-bootstrap';
 
 
 
@@ -16,45 +16,70 @@ function MyVerticallyCenteredModal(props) {
     props.recs.data = [];
   }
 
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Recommendations
-        </Modal.Title>
-      </Modal.Header>
+  if (props.recs.data.length > 0) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Recommendations
+          </Modal.Title>
+        </Modal.Header>
 
-      <Modal.Body>
-        <Container>
+        <Modal.Body>
+          <Container>
 
-          {props.recs.data.map(e => (
-            <Row className="rec-row">
-              <Card className="rec-card">
-                <Card.Body>
-                  <Card.Title>{e["date"]}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">{e["from_country"]} to {e["to_country"]} </Card.Subtitle>
-                  <Card.Text>
-                    ${e["cost"]}
-                  </Card.Text>
-                  <Card.Link href={e["url"]}>More info</Card.Link>
-                </Card.Body>
-              </Card>
-          </Row>
-          ))}
+            {props.recs.data.map(e => (
+              <Row className="rec-row">
+                <Card className="rec-card">
+                  <Card.Body>
+                    <Card.Title>{e["date"]}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{props.originalFrom} to {props.originalTo} </Card.Subtitle>
+                    <Card.Text>
+                      ${e["cost"]}
+                    </Card.Text>
+                    <Card.Link href={e["url"]}>More info</Card.Link>
+                  </Card.Body>
+                </Card>
+            </Row>
+            ))}
 
-        </Container>
-      </Modal.Body>
-      
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
+          </Container>
+        </Modal.Body>
+        
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  } else {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Recommendations
+          </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          No recommendations found! Try increasing your budget and trying again.
+        </Modal.Body>
+        
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 }
 
 
@@ -63,12 +88,17 @@ function Recommendations(props) {
   const [topic, setTopic] = useState(0);
   const [budget, setBudget] = useState(0);
   const [date, setDate] = useState("");
+  const [fromAPT, setfromAPT] = useState("");
+  const [toAPT, settoAPT] = useState("");
+
   const [show, setShow] = useState(false);
   const [showFlightVar, setFlight] = useState(true);
   const [showOtherVar, setOther] = useState(false);
   
   const [recsReceived, setRecsReceived] = useState([]);
   const [modalShow, setModalShow] = useState(false);
+
+  //if no recs then just display change budget, no recs try increasing your budget
 
 
   const handleSubmit= (e) => {
@@ -79,6 +109,8 @@ function Recommendations(props) {
     formData.topic = topic;
     formData.budget = budget;
     formData.date = date;
+    formData.from = fromAPT;
+    formData.to = toAPT;
     let formString = JSON.stringify(formData);    
   
     axios({
@@ -143,6 +175,22 @@ function Recommendations(props) {
             Please provide a valid date.
           </Form.Control.Feedback>
         </Form.Group>
+
+        <Form.Group controlId="validationCustom05">
+          <Form.Label>From Airport</Form.Label>
+          <Form.Control type="text" placeholder="(eg. JFK)" required value={fromAPT} onChange={e => setfromAPT(e.target.value)}/>
+          <Form.Control.Feedback type="invalid">
+            Please provide valid text.
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId="validationCustom05">
+          <Form.Label>To Airport</Form.Label>
+          <Form.Control type="text" placeholder="(eg. LHR)" required value={toAPT} onChange={e => settoAPT(e.target.value)}/>
+          <Form.Control.Feedback type="invalid">
+            Please provide valid text.
+          </Form.Control.Feedback>
+        </Form.Group>
       </div>)
   }
 
@@ -155,6 +203,7 @@ function Recommendations(props) {
     )
   }
 
+
   // let showRecs = null;
   // if (typeof recsReceived !== 'undefined' && recsReceived.length > 0) {
   //   showRecs = (
@@ -164,15 +213,16 @@ function Recommendations(props) {
   //   )
   // }
 
+  console.log(toAPT);
   return (
-    <div className="App">
-      <header className="App-header" id="recsHeader">
-        {<h3 className="App-title">Recommendations</h3>}
-      </header>
+    <div class="main-content">
+
+        <h3>Recommendations</h3>
+
 
       {showFunc} 
 
-      <body className="App-body">
+      <body class="rec-form">
           <Form className="App-form" onSubmit={e => { handleSubmit(e) }}>
             <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Topic</Form.Label>
@@ -204,6 +254,8 @@ function Recommendations(props) {
             recs={recsReceived}
             show={modalShow}
             onHide={() => setModalShow(false)}
+            originalFrom={fromAPT}
+            originalTo={toAPT}
           />
 
       </body>

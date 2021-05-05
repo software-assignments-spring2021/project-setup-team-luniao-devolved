@@ -24,7 +24,6 @@
 }
 
 .App-title {
-  background-color: white;
   margin-top: 5vmin;
   margin-bottom: 5vmin;
   display: flex;
@@ -36,7 +35,6 @@
 }
 
 .App-body {
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +45,7 @@
 
 .App-form {
   position: relative;
-  width: 50%;
+  width: 100%;
   padding: 1rem;
   border: .2rem solid #ececec;
   border-radius: 8px;
@@ -66,3 +64,4 @@
   align-items: center;
   justify-content: center;
 }
+

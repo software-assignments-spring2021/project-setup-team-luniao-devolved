@@ -47,36 +47,36 @@ function CreatePost(props) {
 
 
   return (
-    <div className="App">
-      <header className="App-header" id="newpostheader">
-        {<h2 className="App-title">New Post</h2>}
-      </header>
+    <div className='d-flex flex-column'>
+
+      <h3>New Post</h3>
+
 
       {showFunc} 
 
-      <body className="App-body">
-          <Form className="App-form" onSubmit={e => { handleSubmit(e) }}>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              {/* <Form.Label>Topic</Form.Label> */}
-              <Form.Control type="text" placeholder="Type Title" required value={title} onChange={e => {
-                setTitle(e.target.value)}}/>
-            </Form.Group>
+      
+            <Form className="App-form align-self-center" onSubmit={e => { handleSubmit(e) }}>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                {/* <Form.Label>Topic</Form.Label> */}
+                <Form.Control type="text" placeholder="Type Title" required value={title} onChange={e => {
+                  setTitle(e.target.value)}}/>
+              </Form.Group>
 
-            <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Control as="textarea" placeholder="Type Post" required rows={10} value={post} onChange={e => 
-              
-              {
-                setPost(e.target.value);}}/>
-            </Form.Group>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Control as="textarea" placeholder="Type Post" required rows={10} value={post} onChange={e => 
+                
+                {
+                  setPost(e.target.value);}}/>
+              </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
 
          {/* {showRecs} */}
 
-      </body>
+      
 
 
     </div>
