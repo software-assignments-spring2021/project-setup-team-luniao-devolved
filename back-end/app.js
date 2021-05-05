@@ -635,17 +635,23 @@ app.get('/api/viewfriendscurrenttrip', (req, res) => {
     userHash = req.header('Authorization').slice(4);
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
-    User.findOne({ email: decodedUser}, function (err, user) {
-
+    User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
             if (err) {
                 console.log(err);
             }
+            if (trip) {
+                console.log("FIRST", trip.friend);
+                return res.json(trip.friend)}
 
-            if (trip) {return res.json(trip.friend);}
-            else {return res.json();}
-
-            
+            else {
+                Trip.findOne({friend: user._id, past: false}, function(err, newtrip) {
+                    Trip.findOne({user: newtrip.user, past: false}, function(err, owner) {
+                        console.log("HELLOOO", owner.friend);
+                        return res.json(owner.friend);
+                    }).populate("friend");
+                });
+            }     
         }).populate("friend");
     });
 });
