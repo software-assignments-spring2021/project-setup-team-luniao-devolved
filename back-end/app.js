@@ -181,8 +181,14 @@ app.get('/api/createpoll', function(req, res) {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            console.log(trip)
             if (trip !== null) {
                 res.json(trip.poll);
+            }
+            else {
+                Trip.findOne({friend: user._id, past: false}, function(err, friendtrip) {
+                    res.json(friendtrip.poll);
+                });
             }
         });
     });
@@ -435,7 +441,7 @@ app.post("/api/currenttrip", (req, res) => {
                     todo: req.body.todo
                 }
             }
-            
+
             else {
                 newtrip = {
                     todo: req.body.todo

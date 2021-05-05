@@ -171,6 +171,7 @@ const CurrentTrip = (props) => {
       <br />
       <p>No friends yet!</p>
       </div>);
+      
   if (frdata) {
     showFriends = ( <div class="friendscardct">
     <CardColumns class="card-columns addborderfriends">
