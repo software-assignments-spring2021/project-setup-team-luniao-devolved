@@ -127,7 +127,7 @@ app.post("/api/recommendations", (req, res) => {
                 newResult.from_country = resultsJSON['Places'][1].IataCode;
                 newResult.to_country = resultsJSON['Places'][0].IataCode;
                 newResult.cost = resultsJSON['Quotes'][item].MinPrice;
-                newResult.url = "http://example.org";
+                newResult.url = 'https://www.skyscanner.com/transport/flights/' + recForm['from'] + '/' + recForm['to'] + '/' + recForm['date'] + '/';
 
                 if (newResult.cost <= recForm["budget"]) {
                     results.push(newResult);
