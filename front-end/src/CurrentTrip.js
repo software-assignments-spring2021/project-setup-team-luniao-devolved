@@ -231,13 +231,13 @@ const CurrentTrip = (props) => {
 
         {showSaved}
 
-        <section className="main-content">
+        <section className="main-content" id="ct-input-field">
         <Form onSubmit={e => {handleSubmit(e)}}>
           <div class='flex-container'>
             <div>
               <h4>Trip Title: {tripname}</h4>
   
-              <Form.Group controlId="tripName">
+              <Form.Group controlId="tripName" id="ct-input-field">
                   <Form.Control size="sm" type="text" placeholder="Edit Trip Name" value={newtripname} onChange={e => setNewtripname(e.target.value)} />
               </Form.Group>
             </div>
@@ -255,11 +255,12 @@ const CurrentTrip = (props) => {
               <Button href="/createpoll" className="buttons">Polls</Button>
               <Button href="/recommendations" className="buttons">Recommendations</Button>
             </div>
+            <h3>Vote for these polls!</h3>
             
             {poll.map(a => (
           <Container className="PollHeader">
-          <h3>Vote for these polls!</h3>
-          <Form className="poll form">
+      
+          <Form className="poll-form">
               <Form.Group as={Row} controlId="pollName">
                 <Form.Label column sm="5">Poll Name</Form.Label>
                 <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.name}></Form.Control></Col>
@@ -275,18 +276,18 @@ const CurrentTrip = (props) => {
                 <Col sm="10"><Form.Control plaintext readOnly defaultValue={a.message}></Form.Control></Col>
               </Form.Group>
 
-              <Form.Group as={Row} controlId="option">
-                <Form.Label column sm="5">Options</Form.Label>
-                <Button type="button" variant="primary">{a.data[0].option}</Button>
-                <Button type="button" variant="primary">{a.data[1].option}</Button>
-            <Button type="button" variant="primary">{a.data[2].option}</Button>
+              <Form.Group as={Row} controlId="option" class="d-flex flex-column">
+                {/* <Form.Label column sm="5">Options</Form.Label> */}
+                <Button type="button" class="p-2">{a.data[0].option}</Button>
+                <Button type="button" class="p-2">{a.data[1].option}</Button>
+                <Button type="button" class="p-2">{a.data[2].option}</Button>
               </Form.Group>
             </Form>
             </Container>
             ))}
 
 
-            <div className="todo"> 
+            <div className="todo-ct"> 
               <div className="container">
                 
             <FormTodo addTodo={addTodo} />

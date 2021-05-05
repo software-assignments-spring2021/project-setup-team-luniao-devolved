@@ -69,7 +69,7 @@ const Login = (props) => {
         <Col><img src="testlogo.png" alt="logo" id="loginlogo"></img></Col>
         <Col>
           <div className="signin"><h3>Sign In</h3></div>
-          <Form>
+          <Form className="form-signup">
           <Form.Group className="form" controlId="email">
             <Form.Label>Email</Form.Label>
             <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email"/>

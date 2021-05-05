@@ -65,7 +65,7 @@ function SignUp() {
           <Col><img src="testlogo.png" alt="logo" id="signuplogo"></img></Col>
           <Col>
             <h3 id="signup-header">Sign Up</h3>
-            <Form>
+            <Form className="form-signup">
             <Form.Group className="form" controlId="fullname">
               <Form.Label>Full Name</Form.Label>
               <Form.Control value={fullname} onChange={(e) => setName(e.target.value)} placeholder="Enter full name"/>

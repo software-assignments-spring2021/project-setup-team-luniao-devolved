@@ -25,6 +25,8 @@ div #basic-navbar-nav .nav-link:hover {
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
     background-color: #ED9b40 !important;
     border: crimson;
+    margin : 2px;
+    height : 40px;
     
 } 
 
@@ -35,4 +37,12 @@ div #basic-navbar-nav .nav-link:hover {
 #back-cpoll {
     padding-left: 73%;
     padding-top: 0;
+}
+
+.form-group {
+    width : 100%;
+}
+
+.ItineraryBody {
+    margin-top: 20px;
 }
