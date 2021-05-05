@@ -12,7 +12,7 @@ import Cpoll from './../Cpoll';
 import Itinerary from './../Itinerary';
 import ProfilePage from './../ProfilePage';
 import Friends from './../Friends';
-//import EditProfile from './../EditProfile';
+import EditProfile from './../EditProfile';
 import Preferences from './../Preferences';
 import GuestNewTrip from './../GuestNewTrip';
 import PastTrips from './../PastTrips';
@@ -59,12 +59,12 @@ const Routes = ({ isLoggedIn }) => {
                     <CurrentTrip />
                 </Route>
 
-                {/*
-            <Route exact path="/editprofile">
-                <NavBar/>
-                <EditProfile/>
-            </Route>
-            */}
+                    
+                <Route exact path="/editprofile">
+                    <NavBar/>
+                    <EditProfile/>
+                </Route>
+            
 
                 <Route exact path="/createpost">
                     <CreatePost />
@@ -157,12 +157,12 @@ const Routes = ({ isLoggedIn }) => {
                     <Redirect to='/' />
                 </Route>
 
-                {/*
-              <Route exact path="/editprofile">
-                <NavBar/>
-                <EditProfile/>
-              </Route>
-              */}
+                    
+                <Route exact path="/editprofile">
+                    <NavBar/>
+                    <EditProfile/>
+                </Route>
+                
 
                 <Route exact path="/createpost">
                     <Redirect to='/' />
