@@ -49,7 +49,7 @@ function CreatePost(props) {
   return (
     <div className='d-flex flex-column'>
 
-      <h3 className="App-title">New Post</h3>
+      <h3>New Post</h3>
 
 
       {showFunc} 

@@ -1,0 +1,24 @@
+#signuplogo {
+    margin-top: 250px;
+    width: 400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#signupcont {
+    margin-top: 20px;
+    background-color : #02182b;
+    padding-bottom : 0;
+}
+
+h2 {
+    font-size: medium;
+    text-align: center;
+    padding-top: 20px;
+    color : white;
+}
+
+#signup-header {
+    color: white;
+}

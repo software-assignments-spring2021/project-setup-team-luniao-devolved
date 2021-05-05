@@ -45,7 +45,7 @@
 
 .App-form {
   position: relative;
-  width: 50%;
+  width: 100%;
   padding: 1rem;
   border: .2rem solid #ececec;
   border-radius: 8px;
@@ -64,3 +64,4 @@
   align-items: center;
   justify-content: center;
 }
+
