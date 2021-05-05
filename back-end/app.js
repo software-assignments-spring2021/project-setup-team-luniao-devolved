@@ -425,27 +425,31 @@ app.post("/api/currenttrip", (req, res) => {
 
     User.findOne({email: decodedUser}, function(err, user) {
 
-        let newtrip = {}
-        console.log(req.body.name);
-        if (req.body.name !== undefined) {
-            newtrip = {
-                name: req.body.name,
-                todo: req.body.todo,
-                user: user._id
-            }
-        }
-
-        else {
-            newtrip = {
-                todo: req.body.todo,
-                user: user._id
-            }
-        }
-
         Trip.findOne({user: user._id, past: false} , function(err, trip) {
-            const userId = {user: user._id};
+            let userId = {};
+            let newtrip = {}
+            console.log(req.body.name);
+            if (req.body.name !== undefined) {
+                newtrip = {
+                    name: req.body.name,
+                    todo: req.body.todo
+                }
+            }
+            
+            else {
+                newtrip = {
+                    todo: req.body.todo
+                }
+            }
+            if (trip !== null) {
+                userId = {user: user._id, past: false};
+            }
 
-            Trip.update({user: user._id, past: false}, {$set: newtrip}, function(err, updated) {
+            else {
+                userId = {friend: user._id, past: false}
+            }
+
+            Trip.update(userId, {$set: newtrip}, function(err, updated) {
                 if (err) console.log(err);
                 else {
                     // link to User Schema
@@ -640,13 +644,15 @@ app.get('/api/viewfriendscurrenttrip', (req, res) => {
     });
 });
 
-app.post('/api/addfriendscurrenttrip', (req, res, next) => {
+app.post('/api/adduserscurrenttrip', (req, res, next) => {
     recForm = req.body;
     userHash = req.header('Authorization').slice(4);
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
+
+            console.log("recForm", recForm)
 
             let allEmails = recForm.map(a => a.value);
             console.log(allEmails);
