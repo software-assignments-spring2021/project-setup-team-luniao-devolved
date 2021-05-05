@@ -181,8 +181,16 @@ app.get('/api/createpoll', function(req, res) {
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
+            console.log(trip)
             if (trip !== null) {
                 res.json(trip.poll);
+            }
+            else {
+                Trip.findOne({friend: user._id, past: false}, function(err, friendtrip) {
+                    if (friendtrip !== null) {
+                        res.json(friendtrip.poll);
+                    }
+                });
             }
         });
     });
@@ -430,27 +438,31 @@ app.post("/api/currenttrip", (req, res) => {
 
     User.findOne({email: decodedUser}, function(err, user) {
 
-        let newtrip = {}
-        console.log(req.body.name);
-        if (req.body.name !== undefined) {
-            newtrip = {
-                name: req.body.name,
-                todo: req.body.todo,
-                user: user._id
-            }
-        }
-
-        else {
-            newtrip = {
-                todo: req.body.todo,
-                user: user._id
-            }
-        }
-
         Trip.findOne({user: user._id, past: false} , function(err, trip) {
-            const userId = {user: user._id};
+            let userId = {};
+            let newtrip = {}
+            console.log(req.body.name);
+            if (req.body.name !== undefined) {
+                newtrip = {
+                    name: req.body.name,
+                    todo: req.body.todo
+                }
+            }
 
-            Trip.update({user: user._id, past: false}, {$set: newtrip}, function(err, updated) {
+            else {
+                newtrip = {
+                    todo: req.body.todo
+                }
+            }
+            if (trip !== null) {
+                userId = {user: user._id, past: false};
+            }
+
+            else {
+                userId = {friend: user._id, past: false}
+            }
+
+            Trip.update(userId, {$set: newtrip}, function(err, updated) {
                 if (err) console.log(err);
                 else {
                     // link to User Schema
@@ -531,6 +543,7 @@ app.post('/api/newtrip', (req, res) => {
             name: req.body.name,
             todo: req.body.todo,
             user: user._id,
+            friend: [user._id],
             past: false
         }
 
@@ -629,29 +642,35 @@ app.get('/api/viewfriendscurrenttrip', (req, res) => {
 
     userHash = req.header('Authorization').slice(4);
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
-
-    User.findOne({ email: decodedUser}, function (err, user) {
-
+    User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
             if (err) {
                 console.log(err);
             }
-
-            if (trip) {return res.json(trip.friend);}
-            else {return res.json();}
-
-            
+            if (trip) {
+                return res.json(trip.friend)}
+            else {
+                Trip.findOne({friend: user._id, past: false}, function(err, newtrip) {
+                    if (newtrip) {
+                        Trip.findOne({user: newtrip.user, past: false}, function(err, owner) {
+                            return res.json(owner.friend);
+                        }).populate("friend");
+                    }
+                });
+            }     
         }).populate("friend");
     });
 });
 
-app.post('/api/addfriendscurrenttrip', (req, res, next) => {
+app.post('/api/adduserscurrenttrip', (req, res, next) => {
     recForm = req.body;
     userHash = req.header('Authorization').slice(4);
     decodedUser = jwt.verify(userHash, jwtSecret.secret).id;
 
     User.findOne({ email: decodedUser }, function (err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, trip) {
+
+            console.log("recForm", recForm)
 
             let allEmails = recForm.map(a => a.value);
             console.log(allEmails);

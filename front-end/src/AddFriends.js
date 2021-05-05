@@ -31,7 +31,7 @@ function AddFriend(props) {
 
         axios({
             method: "post",
-            url: "http://localhost:4000/api/addfriendscurrenttrip",
+            url: "http://localhost:4000/api/adduserscurrenttrip",
             data: friendsout,
             headers: { "Content-Type": "application/json", Authorization: `JWT ${localStorage.getItem('JWT')}`},
           })
@@ -53,8 +53,6 @@ function AddFriend(props) {
     console.log(friendsout);
 
     useEffect(() => {
-
-
         axios({
             method: "GET",
             url: "http://localhost:4000/api/friends",

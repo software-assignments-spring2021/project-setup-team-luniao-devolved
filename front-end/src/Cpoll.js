@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Alert } from 'react-bootstrap';
 import axios from 'axios';
 
 function Cpoll(props) {
@@ -16,6 +17,7 @@ function Cpoll(props) {
     const [opa, setOpa] = useState("");
     const [opb, setOpb] = useState("");
     const [opc, setOpc] = useState("");
+    const [show, setShow] = useState(false);
 
     //handling form data
     const onSubmit = (e) => {
@@ -44,13 +46,20 @@ function Cpoll(props) {
           .catch(function(res) {
             console.log(res);
           });
+        
+          setShow(true);
     }
 
+    let showSaved = null;
+    if (show === true) {
+        showSaved = <Alert variant="success" onClose={() => setShow(false)} dismissible>Poll saved!</Alert>;
+    }
 
     return (
         // Container for Poll form
         <Container className="PollHeader">
             <h3>Create Poll</h3>
+            {showSaved}
             <Form className="poll form" onSubmit={e => { onSubmit(e) }}>
                 <Row>
                     <Col>
