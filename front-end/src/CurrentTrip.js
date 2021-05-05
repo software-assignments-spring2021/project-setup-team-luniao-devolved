@@ -182,7 +182,29 @@ const CurrentTrip = (props) => {
     setTrip(true);
   }
   
-  console.log(poll)
+  function chooseOption(option) {
+
+    let pollData = {
+      option: option,
+      voted: true
+    };
+    let pollString = JSON.stringify(pollData);
+
+    axios({
+      method: "post",
+      url: "http://localhost:4000/api/createpoll",
+      data: pollString,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem('JWT')}`
+      }
+    }).then(function(res) {
+      console.log("Poll data updated!");
+    })
+    .catch(function(res) {
+      console.log(res);
+    });
+  }
 
   if (userdata) {
     return (
@@ -215,9 +237,10 @@ const CurrentTrip = (props) => {
               <Button href="/recommendations" className="buttons">Recommendations</Button>
             </div>
             
+
             {poll.map(a => (
           <Container className="PollHeader">
-          <h3>Vote for these polls!</h3>
+          <h3>You did not vote yet!</h3>
           <Form className="poll form">
               <Form.Group as={Row} controlId="pollName">
                 <Form.Label column sm="5">Poll Name</Form.Label>
@@ -236,12 +259,14 @@ const CurrentTrip = (props) => {
 
               <Form.Group as={Row} controlId="option">
                 <Form.Label column sm="5">Options</Form.Label>
-                <Button type="button" variant="primary">{a.data[0].option}</Button>
-                <Button type="button" variant="primary">{a.data[1].option}</Button>
-            <Button type="button" variant="primary">{a.data[2].option}</Button>
+                <Button type="button" variant="primary" onClick={() => chooseOption(a.data[0].option)}>{a.data[0].option}</Button>
+                <Button type="button" variant="primary" onClick={() => chooseOption(a.data[1].option)}>{a.data[1].option}</Button>
+                <Button type="button" variant="primary" onClick={() => chooseOption(a.data[2].option)}>{a.data[2].option}</Button>
               </Form.Group>
             </Form>
+            <hr></hr>
             </Container>
+
             ))}
 
 

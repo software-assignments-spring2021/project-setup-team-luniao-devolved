@@ -12,7 +12,8 @@ const Poll = new mongoose.Schema({
     date: String,
     message: String,
     data: [Object],
-    trip: {type: mongoose.Schema.Types.ObjectId, ref: 'Trip'}
+    trip: {type: mongoose.Schema.Types.ObjectId, ref: 'Trip'},
+    users: [{user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, option: String}]
 });
 
 mongoose.model('Poll', Poll);

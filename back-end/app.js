@@ -190,13 +190,26 @@ app.post('/api/createpoll', function (req, res) {
     User.findOne({email: decodedUser}, function(err, user) {
         Trip.findOne({user: user._id, past: false}, function(err, currtrip) {
             if (err) console.log(err);
+            if (req.body.voted) {
+                console.log(req.body.option)
+                console.log(user._id)
+                //console.log(currtrip);
+                Poll.updateOne({trip: currtrip._id, "users.user": user._id}, {$set: {"users.$.option": req.body.option}}, function(err, poll) {
+                    if (err) console.log(err);
+                    else {
+                        console.log(poll)
+                        console.log("you voted!");
+                    }
+                });
+            }
             else {
                 const poll = {
                     name: req.body.name,
                     date: req.body.date,
                     message: req.body.message,
                     data: req.body.data,
-                    trip: currtrip._id
+                    trip: currtrip._id,
+                    users: [{user: user._id, option: ""}]
                 }
 
                 new Poll(poll).save(function(err, result) {
