@@ -31,7 +31,7 @@ All of us are working on this project because we love to travel, and this means 
 [See here.](CONTRIBUTING.md)
 
 ## Building and testing instructions
-You can find the instructions to build and test Travel Wise [here](CONTRIBUTING.md)
+You can find the instructions to build and test Travel Wise [here](CONTRIBUTING.md).
 
 ## Relevant links
 [User Experience Design](https://github.com/agile-dev-assignments/user-experience-design-team-luniao-devolved): app map, wireframes, and prototype
