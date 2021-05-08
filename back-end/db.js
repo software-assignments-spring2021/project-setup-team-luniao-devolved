@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
-const url = `mongodb+srv://yushin420:Dbtlsld9317@travelwise.dwvrv.mongodb.net/users?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${process.env.DB_EMAIL}:${process.env.DB_PASSWORD}@travelwise.dwvrv.mongodb.net/users?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
 
 client.connect();
